@@ -1,5 +1,9 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "FPS_ActionGameModeBase.h"
+#include "Utilities/Global.h"
+#include "CPlayer.h"
 
+
+AFPS_ActionGameModeBase::AFPS_ActionGameModeBase()
+{
+	CHelpers::GetClass<APawn>(&DefaultPawnClass, "Blueprint'/Game/Player/BP_CPlayer.BP_CPlayer_C'");
+}

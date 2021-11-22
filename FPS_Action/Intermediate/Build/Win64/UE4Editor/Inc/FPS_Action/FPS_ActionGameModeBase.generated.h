@@ -13,10 +13,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define FPS_ACTION_FPS_ActionGameModeBase_generated_h
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_SPARSE_DATA
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_RPC_WRAPPERS
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_SPARSE_DATA
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_RPC_WRAPPERS
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_RPC_WRAPPERS_NO_PURE_DECLS
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAFPS_ActionGameModeBase(); \
 	friend struct Z_Construct_UClass_AFPS_ActionGameModeBase_Statics; \
@@ -25,7 +25,7 @@ public: \
 	DECLARE_SERIALIZER(AFPS_ActionGameModeBase)
 
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_INCLASS \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_INCLASS \
 private: \
 	static void StaticRegisterNativesAFPS_ActionGameModeBase(); \
 	friend struct Z_Construct_UClass_AFPS_ActionGameModeBase_Statics; \
@@ -34,9 +34,9 @@ public: \
 	DECLARE_SERIALIZER(AFPS_ActionGameModeBase)
 
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_STANDARD_CONSTRUCTORS \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API AFPS_ActionGameModeBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
+	NO_API AFPS_ActionGameModeBase(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AFPS_ActionGameModeBase) \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AFPS_ActionGameModeBase); \
 DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AFPS_ActionGameModeBase); \
@@ -47,9 +47,7 @@ private: \
 public:
 
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API AFPS_ActionGameModeBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AFPS_ActionGameModeBase(AFPS_ActionGameModeBase&&); \
@@ -57,31 +55,31 @@ private: \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AFPS_ActionGameModeBase); \
 DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AFPS_ActionGameModeBase); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AFPS_ActionGameModeBase)
+	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AFPS_ActionGameModeBase)
 
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_12_PROLOG
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_GENERATED_BODY_LEGACY \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_PRIVATE_PROPERTY_OFFSET
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_7_PROLOG
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_SPARSE_DATA \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_RPC_WRAPPERS \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_INCLASS \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_STANDARD_CONSTRUCTORS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_PRIVATE_PROPERTY_OFFSET \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_SPARSE_DATA \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_RPC_WRAPPERS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_INCLASS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_GENERATED_BODY \
+#define FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_SPARSE_DATA \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
-	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_15_ENHANCED_CONSTRUCTORS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_PRIVATE_PROPERTY_OFFSET \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_SPARSE_DATA \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_INCLASS_NO_PURE_DECLS \
+	FPS_Action_Source_FPS_Action_FPS_ActionGameModeBase_h_10_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

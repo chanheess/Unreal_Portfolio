@@ -40,7 +40,6 @@ void EmptyLinkFunctionForGeneratedCodeFPS_ActionGameModeBase() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFPS_ActionGameModeBase_Statics::Class_MetaDataParams[] = {
-		{ "Comment", "/**\n * \n */" },
 		{ "HideCategories", "Info Rendering MovementReplication Replication Actor Input Movement Collision Rendering Utilities|Transformation" },
 		{ "IncludePath", "FPS_ActionGameModeBase.h" },
 		{ "ModuleRelativePath", "FPS_ActionGameModeBase.h" },
@@ -74,7 +73,7 @@ void EmptyLinkFunctionForGeneratedCodeFPS_ActionGameModeBase() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AFPS_ActionGameModeBase, 1845468918);
+	IMPLEMENT_CLASS(AFPS_ActionGameModeBase, 3191900550);
 	template<> FPS_ACTION_API UClass* StaticClass<AFPS_ActionGameModeBase>()
 	{
 		return AFPS_ActionGameModeBase::StaticClass();
