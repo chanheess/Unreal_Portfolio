@@ -37,6 +37,7 @@
 *.uasset
 *.ipch
 FPS_Action/.vs
+FPS_Action/Binaries
 FPS_Action/Config
 FPS_Action/Content
 FPS_Action/DerivedDataCache
