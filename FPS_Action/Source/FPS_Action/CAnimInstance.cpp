@@ -1,6 +1,8 @@
 #include "CAnimInstance.h"
 #include "Utilities/Global.h"
 #include "GameFramework/Character.h"
+#include "Weapons/CWeapon.h"
+#include "Weapons/IWeapon.h"
 
 void UCAnimInstance::NativeBeginPlay()
 {
@@ -19,4 +21,11 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Speed = OwnerCharacter->GetVelocity().Size2D();
 	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());
 	Pitch = OwnerCharacter->GetBaseAimRotation().Pitch;
+
+	IIWeapon* weapon = Cast<IIWeapon>(OwnerCharacter);
+	if (!!weapon)
+	{
+		bEquipped = weapon->GetWeapon()->GetEquipped();
+		bAiming = weapon->GetWeapon()->GetAiming();
+	}
 }

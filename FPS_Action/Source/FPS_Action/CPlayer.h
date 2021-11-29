@@ -2,10 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Weapons/IWeapon.h"
 #include "CPlayer.generated.h"
 
 UCLASS()
-class FPS_ACTION_API ACPlayer : public ACharacter
+class FPS_ACTION_API ACPlayer : public ACharacter, public IIWeapon
 {
 	GENERATED_BODY()
 
@@ -17,16 +18,21 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
 	UPROPERTY(VisibleAnywhere)
 		class USpringArmComponent* SpringArm;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		class UCameraComponent* Camera;
+
+public:
+	FORCEINLINE class ACWeapon* GetWeapon() override { return (ACWeapon*)Pistol; }
 
 private:
 	void OnMoveForward(float Axis);
@@ -36,5 +42,22 @@ private:
 
 	void OnRun();
 	void OffRun();
+
+	void OnPistol();
+
+	void OnAim();
+	void OffAim();
+
+	void OnFire();
+	void OffFire();
+
+	void OnFocus() override;
+	void OffFocus() override;
+	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
+
+private:
+	class ACPistol* Pistol;
+	class UCUserWidget_CrossHair* Crosshair;
+	//class UCUserWidget_AutoFire* AutoFire;
 
 };
