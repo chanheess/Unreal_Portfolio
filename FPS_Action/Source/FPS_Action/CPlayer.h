@@ -31,6 +31,12 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		class UCameraComponent* Camera;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void ZoomIn();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ZoomOut();
+
 public:
 	FORCEINLINE class ACWeapon* GetWeapon() override { return (ACWeapon*)Pistol; }
 
@@ -51,6 +57,7 @@ private:
 	void OnFire();
 	void OffFire();
 
+public:
 	void OnFocus() override;
 	void OffFocus() override;
 	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;

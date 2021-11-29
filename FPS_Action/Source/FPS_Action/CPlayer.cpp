@@ -140,6 +140,7 @@ void ACPlayer::OnAim()
 	SpringArm->TargetArmLength = 100.0f;
 	SpringArm->SocketOffset = FVector(0, 30, 10);
 
+	ZoomIn();
 	Pistol->Begin_Aim();
 
 	Crosshair->SetVisibility(ESlateVisibility::Visible);
@@ -155,6 +156,7 @@ void ACPlayer::OffAim()
 	SpringArm->TargetArmLength = 200.0f;
 	SpringArm->SocketOffset = FVector(0, 60, 0);
 
+	ZoomOut();
 	Pistol->End_Aim();
 
 	Crosshair->SetVisibility(ESlateVisibility::Hidden);
@@ -162,25 +164,21 @@ void ACPlayer::OffAim()
 
 void ACPlayer::OnFire()
 {
-	CheckFalse(Pistol->GetEquipped());
 	Pistol->Begin_Fire();
 }
 
 void ACPlayer::OffFire()
 {
-	CheckFalse(Pistol->GetEquipped());
 	Pistol->End_Fire();
 }
 
 void ACPlayer::OnFocus()
 {
-	CheckFalse(Pistol->GetEquipped());
 	Crosshair->OnFocus();
 }
 
 void ACPlayer::OffFocus()
 {
-	CheckFalse(Pistol->GetEquipped());
 	Crosshair->OffFocus();
 }
 

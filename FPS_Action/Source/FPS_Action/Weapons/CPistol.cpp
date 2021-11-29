@@ -30,6 +30,7 @@ ACPistol::ACPistol() : ACWeapon()
 	UStaticMesh* mesh;
 	CHelpers::GetAsset<UStaticMesh>(&mesh, "StaticMesh'/Game/Soldier/Mesh/Weapon/SM_Pistol.SM_Pistol'");
 	Mesh->SetStaticMesh(mesh);
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	CHelpers::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/BluePrint/BP_CameraShake.BP_CameraShake_C'");
 }
@@ -54,8 +55,8 @@ void ACPistol::End_Aim()
 
 void ACPistol::Begin_Fire()
 {
-	CheckFalse(bAiming);
 	CheckFalse(bEquipped);
+	CheckFalse(bAiming);
 	CheckTrue(bFiring);
 
 	bFiring = true;
