@@ -3,12 +3,11 @@
 #include "../CPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraShake.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Character.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
-#include "GameFramework/Character.h"
-//#include "Particles/PxParticleSystem.h"
-//#include "Sound/SoundCue.h"
-//#include "Materials/MaterialInstanceConstant.h"
+#include "Sound/SoundCue.h"
 
 ACPistol* ACPistol::Spawn(UWorld* InWorld, ACharacter* InOwner)
 {
@@ -33,6 +32,26 @@ ACPistol::ACPistol() : ACWeapon()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	CHelpers::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/BluePrint/BP_CameraShake.BP_CameraShake_C'");
+
+	AimSpringArm = CreateDefaultSubobject<USpringArmComponent>("AimSpringArm");
+	AimSpringArm->SetupAttachment(Mesh);
+	AimSpringArm->SetRelativeLocation(FVector(0, 0, 12));
+	AimSpringArm->SetRelativeRotation(FRotator(0, 90, 0));
+	AimSpringArm->TargetArmLength = 30.0f;
+	AimSpringArm->bDoCollisionTest = false;
+	AimSpringArm->bUsePawnControlRotation = true;
+	AimSpringArm->SocketOffset = FVector(0, 0, 0);
+	//AimSpringArm->bInheritPitch = false;
+	//AimSpringArm->bInheritRoll = false;
+	//AimSpringArm->bInheritYaw = false;
+
+	AimCamera = CreateDefaultSubobject<UCameraComponent>("AimCamera");
+	AimCamera->SetupAttachment(AimSpringArm);
+	AimCamera->SetRelativeLocation(FVector(0));
+	AimCamera->SetRelativeRotation(FRotator(0));
+	AimCamera->bUsePawnControlRotation = true;
+	
+	CHelpers::GetAsset<USoundCue>(&FireSoundCue, "SoundCue'/Game/GunsAudioPack/Pistol_v1/Cue/Pistol_v1_wav_Cue.Pistol_v1_wav_Cue'");
 }
 
 void ACPistol::BeginPlay()
@@ -45,77 +64,13 @@ void ACPistol::BeginPlay()
 
 void ACPistol::Begin_Aim()
 {
+	//AimCamera->Activate();
 	bAiming = true;
 }
 
 void ACPistol::End_Aim()
 {
+	//AimCamera->Deactivate();
 	bAiming = false;
-}
-
-void ACPistol::Begin_Fire()
-{
-	CheckFalse(bEquipped);
-	CheckFalse(bAiming);
-	CheckTrue(bFiring);
-
-	bFiring = true;
-	Pitch = 0.0f;
-
-	Firing();
-}
-
-void ACPistol::End_Fire()
-{
-	bFiring = false;
-}
-
-void ACPistol::Firing()
-{
-	IIWeapon* weapon = Cast<IIWeapon>(OwnerCharacter);
-	CheckNull(weapon);
-
-	FVector start, end, direction;
-	weapon->GetLocationAndDirection(start, end, direction);
-
-	//카메라 진동	
-	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
-	if (!!player)	//플레이어영역
-	{
-		APlayerController* controller = player->GetController<APlayerController>();
-		controller->PlayerCameraManager->PlayCameraShake(CameraShakeClass);
-	}
-
-	Pitch -= LimitPitch * GetWorld()->GetDeltaSeconds();
-	if (Pitch > -LimitPitch)
-		OwnerCharacter->AddControllerPitchInput(Pitch);
-
-	//어떤 식으로 검출하는 건지 지정
-	FCollisionQueryParams params;
-	params.AddIgnoredActor(this);	//자기 자신 제거
-	params.AddIgnoredActor(OwnerCharacter);
-
-	FHitResult hitResult;
-
-	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_WorldDynamic, params))
-	{
-		AStaticMeshActor* staticMeshActor = Cast<AStaticMeshActor>(hitResult.GetActor());
-		if (!!staticMeshActor)
-		{
-			UStaticMeshComponent* meshComponent = Cast<UStaticMeshComponent>(staticMeshActor->GetRootComponent());
-			if (!!meshComponent)
-			{
-				if (meshComponent->BodyInstance.bSimulatePhysics)
-				{
-					direction = staticMeshActor->GetActorLocation() - OwnerCharacter->GetActorLocation();
-					direction.Normalize();
-
-					meshComponent->AddImpulseAtLocation(direction * meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
-
-					return;
-				}
-			}//if (!!meshComponent)
-		}//if (!!staticMeshActor)
-	}
 }
 

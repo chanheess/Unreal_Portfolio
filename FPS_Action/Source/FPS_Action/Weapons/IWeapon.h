@@ -16,6 +16,7 @@ class FPS_ACTION_API IIWeapon
 
 public:
 	virtual class ACWeapon* GetWeapon() = 0;
+	virtual bool GetRunning() = 0;
 	virtual void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) = 0;
 	virtual void OnFocus() {}
 	virtual void OffFocus() {}

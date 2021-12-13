@@ -16,28 +16,16 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UFUNCTION()
-		void Firing();
-
 	void Begin_Aim();
 	void End_Aim();
 
-	void Begin_Fire();
-	void End_Fire();
-
 	static ACPistol* Spawn(class UWorld* InWorld, class ACharacter* InOwner);
 
-private:
-	//UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-	//	class USoundCue* FireSoundCue;
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+		class UCameraComponent* AimCamera;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		TSubclassOf<class UCameraShake> CameraShakeClass;
-
-public:
-	FORCEINLINE	bool GetFiring() { return bFiring; }
-
-private:
-	bool bFiring;
+	UPROPERTY(VisibleAnywhere)
+		class USpringArmComponent* AimSpringArm;
 
 };

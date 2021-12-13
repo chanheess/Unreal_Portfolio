@@ -25,6 +25,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bAiming;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		bool bRunning;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		bool bFiring;
 
 public:
 	virtual void NativeBeginPlay() override;

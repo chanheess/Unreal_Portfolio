@@ -16,15 +16,15 @@ ACPlayer::ACPlayer()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	SpringArm->SetRelativeLocation(FVector(0, 0, 60));
+	SpringArm->SocketOffset = FVector(0, 20, 20);
 	SpringArm->TargetArmLength = 200.0f;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
-	SpringArm->SocketOffset = FVector(0, 60, 0);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
-	Camera->SetRelativeLocation(FVector(-10, -30, -5));
-	Camera->SetRelativeRotation(FRotator(-10, 0, 0));
+	Camera->SetRelativeLocation(FVector(10, 0, -5));
+	Camera->SetRelativeRotation(FRotator(-20.0f, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
 	bUseControllerRotationYaw = false;
@@ -110,56 +110,71 @@ void ACPlayer::OnVerticalLook(float Axis)
 
 void ACPlayer::OnRun()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	CheckTrue(Pistol->GetAiming());
+	bRunning = true;
+
+	GetCharacterMovement()->MaxWalkSpeed = Pistol->GetMaxRunSpeed();
+
+	CheckFalse(Pistol->GetEquipped());
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 void ACPlayer::OffRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	bRunning = false;
+
+	CheckFalse(Pistol->GetEquipped());
+	bUseControllerRotationYaw = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
 void ACPlayer::OnPistol()
 {
+	CheckTrue(bRunning);
+
 	if (Pistol->GetEquipped())
 	{
+		CheckTrue(Pistol->GetAiming());
+		Crosshair->SetVisibility(ESlateVisibility::Hidden);
 		Pistol->Unequip();
 	
 		return;
 	}
 
 	Pistol->Equip();
+	Crosshair->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ACPlayer::OnAim()
 {
 	CheckFalse(Pistol->GetEquipped());
 
-	bUseControllerRotationYaw = true;
-	GetCharacterMovement()->bOrientRotationToMovement = false;
-
-	SpringArm->TargetArmLength = 100.0f;
-	SpringArm->SocketOffset = FVector(0, 30, 10);
+	GetCharacterMovement()->bUseControllerDesiredRotation = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->MaxWalkSpeed = 320.0f;
 
 	ZoomIn();
+	//Camera->Deactivate();
 	Pistol->Begin_Aim();
 
-	Crosshair->SetVisibility(ESlateVisibility::Visible);
+	//Crosshair->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void ACPlayer::OffAim()
 {
 	CheckFalse(Pistol->GetEquipped());
 
-	bUseControllerRotationYaw = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
-
-	SpringArm->TargetArmLength = 200.0f;
-	SpringArm->SocketOffset = FVector(0, 60, 0);
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 
 	ZoomOut();
+	//Camera->Activate();
 	Pistol->End_Aim();
 
-	Crosshair->SetVisibility(ESlateVisibility::Hidden);
+	//Crosshair->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ACPlayer::OnFire()

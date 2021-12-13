@@ -27,5 +27,8 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	{
 		bEquipped = weapon->GetWeapon()->GetEquipped();
 		bAiming = weapon->GetWeapon()->GetAiming();
+		bRunning = weapon->GetRunning();
+		bFiring = weapon->GetWeapon()->GetFiring();
 	}
+
 }

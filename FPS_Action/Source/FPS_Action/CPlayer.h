@@ -39,6 +39,7 @@ protected:
 
 public:
 	FORCEINLINE class ACWeapon* GetWeapon() override { return (ACWeapon*)Pistol; }
+	FORCEINLINE	bool GetRunning() { return bRunning; }
 
 private:
 	void OnMoveForward(float Axis);
@@ -67,4 +68,5 @@ private:
 	class UCUserWidget_CrossHair* Crosshair;
 	//class UCUserWidget_AutoFire* AutoFire;
 
+	bool bRunning;
 };
