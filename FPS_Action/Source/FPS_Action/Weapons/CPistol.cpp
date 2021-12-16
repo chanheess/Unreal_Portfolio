@@ -31,8 +31,6 @@ ACPistol::ACPistol() : ACWeapon()
 	Mesh->SetStaticMesh(mesh);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	CHelpers::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/BluePrint/BP_CameraShake.BP_CameraShake_C'");
-
 	AimSpringArm = CreateDefaultSubobject<USpringArmComponent>("AimSpringArm");
 	AimSpringArm->SetupAttachment(Mesh);
 	AimSpringArm->SetRelativeLocation(FVector(0, 0, 12));
@@ -73,4 +71,3 @@ void ACPistol::End_Aim()
 	//AimCamera->Deactivate();
 	bAiming = false;
 }
-

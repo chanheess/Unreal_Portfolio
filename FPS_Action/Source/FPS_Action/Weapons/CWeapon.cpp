@@ -28,6 +28,7 @@ ACWeapon::ACWeapon()
 	CHelpers::GetAsset<UMaterialInstanceConstant>(&DecalMaterial, "MaterialInstanceConstant'/Game/Weapons/Materials/M_Decal_Inst.M_Decal_Inst'");
 
 	CHelpers::GetClass<ACBullet>(&BulletClass, "Blueprint'/Game/BluePrint/BP_CBullet.BP_CBullet_C'");
+	CHelpers::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/BluePrint/BP_CameraShake.BP_CameraShake_C'");
 }
 
 void ACWeapon::BeginPlay()
@@ -139,8 +140,8 @@ void ACWeapon::Fired()
 	FRotator muzzleRotation = Mesh->GetSocketRotation("MuzzleSocket");
 	FVector start, end, direction;
 
+	start = Mesh->GetSocketLocation("MuzzleSocket");
 	weapon->GetLocationAndDirection(start, end, direction);
-	start = muzzleLocation;
 
 	//DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
 
