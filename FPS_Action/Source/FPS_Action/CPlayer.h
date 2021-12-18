@@ -38,7 +38,7 @@ protected:
 		void ZoomOut();
 
 public:
-	FORCEINLINE class ACWeapon* GetWeapon() override { return (ACWeapon*)Pistol; }
+	FORCEINLINE class ACWeapon* GetWeapon() override { return Weapon; }
 	FORCEINLINE	bool GetRunning() { return bRunning; }
 
 private:
@@ -50,6 +50,7 @@ private:
 	void OnRun();
 	void OffRun();
 
+	void OnWeapon(ACWeapon& weapons);
 	void OnPistol();
 
 	void OnAim();
@@ -64,6 +65,7 @@ public:
 	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
 
 private:
+	class ACWeapon* Weapon;
 	class ACPistol* Pistol;
 	class UCUserWidget_CrossHair* Crosshair;
 	//class UCUserWidget_AutoFire* AutoFire;

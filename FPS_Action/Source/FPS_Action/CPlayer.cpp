@@ -2,6 +2,7 @@
 #include "Utilities/Global.h"
 #include "CAnimInstance.h"
 #include "Weapons/CPistol.h"
+#include "Weapons/CWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -52,6 +53,7 @@ void ACPlayer::BeginPlay()
 	Crosshair->AddToViewport();
 	Crosshair->SetVisibility(ESlateVisibility::Hidden);
 
+	Weapon = ACWeapon::Spawn(GetWorld(), this);
 	Pistol = ACPistol::Spawn(GetWorld(), this);
 }
 
@@ -110,12 +112,12 @@ void ACPlayer::OnVerticalLook(float Axis)
 
 void ACPlayer::OnRun()
 {
-	CheckTrue(Pistol->GetAiming());
+	CheckTrue(Weapon->GetAiming());
 	bRunning = true;
 
-	GetCharacterMovement()->MaxWalkSpeed = Pistol->GetMaxRunSpeed();
+	GetCharacterMovement()->MaxWalkSpeed = Weapon->GetMaxRunSpeed();
 
-	CheckFalse(Pistol->GetEquipped());
+	CheckFalse(Weapon->GetEquipped());
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
@@ -125,31 +127,38 @@ void ACPlayer::OffRun()
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 	bRunning = false;
 
-	CheckFalse(Pistol->GetEquipped());
+	CheckFalse(Weapon->GetEquipped());
 	bUseControllerRotationYaw = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
-void ACPlayer::OnPistol()
+void ACPlayer::OnWeapon(ACWeapon& weapons)
 {
 	CheckTrue(bRunning);
 
-	if (Pistol->GetEquipped())
+	if (Weapon->GetEquipped())
 	{
-		CheckTrue(Pistol->GetAiming());
+		CheckTrue(Weapon->GetAiming());
 		Crosshair->SetVisibility(ESlateVisibility::Hidden);
-		Pistol->Unequip();
-	
+		Weapon->Unequip();
+
 		return;
 	}
 
-	Pistol->Equip();
+	CheckNull(&weapons);
+	Weapon = &weapons;
+	Weapon->Equip();
 	Crosshair->SetVisibility(ESlateVisibility::Visible);
+}
+
+void ACPlayer::OnPistol()
+{
+	OnWeapon(*Pistol);
 }
 
 void ACPlayer::OnAim()
 {
-	CheckFalse(Pistol->GetEquipped());
+	CheckFalse(Weapon->GetEquipped());
 
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -157,14 +166,14 @@ void ACPlayer::OnAim()
 
 	ZoomIn();
 	//Camera->Deactivate();
-	Pistol->Begin_Aim();
+	Weapon->Begin_Aim();
 
 	//Crosshair->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void ACPlayer::OffAim()
 {
-	CheckFalse(Pistol->GetEquipped());
+	CheckFalse(Weapon->GetEquipped());
 
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -172,19 +181,21 @@ void ACPlayer::OffAim()
 
 	ZoomOut();
 	//Camera->Activate();
-	Pistol->End_Aim();
+	Weapon->End_Aim();
 
 	//Crosshair->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ACPlayer::OnFire()
 {
-	Pistol->Begin_Fire();
+	CheckFalse(Weapon->GetEquipped());
+	Weapon->Begin_Fire();
 }
 
 void ACPlayer::OffFire()
 {
-	Pistol->End_Fire();
+	CheckFalse(Weapon->GetEquipped());
+	Weapon->End_Fire();
 }
 
 void ACPlayer::OnFocus()

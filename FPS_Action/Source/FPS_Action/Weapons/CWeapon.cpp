@@ -12,6 +12,15 @@
 #include "Sound/SoundCue.h"
 #include "Materials/MaterialInstanceConstant.h"
 
+ACWeapon* ACWeapon::Spawn(UWorld* InWorld, ACharacter* InOwner)
+{
+	FActorSpawnParameters params;
+	params.Owner = InOwner;
+
+	//스폰할 파라미터를 지정해서 사용할 수 있게됨
+	return InWorld->SpawnActor<ACWeapon>(params);
+}
+
 ACWeapon::ACWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -203,4 +212,12 @@ void ACWeapon::Fired()
 	}
 }
 
+void ACWeapon::Begin_Aim()
+{
+	
+}
 
+void ACWeapon::End_Aim()
+{
+	
+}

@@ -30,6 +30,11 @@ public:
 	void Begin_Firing_Montage();
 	void End_Firing_Montage();
 
+	virtual void Begin_Aim();
+	virtual void End_Aim();
+
+	static ACWeapon* Spawn(class UWorld* InWorld, class ACharacter* InOwner);
+
 public:
 	FORCEINLINE	bool GetEquipped() { return bEquipped; }
 	FORCEINLINE	bool GetAiming() { return bAiming; }
