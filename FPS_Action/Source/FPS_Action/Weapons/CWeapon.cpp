@@ -2,7 +2,7 @@
 #include "IWeapon.h"
 #include "../Utilities/Global.h"
 #include "../CPlayer.h"
-#include "../CBullet.h"
+#include "CBullet.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/StaticMeshComponent.h"

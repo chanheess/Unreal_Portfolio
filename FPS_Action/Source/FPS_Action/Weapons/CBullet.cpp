@@ -1,5 +1,5 @@
 #include "CBullet.h"
-#include "Utilities/Global.h"
+#include "../Utilities/Global.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"

@@ -1,8 +1,9 @@
 #include "CPlayer.h"
 #include "Utilities/Global.h"
 #include "CAnimInstance.h"
-#include "Weapons/CPistol.h"
 #include "Weapons/CWeapon.h"
+#include "Weapons/CPistol.h"
+#include "Weapons/CRifle.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -55,6 +56,7 @@ void ACPlayer::BeginPlay()
 
 	Weapon = ACWeapon::Spawn(GetWorld(), this);
 	Pistol = ACPistol::Spawn(GetWorld(), this);
+	Rifle = ACRifle::Spawn(GetWorld(), this);
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -76,6 +78,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Released, this, &ACPlayer::OffRun);
 
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
+	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
 
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
@@ -145,7 +148,6 @@ void ACPlayer::OnWeapon(ACWeapon& weapons)
 		return;
 	}
 
-	CheckNull(&weapons);
 	Weapon = &weapons;
 	Weapon->Equip();
 	Crosshair->SetVisibility(ESlateVisibility::Visible);
@@ -153,7 +155,14 @@ void ACPlayer::OnWeapon(ACWeapon& weapons)
 
 void ACPlayer::OnPistol()
 {
+	CheckNull(Pistol);
 	OnWeapon(*Pistol);
+}
+
+void ACPlayer::OnRifle()
+{
+	CheckNull(Rifle);
+	OnWeapon(*Rifle);
 }
 
 void ACPlayer::OnAim()

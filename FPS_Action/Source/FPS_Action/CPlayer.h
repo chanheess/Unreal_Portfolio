@@ -52,6 +52,7 @@ private:
 
 	void OnWeapon(ACWeapon& weapons);
 	void OnPistol();
+	void OnRifle();
 
 	void OnAim();
 	void OffAim();
@@ -67,6 +68,7 @@ public:
 private:
 	class ACWeapon* Weapon;
 	class ACPistol* Pistol;
+	class ACRifle* Rifle;
 	class UCUserWidget_CrossHair* Crosshair;
 	//class UCUserWidget_AutoFire* AutoFire;
 
