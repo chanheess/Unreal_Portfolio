@@ -1,7 +1,7 @@
 #include "CWeapon.h"
 #include "IWeapon.h"
 #include "../Utilities/Global.h"
-#include "../CPlayer.h"
+#include "../Characters/CPlayer.h"
 #include "CBullet.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"

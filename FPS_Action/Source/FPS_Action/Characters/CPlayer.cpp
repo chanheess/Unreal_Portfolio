@@ -1,37 +1,44 @@
 #include "CPlayer.h"
-#include "Utilities/Global.h"
 #include "CAnimInstance.h"
-#include "Weapons/CWeapon.h"
-#include "Weapons/CPistol.h"
-#include "Weapons/CRifle.h"
+#include "../Utilities/Global.h"
+#include "../Weapons/CWeapon.h"
+#include "../Weapons/CPistol.h"
+#include "../Weapons/CRifle.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Widgets/CUserWidget_CrossHair.h"
+#include "Components/InputComponent.h"
+#include "../Components/CStatusComponent.h"
+#include "../Components/COptionComponent.h"
+#include "../Widgets/CUserWidget_CrossHair.h"
 
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	SpringArm->SetupAttachment(GetCapsuleComponent());
+	CHelpers::CreateActorComponent(this, &Status, "Status");
+	CHelpers::CreateActorComponent(this, &Option, "Option");
+
+	CHelpers::CreateComponent(this, &SpringArm, "SpringArm", GetMesh());
 	SpringArm->SetRelativeLocation(FVector(0, 0, 60));
+	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
 	SpringArm->SocketOffset = FVector(0, 20, 20);
-	SpringArm->TargetArmLength = 200.0f;
+	SpringArm->TargetArmLength = 200.0f; 
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
+	SpringArm->bEnableCameraLag = true;
 
-	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm);
+	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
 	Camera->SetRelativeLocation(FVector(10, 0, -5));
 	Camera->SetRelativeRotation(FRotator(-20.0f, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
@@ -39,8 +46,8 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
-	TSubclassOf<UCAnimInstance> animInstance;
-	CHelpers::GetClass<UCAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_Player.ABP_Player_C'");
+	TSubclassOf<UAnimInstance> animInstance;
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_Player.ABP_Player_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_Crosshair_C'");
@@ -87,30 +94,36 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer::OffFire);
 }
 
-void ACPlayer::OnMoveForward(float Axis)
+void ACPlayer::OnMoveForward(float InAxis)
 {
+	CheckFalse(Status->IsCanMove());
+
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void ACPlayer::OnMoveRight(float Axis)
+void ACPlayer::OnMoveRight(float InAxis)
 {
+	CheckFalse(Status->IsCanMove());
+
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetRightVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void ACPlayer::OnHorizontalLook(float Axis)
+void ACPlayer::OnHorizontalLook(float InAxis)
 {
-	AddControllerYawInput(Axis);
+	float rate = Option->GetHorizontalLookRate();
+	AddControllerYawInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
-void ACPlayer::OnVerticalLook(float Axis)
+void ACPlayer::OnVerticalLook(float InAxis)
 {
-	AddControllerPitchInput(Axis);
+	float rate = Option->GetVerticalLookRate();
+	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
 void ACPlayer::OnRun()

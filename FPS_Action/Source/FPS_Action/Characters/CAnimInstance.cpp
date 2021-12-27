@@ -1,14 +1,20 @@
 #include "CAnimInstance.h"
-#include "Utilities/Global.h"
 #include "GameFramework/Character.h"
-#include "Weapons/CWeapon.h"
-#include "Weapons/IWeapon.h"
+#include "../Utilities/Global.h"
+#include "../Weapons/CWeapon.h"
+#include "../Weapons/IWeapon.h"
 
 void UCAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
 	OwnerCharacter = Cast<ACharacter>(TryGetPawnOwner());
+	CheckNull(OwnerCharacter);
+
+	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(OwnerCharacter);
+	CheckNull(action);
+
+	action->OnActionTypeChanged.AddDynamic(this, &UCAnimInstance::OnActionTypeChanged);
 }
 
 
@@ -31,4 +37,9 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bFiring = weapon->GetWeapon()->GetFiring();
 	}
 
+}
+
+void UCAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)
+{
+	ActionType = InNewType;
 }

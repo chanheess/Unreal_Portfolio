@@ -2,12 +2,17 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "../Components/CActionComponent.h"
 #include "CAnimInstance.generated.h"
 
 UCLASS()
 class FPS_ACTION_API UCAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+
+public:
+	virtual void NativeBeginPlay() override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
@@ -18,6 +23,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		float Pitch;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		EActionType ActionType;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bEquipped;
@@ -31,11 +39,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bFiring;
 
-public:
-	virtual void NativeBeginPlay() override;
-	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
 
 private:
-	class ACharacter* OwnerCharacter;
+	UFUNCTION()
+		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
 
+	ACharacter* OwnerCharacter;
 };

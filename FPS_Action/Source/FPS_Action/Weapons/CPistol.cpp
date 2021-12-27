@@ -1,6 +1,6 @@
 #include "CPistol.h"
 #include "../Utilities/Global.h"
-#include "../CPlayer.h"
+#include "../Characters/CPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraShake.h"
 #include "GameFramework/SpringArmComponent.h"
