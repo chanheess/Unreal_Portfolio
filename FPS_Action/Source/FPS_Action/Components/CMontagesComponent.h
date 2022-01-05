@@ -27,8 +27,6 @@ public:
 	UPROPERTY(EditAnywhere)
 		bool bCanMove;
 
-
-
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -42,8 +40,8 @@ private:
 public:	
 	UCMontagesComponent();
 
-	void PlayRoll();
-	void PlayBackstep();
+	void PlayFire();
+	void PlayAim();
 
 protected:
 	virtual void BeginPlay() override;

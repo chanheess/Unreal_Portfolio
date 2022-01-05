@@ -8,14 +8,14 @@ UCMontagesComponent::UCMontagesComponent()
 
 }
 
-void UCMontagesComponent::PlayRoll()
+void UCMontagesComponent::PlayFire()
 {
-	PlayAnimMontage(EStateType::Roll);
+	PlayAnimMontage(EStateType::Fire);
 }
 
-void UCMontagesComponent::PlayBackstep()
+void UCMontagesComponent::PlayAim()
 {
-	PlayAnimMontage(EStateType::Backstep);
+	PlayAnimMontage(EStateType::Aim);
 }
 
 void UCMontagesComponent::BeginPlay()

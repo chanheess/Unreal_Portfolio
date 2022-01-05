@@ -76,6 +76,9 @@ private:
 	void OnFire();
 	void OffFire();
 
+	UFUNCTION()
+		void OnStateTypeChanged(EStateType InPrevType, EStateType, InNewType);
+
 public:
 	void OnFocus() override;
 	void OffFocus() override;

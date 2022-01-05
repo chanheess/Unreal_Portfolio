@@ -7,7 +7,6 @@ UCStateComponent::UCStateComponent()
 
 }
 
-
 void UCStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,14 +19,14 @@ void UCStateComponent::SetIdleMode()
 	ChangeType(EStateType::Idle);
 }
 
-void UCStateComponent::SetRollMode()
+void UCStateComponent::SetFireMode()
 {
-	ChangeType(EStateType::Roll);
+	ChangeType(EStateType::Fire);
 }
 
-void UCStateComponent::SetBackstepMode()
+void UCStateComponent::SetAimMode()
 {
-	ChangeType(EStateType::Backstep);
+	ChangeType(EStateType::Aim);
 }
 
 
