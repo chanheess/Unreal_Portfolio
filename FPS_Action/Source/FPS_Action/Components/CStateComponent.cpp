@@ -29,6 +29,11 @@ void UCStateComponent::SetAimMode()
 	ChangeType(EStateType::Aim);
 }
 
+void UCStateComponent::SetEquipMode()
+{
+	ChangeType(EStateType::Equip);
+}
+
 
 void UCStateComponent::ChangeType(EStateType InNewType)
 {

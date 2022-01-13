@@ -231,12 +231,12 @@ void ACPlayer::OffFire()
 	State->SetFireMode();
 }
 
-void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType, InNewType)
+void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InNewType)
 	{
 	case EStateType::Fire: break;
-	case EStateType::Aim: break;
+	case EStateType::Aim: break; 
 	}
 
 }

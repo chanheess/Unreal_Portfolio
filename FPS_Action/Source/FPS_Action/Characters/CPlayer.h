@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../Components/CStateComponent.h"
 #include "../Weapons/IWeapon.h"
 #include "CPlayer.generated.h"
 
@@ -77,7 +78,7 @@ private:
 	void OffFire();
 
 	UFUNCTION()
-		void OnStateTypeChanged(EStateType InPrevType, EStateType, InNewType);
+		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 
 public:
 	void OnFocus() override;
