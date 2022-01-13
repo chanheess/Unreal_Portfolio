@@ -2,7 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Weapons/IWeapon.h"
+#include "../Components/CStateComponent.h"
+#include "../Weapons/IWeapon.h"
 #include "CPlayer.generated.h"
 
 UCLASS()
@@ -20,15 +21,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-private:
-	UPROPERTY(VisibleAnywhere)
+private:	//Scene Component
+	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
 
 protected:
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class UCameraComponent* Camera;
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -37,27 +38,47 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 		void ZoomOut();
 
+private:	//Actor Component
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCStatusComponent* Status;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCOptionComponent* Option;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCStateComponent* State;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCMontagesComponent* Montages;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCActionComponent* Action;
+
 public:
 	FORCEINLINE class ACWeapon* GetWeapon() override { return Weapon; }
 	FORCEINLINE	bool GetRunning() { return bRunning; }
 
 private:
-	void OnMoveForward(float Axis);
-	void OnMoveRight(float Axis);
-	void OnHorizontalLook(float Axis);
-	void OnVerticalLook(float Axis);
+	void OnMoveForward(float InAxis);
+	void OnMoveRight(float InAxis);
+	void OnHorizontalLook(float InAxis);
+	void OnVerticalLook(float InAxis);
 
 	void OnRun();
 	void OffRun();
 
 	void OnWeapon(ACWeapon& weapons);
 	void OnPistol();
+	void OnRifle();
 
 	void OnAim();
 	void OffAim();
 
 	void OnFire();
 	void OffFire();
+
+	UFUNCTION()
+		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 
 public:
 	void OnFocus() override;
@@ -67,6 +88,7 @@ public:
 private:
 	class ACWeapon* Weapon;
 	class ACPistol* Pistol;
+	class ACRifle* Rifle;
 	class UCUserWidget_CrossHair* Crosshair;
 	//class UCUserWidget_AutoFire* AutoFire;
 

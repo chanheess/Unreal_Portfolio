@@ -57,4 +57,11 @@ public:
 		*InComponent = InActor->CreateDefaultSubobject<T>(InName);
 	}
 
+	//해당 액터에서 해당클래스(컴포넌트)를 리턴해준다.
+	template<typename T>
+	static T* GetComponent(AActor* InActor)
+	{
+		return Cast<T>(InActor->GetComponentByClass(T::StaticClass()));
+	}
+
 };

@@ -1,36 +1,47 @@
 #include "CPlayer.h"
-#include "Utilities/Global.h"
 #include "CAnimInstance.h"
-#include "Weapons/CPistol.h"
-#include "Weapons/CWeapon.h"
+#include "../Utilities/Global.h"
+#include "../Weapons/CWeapon.h"
+#include "../Weapons/CPistol.h"
+#include "../Weapons/CRifle.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Widgets/CUserWidget_CrossHair.h"
+#include "Components/InputComponent.h"
+#include "../Components/CMontagesComponent.h"
+#include "../Components/COptionComponent.h"
+#include "../Components/CStatusComponent.h"
+#include "../Components/CStateComponent.h"
+#include "../Widgets/CUserWidget_CrossHair.h"
 
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	SpringArm->SetupAttachment(GetCapsuleComponent());
-	SpringArm->SetRelativeLocation(FVector(0, 0, 60));
+	CHelpers::CreateActorComponent(this, &Montages, "Montages");
+	CHelpers::CreateActorComponent(this, &Option, "Option");
+	CHelpers::CreateActorComponent(this, &Status, "Status");
+	CHelpers::CreateActorComponent(this, &State, "State");
+
+	CHelpers::CreateComponent(this, &SpringArm, "SpringArm", GetMesh());
+	SpringArm->SetRelativeLocation(FVector(0, 0, 160));
+	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
 	SpringArm->SocketOffset = FVector(0, 20, 20);
-	SpringArm->TargetArmLength = 200.0f;
+	SpringArm->TargetArmLength = 200.0f; 
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
 
-	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm);
+	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
 	Camera->SetRelativeLocation(FVector(10, 0, -5));
 	Camera->SetRelativeRotation(FRotator(-20.0f, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
@@ -38,8 +49,8 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
-	TSubclassOf<UCAnimInstance> animInstance;
-	CHelpers::GetClass<UCAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_Player.ABP_Player_C'");
+	TSubclassOf<UAnimInstance> animInstance;
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_Player.ABP_Player_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_Crosshair_C'");
@@ -47,14 +58,17 @@ ACPlayer::ACPlayer()
 
 void ACPlayer::BeginPlay()
 {
-	Super::BeginPlay();
-
 	Crosshair = CreateWidget<UCUserWidget_CrossHair, APlayerController>(GetController<APlayerController>(), CrossHairClass);
 	Crosshair->AddToViewport();
 	Crosshair->SetVisibility(ESlateVisibility::Hidden);
 
 	Weapon = ACWeapon::Spawn(GetWorld(), this);
 	Pistol = ACPistol::Spawn(GetWorld(), this);
+	Rifle = ACRifle::Spawn(GetWorld(), this);
+
+	State->OnStateTypeChanged.AddDynamic(this, &ACPlayer::OnStateTypeChanged);
+
+	Super::BeginPlay();
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -76,6 +90,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Released, this, &ACPlayer::OffRun);
 
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
+	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
 
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
@@ -84,30 +99,36 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer::OffFire);
 }
 
-void ACPlayer::OnMoveForward(float Axis)
+void ACPlayer::OnMoveForward(float InAxis)
 {
+	CheckFalse(Status->IsCanMove());
+
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void ACPlayer::OnMoveRight(float Axis)
+void ACPlayer::OnMoveRight(float InAxis)
 {
+	CheckFalse(Status->IsCanMove());
+
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetRightVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void ACPlayer::OnHorizontalLook(float Axis)
+void ACPlayer::OnHorizontalLook(float InAxis)
 {
-	AddControllerYawInput(Axis);
+	float rate = Option->GetHorizontalLookRate();
+	AddControllerYawInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
-void ACPlayer::OnVerticalLook(float Axis)
+void ACPlayer::OnVerticalLook(float InAxis)
 {
-	AddControllerPitchInput(Axis);
+	float rate = Option->GetVerticalLookRate();
+	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
 void ACPlayer::OnRun()
@@ -145,7 +166,6 @@ void ACPlayer::OnWeapon(ACWeapon& weapons)
 		return;
 	}
 
-	CheckNull(&weapons);
 	Weapon = &weapons;
 	Weapon->Equip();
 	Crosshair->SetVisibility(ESlateVisibility::Visible);
@@ -153,7 +173,14 @@ void ACPlayer::OnWeapon(ACWeapon& weapons)
 
 void ACPlayer::OnPistol()
 {
+	CheckNull(Pistol);
 	OnWeapon(*Pistol);
+}
+
+void ACPlayer::OnRifle()
+{
+	CheckNull(Rifle);
+	OnWeapon(*Rifle);
 }
 
 void ACPlayer::OnAim()
@@ -188,14 +215,30 @@ void ACPlayer::OffAim()
 
 void ACPlayer::OnFire()
 {
-	CheckFalse(Weapon->GetEquipped());
-	Weapon->Begin_Fire();
+	/*CheckFalse(Weapon->GetEquipped());
+	Weapon->Begin_Fire();*/
+
+	CheckFalse(State->IsIdleMode());
+	State->SetFireMode();
 }
 
 void ACPlayer::OffFire()
 {
-	CheckFalse(Weapon->GetEquipped());
-	Weapon->End_Fire();
+	//CheckFalse(Weapon->GetEquipped());
+	//Weapon->End_Fire();
+
+	CheckFalse(State->IsFireMode());
+	State->SetFireMode();
+}
+
+void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
+{
+	switch (InNewType)
+	{
+	case EStateType::Fire: break;
+	case EStateType::Aim: break; 
+	}
+
 }
 
 void ACPlayer::OnFocus()
