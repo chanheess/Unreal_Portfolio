@@ -27,23 +27,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EActionType ActionType;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
-		bool bEquipped;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
-		bool bAiming;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
-		bool bRunning;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
-		bool bFiring;
-
-
-
 private:
 	UFUNCTION()
 		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
-
-	ACharacter* OwnerCharacter;
 };

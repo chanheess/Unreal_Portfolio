@@ -1,7 +1,7 @@
 #include "CAnimNotifyState_Equip.h"
 #include "../Utilities/Global.h"
-#include "../Weapons/IWeapon.h"
-#include "../Weapons/CWeapon.h"
+#include "../Actions/CEquipment.h"
+#include "../Components/CActionComponent.h"
 
 FString UCAnimNotifyState_Equip::GetNotifyName_Implementation() const
 {
@@ -13,14 +13,24 @@ void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	CheckNull(MeshComp);
 
-	IIWeapon* weapon = Cast<IIWeapon>(MeshComp->GetOwner());
-	CheckNull(weapon);
-	
-	weapon->GetWeapon()->Equipped_Montage();
+	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
+	CheckNull(MeshComp);
+	CheckNull(MeshComp->GetOwner());
+
+	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
+	CheckNull(action);
+
+	action->GetCurrent()->GetEquipment()->Begin_Equip();
 }
 
 void UCAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
 	CheckNull(MeshComp);
+	CheckNull(MeshComp->GetOwner());
+
+	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
+	CheckNull(action);
+
+	action->GetCurrent()->GetEquipment()->End_Equip();
 }

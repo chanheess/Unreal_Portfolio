@@ -1,42 +1,30 @@
 #include "CAnimInstance.h"
-#include "GameFramework/Character.h"
 #include "../Utilities/Global.h"
-#include "../Weapons/CWeapon.h"
-#include "../Weapons/IWeapon.h"
+#include "GameFramework/Character.h"
 
 void UCAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
-	OwnerCharacter = Cast<ACharacter>(TryGetPawnOwner());
-	CheckNull(OwnerCharacter);
+	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());
+	CheckNull(character);
 
-	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(OwnerCharacter);
+	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(character);
 	CheckNull(action);
 
 	action->OnActionTypeChanged.AddDynamic(this, &UCAnimInstance::OnActionTypeChanged);
 }
 
-
 void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	CheckNull(OwnerCharacter);
+	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());
+	CheckNull(character);
 
-	Speed = OwnerCharacter->GetVelocity().Size2D();
-	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());
-	Pitch = OwnerCharacter->GetBaseAimRotation().Pitch;
-
-	IIWeapon* weapon = Cast<IIWeapon>(OwnerCharacter);
-	if (!!weapon)
-	{
-		bEquipped = weapon->GetWeapon()->GetEquipped();
-		bAiming = weapon->GetWeapon()->GetAiming();
-		bRunning = weapon->GetRunning();
-		bFiring = weapon->GetWeapon()->GetFiring();
-	}
-
+	Speed = character->GetVelocity().Size2D();
+	Direction = CalculateDirection(character->GetVelocity(), character->GetControlRotation());
+	Pitch = character->GetBaseAimRotation().Pitch;
 }
 
 void UCAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)

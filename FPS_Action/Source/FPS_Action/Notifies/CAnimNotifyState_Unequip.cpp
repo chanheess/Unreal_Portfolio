@@ -1,7 +1,7 @@
 #include "CAnimNotifyState_Unequip.h"
 #include "../Utilities/Global.h"
-#include "../Weapons/IWeapon.h"
-#include "../Weapons/CWeapon.h"
+//#include "../Weapons/IWeapon.h"
+//#include "../Weapons/CWeapon.h"
 
 FString UCAnimNotifyState_Unequip::GetNotifyName_Implementation() const
 {
@@ -13,10 +13,10 @@ void UCAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent* MeshComp, UA
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	CheckNull(MeshComp);
 
-	IIWeapon* weapon = Cast<IIWeapon>(MeshComp->GetOwner());
-	CheckNull(weapon);
-
-	weapon->GetWeapon()->Unequipped_Montage();
+	//IIWeapon* weapon = Cast<IIWeapon>(MeshComp->GetOwner());
+	//CheckNull(weapon);
+	//
+	//weapon->GetWeapon()->Unequipped_Montage();
 }
 
 void UCAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)

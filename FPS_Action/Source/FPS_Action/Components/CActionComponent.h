@@ -17,7 +17,14 @@ class FPS_ACTION_API UCActionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly)
+		class UCActionData* Datas[(int32)EActionType::Max];
+
 public:
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE class UCActionData* GetCurrent() { return Datas[(int32)Type]; }
+
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType::Unarmed; }
 

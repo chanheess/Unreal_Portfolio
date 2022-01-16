@@ -3,11 +3,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
-#include "../Weapons/IWeapon.h"
+#include "ICharacter.h"
 #include "CPlayer.generated.h"
 
 UCLASS()
-class FPS_ACTION_API ACPlayer : public ACharacter, public IIWeapon
+class FPS_ACTION_API ACPlayer : public ACharacter, public IICharacter
 {
 	GENERATED_BODY()
 
@@ -54,9 +54,9 @@ private:	//Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCActionComponent* Action;
 
-public:
-	FORCEINLINE class ACWeapon* GetWeapon() override { return Weapon; }
-	FORCEINLINE	bool GetRunning() { return bRunning; }
+//public:
+	//FORCEINLINE class ACWeapon* GetWeapon() override { return Weapon; }
+	//FORCEINLINE	bool GetRunning() { return bRunning; }
 
 private:
 	void OnMoveForward(float InAxis);
@@ -64,33 +64,31 @@ private:
 	void OnHorizontalLook(float InAxis);
 	void OnVerticalLook(float InAxis);
 
-	void OnRun();
-	void OffRun();
+	void OnWalk();
+	void OffWalk();
+	void OnSprint();
+	void OffSprint();
 
-	void OnWeapon(ACWeapon& weapons);
 	void OnPistol();
 	void OnRifle();
 
-	void OnAim();
-	void OffAim();
-
-	void OnFire();
-	void OffFire();
+	//void OnAim();
+	//void OffAim();
+	//
+	//void OnFire();
+	//void OffFire();
 
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 
-public:
-	void OnFocus() override;
-	void OffFocus() override;
-	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
+public:	//ICharacter
+	virtual void OnFocus() override;
+	virtual void OffFocus() override;
+	virtual void ChangeColor(FLinearColor InColor) override;
+	virtual void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
 
 private:
-	class ACWeapon* Weapon;
-	class ACPistol* Pistol;
-	class ACRifle* Rifle;
 	class UCUserWidget_CrossHair* Crosshair;
+	class UMaterialInstanceDynamic* BodyMaterial;
 	//class UCUserWidget_AutoFire* AutoFire;
-
-	bool bRunning;
 };
