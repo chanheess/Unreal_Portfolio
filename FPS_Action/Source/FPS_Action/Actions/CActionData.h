@@ -34,8 +34,14 @@ class FPS_ACTION_API UCActionData : public UDataAsset
 
 public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
-	
+
 public:
+	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
+
+public:
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TSubclassOf<class ACAttachment> AttachmentClass;
+
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACEquipment> EquipmentClass;
 
@@ -46,6 +52,10 @@ public:
 		FLinearColor EquipmentColor;
 
 private:
+	FString GetLabelName(class ACharacter* InOwnerCharacter, FString InName);
+
+private:
+	class ACAttachment* Attachment;
 	class ACEquipment* Equipment;
 
 };

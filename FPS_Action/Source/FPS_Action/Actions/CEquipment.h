@@ -24,6 +24,13 @@ public:
 	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
 
 public:
+	UPROPERTY(BlueprintAssignable)
+		FEquipmentDelegate OnEquipmentDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+		FUnequipmentDelegate OnUnequipmentDelegate;
+
+public:
 	//ÀåÂø ¸í·É
 	UFUNCTION(BlueprintNativeEvent)
 		void Equip();

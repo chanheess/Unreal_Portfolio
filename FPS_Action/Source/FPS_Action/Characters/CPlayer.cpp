@@ -1,9 +1,6 @@
 #include "CPlayer.h"
 #include "CAnimInstance.h"
 #include "../Utilities/Global.h"
-#include "../Weapons/CWeapon.h"
-#include "../Weapons/CPistol.h"
-#include "../Weapons/CRifle.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -15,11 +12,14 @@
 #include "../Components/CStatusComponent.h"
 #include "../Components/CStateComponent.h"
 #include "../Widgets/CUserWidget_CrossHair.h"
+#include "Materials/MaterialInstanceConstant.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 ACPlayer::ACPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	CHelpers::CreateActorComponent(this, &Action, "Action");
 	CHelpers::CreateActorComponent(this, &Montages, "Montages");
 	CHelpers::CreateActorComponent(this, &Option, "Option");
 	CHelpers::CreateActorComponent(this, &Status, "Status");
@@ -62,13 +62,16 @@ void ACPlayer::BeginPlay()
 	Crosshair->AddToViewport();
 	Crosshair->SetVisibility(ESlateVisibility::Hidden);
 
-	Weapon = ACWeapon::Spawn(GetWorld(), this);
-	Pistol = ACPistol::Spawn(GetWorld(), this);
-	Rifle = ACRifle::Spawn(GetWorld(), this);
-
 	State->OnStateTypeChanged.AddDynamic(this, &ACPlayer::OnStateTypeChanged);
 
+	UMaterialInstanceConstant* body;
+	CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/Soldier/Materials/Soldier/MI_Soldier_1.MI_Soldier_1'");
+	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
+	GetMesh()->SetMaterial(0, BodyMaterial);
+
 	Super::BeginPlay();
+
+	Action->SetUnarmedMode();
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -86,17 +89,19 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("HorizontalLook", this, &ACPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("VerticalLook", this, &ACPlayer::OnVerticalLook);
 
-	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Pressed, this, &ACPlayer::OnRun);
-	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Released, this, &ACPlayer::OffRun);
+	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Pressed, this, &ACPlayer::OnSprint);
+	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Released, this, &ACPlayer::OffSprint);
+	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Pressed, this, &ACPlayer::OnWalk);
+	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Released, this, &ACPlayer::OffWalk);
 
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
 
-	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
-	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
+	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
+	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
 
-	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACPlayer::OnFire);
-	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer::OffFire);
+	//PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACPlayer::OnFire);
+	//PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer::OffFire);
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -131,105 +136,115 @@ void ACPlayer::OnVerticalLook(float InAxis)
 	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
-void ACPlayer::OnRun()
+void ACPlayer::OnWalk()
 {
-	CheckTrue(Weapon->GetAiming());
-	bRunning = true;
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed();
+}
 
-	GetCharacterMovement()->MaxWalkSpeed = Weapon->GetMaxRunSpeed();
+void ACPlayer::OffWalk()
+{
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
+}
 
-	CheckFalse(Weapon->GetEquipped());
+void ACPlayer::OnSprint()
+{
+	//CheckTrue(Weapon->GetAiming());
+	//bRunning = true;
+
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetSprintSpeed();
+
+	//CheckFalse(Weapon->GetEquipped());
+	CheckFalse(State->IsIdleMode());
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
-void ACPlayer::OffRun()
+void ACPlayer::OffSprint()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-	bRunning = false;
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
+	//bRunning = false;
 
-	CheckFalse(Weapon->GetEquipped());
+	//CheckFalse(Weapon->GetEquipped());
+	CheckFalse(State->IsIdleMode());
 	bUseControllerRotationYaw = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
-void ACPlayer::OnWeapon(ACWeapon& weapons)
-{
-	CheckTrue(bRunning);
-
-	if (Weapon->GetEquipped())
-	{
-		CheckTrue(Weapon->GetAiming());
-		Crosshair->SetVisibility(ESlateVisibility::Hidden);
-		Weapon->Unequip();
-
-		return;
-	}
-
-	Weapon = &weapons;
-	Weapon->Equip();
-	Crosshair->SetVisibility(ESlateVisibility::Visible);
-}
-
+//void ACPlayer::OnWeapon(ACWeapon& weapons)
+//{
+//	CheckTrue(bRunning);
+//
+//	if (Weapon->GetEquipped())
+//	{
+//		CheckTrue(Weapon->GetAiming());
+//		Crosshair->SetVisibility(ESlateVisibility::Hidden);
+//		Weapon->Unequip();
+//
+//		return;
+//	}
+//
+//	Weapon = &weapons;
+//	Weapon->Equip();
+//	Crosshair->SetVisibility(ESlateVisibility::Visible);
+//}
+//
 void ACPlayer::OnPistol()
 {
-	CheckNull(Pistol);
-	OnWeapon(*Pistol);
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetPistolMode();
 }
 
 void ACPlayer::OnRifle()
 {
-	CheckNull(Rifle);
-	OnWeapon(*Rifle);
-}
-
-void ACPlayer::OnAim()
-{
-	CheckFalse(Weapon->GetEquipped());
-
-	GetCharacterMovement()->bUseControllerDesiredRotation = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->MaxWalkSpeed = 320.0f;
-
-	ZoomIn();
-	//Camera->Deactivate();
-	Weapon->Begin_Aim();
-
-	//Crosshair->SetVisibility(ESlateVisibility::Hidden);
-}
-
-void ACPlayer::OffAim()
-{
-	CheckFalse(Weapon->GetEquipped());
-
-	GetCharacterMovement()->bUseControllerDesiredRotation = true;
-	GetCharacterMovement()->bOrientRotationToMovement = false;
-	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-
-	ZoomOut();
-	//Camera->Activate();
-	Weapon->End_Aim();
-
-	//Crosshair->SetVisibility(ESlateVisibility::Visible);
-}
-
-void ACPlayer::OnFire()
-{
-	/*CheckFalse(Weapon->GetEquipped());
-	Weapon->Begin_Fire();*/
-
 	CheckFalse(State->IsIdleMode());
-	State->SetFireMode();
+
+	Action->SetPistolMode();
 }
 
-void ACPlayer::OffFire()
-{
-	//CheckFalse(Weapon->GetEquipped());
-	//Weapon->End_Fire();
+//void ACPlayer::OnAim()
+//{
+//	//CheckFalse(Weapon->GetEquipped());
+//	CheckFalse(State->IsIdleMode());
+//
+//	GetCharacterMovement()->bUseControllerDesiredRotation = false;
+//	GetCharacterMovement()->bOrientRotationToMovement = true;
+//	GetCharacterMovement()->MaxWalkSpeed = 320.0f;
+//
+//	ZoomIn();
+//	//Camera->Deactivate();
+//	//Weapon->Begin_Aim();
+//
+//	//Crosshair->SetVisibility(ESlateVisibility::Hidden);
+//}
+//
+//void ACPlayer::OffAim()
+//{
+//	//CheckFalse(Weapon->GetEquipped());
+//	CheckFalse(State->IsIdleMode());
+//
+//	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+//	GetCharacterMovement()->bOrientRotationToMovement = false;
+//	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+//
+//	ZoomOut();
+//	//Camera->Activate();
+//	//Weapon->End_Aim();
+//
+//	//Crosshair->SetVisibility(ESlateVisibility::Visible);
+//}
 
-	CheckFalse(State->IsFireMode());
-	State->SetFireMode();
-}
+//void ACPlayer::OnFire()
+//{
+//	CheckFalse(State->IsIdleMode());
+//	State->SetFireMode();
+//}
+//
+//void ACPlayer::OffFire()
+//{
+//	CheckFalse(State->IsFireMode());
+//	State->SetFireMode();
+//}
 
 void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
@@ -249,6 +264,11 @@ void ACPlayer::OnFocus()
 void ACPlayer::OffFocus()
 {
 	Crosshair->OffFocus();
+}
+
+void ACPlayer::ChangeColor(FLinearColor InColor)
+{
+	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
 
 void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection)
