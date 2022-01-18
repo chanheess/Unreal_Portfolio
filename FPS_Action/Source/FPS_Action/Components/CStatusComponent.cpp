@@ -3,7 +3,12 @@
 
 UCStatusComponent::UCStatusComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	
+}
+
+void UCStatusComponent::BeginPlay()
+{
+	Super::BeginPlay();
 
 }
 
@@ -16,11 +21,3 @@ void UCStatusComponent::SetStop()
 {
 	bCanMove = false;
 }
-
-
-void UCStatusComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-}
-

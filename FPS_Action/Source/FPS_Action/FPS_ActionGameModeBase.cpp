@@ -1,6 +1,5 @@
 #include "FPS_ActionGameModeBase.h"
 #include "Utilities/Global.h"
-#include "Characters/CPlayer.h"
 
 
 AFPS_ActionGameModeBase::AFPS_ActionGameModeBase()

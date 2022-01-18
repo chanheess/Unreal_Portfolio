@@ -34,9 +34,9 @@ protected:
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-		void Equip();
+		void OnEquip();
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void Unequip();
+		void OnUnequip();
 
 };

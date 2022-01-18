@@ -1,16 +1,14 @@
 #include "CPlayer.h"
-#include "CAnimInstance.h"
 #include "../Utilities/Global.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "../Components/CMontagesComponent.h"
+#include "../Components/CActionComponent.h"
 #include "../Components/COptionComponent.h"
 #include "../Components/CStatusComponent.h"
-#include "../Components/CStateComponent.h"
 #include "../Widgets/CUserWidget_CrossHair.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
@@ -148,12 +146,8 @@ void ACPlayer::OffWalk()
 
 void ACPlayer::OnSprint()
 {
-	//CheckTrue(Weapon->GetAiming());
-	//bRunning = true;
-
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetSprintSpeed();
 
-	//CheckFalse(Weapon->GetEquipped());
 	CheckFalse(State->IsIdleMode());
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -162,32 +156,12 @@ void ACPlayer::OnSprint()
 void ACPlayer::OffSprint()
 {
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
-	//bRunning = false;
 
-	//CheckFalse(Weapon->GetEquipped());
 	CheckFalse(State->IsIdleMode());
 	bUseControllerRotationYaw = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
-//void ACPlayer::OnWeapon(ACWeapon& weapons)
-//{
-//	CheckTrue(bRunning);
-//
-//	if (Weapon->GetEquipped())
-//	{
-//		CheckTrue(Weapon->GetAiming());
-//		Crosshair->SetVisibility(ESlateVisibility::Hidden);
-//		Weapon->Unequip();
-//
-//		return;
-//	}
-//
-//	Weapon = &weapons;
-//	Weapon->Equip();
-//	Crosshair->SetVisibility(ESlateVisibility::Visible);
-//}
-//
 void ACPlayer::OnPistol()
 {
 	CheckFalse(State->IsIdleMode());
@@ -199,7 +173,7 @@ void ACPlayer::OnRifle()
 {
 	CheckFalse(State->IsIdleMode());
 
-	Action->SetPistolMode();
+	Action->SetRifleMode();
 }
 
 //void ACPlayer::OnAim()

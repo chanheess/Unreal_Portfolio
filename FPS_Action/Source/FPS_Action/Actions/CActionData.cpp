@@ -24,10 +24,18 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		Equipment->SetData(EquipmentData);
 		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
+
+		
+	}
+
+	if (!!Attachment)
+	{
+		Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
+		Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
 	}
 }
 
-FString UCActionData::GetLabelName(class ACharacter* InOwnerCharacter, FString InName)
+FString UCActionData::GetLabelName(ACharacter* InOwnerCharacter, FString InName)
 {
 	FString name;
 	name.Append(InOwnerCharacter->GetActorLabel());
