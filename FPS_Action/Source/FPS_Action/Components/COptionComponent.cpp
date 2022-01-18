@@ -1,4 +1,5 @@
 #include "COptionComponent.h"
+#include "../Utilities/Global.h"
 
 UCOptionComponent::UCOptionComponent()
 {

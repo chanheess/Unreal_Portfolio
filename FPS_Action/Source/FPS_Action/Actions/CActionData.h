@@ -36,7 +36,9 @@ public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
 
 public:
+	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment; }
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
+	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
 
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)

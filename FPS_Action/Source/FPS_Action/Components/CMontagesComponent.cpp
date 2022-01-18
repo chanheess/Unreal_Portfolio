@@ -4,18 +4,7 @@
 
 UCMontagesComponent::UCMontagesComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
 
-}
-
-void UCMontagesComponent::PlayFire()
-{
-	PlayAnimMontage(EStateType::Fire);
-}
-
-void UCMontagesComponent::PlayAim()
-{
-	PlayAnimMontage(EStateType::Aim);
 }
 
 void UCMontagesComponent::BeginPlay()
@@ -45,6 +34,16 @@ void UCMontagesComponent::BeginPlay()
 		if (!!data)
 			CLog::Log(data->AnimMontage->GetPathName());
 	}*/
+}
+
+void UCMontagesComponent::PlayFire()
+{
+	PlayAnimMontage(EStateType::Fire);
+}
+
+void UCMontagesComponent::PlayAim()
+{
+	PlayAnimMontage(EStateType::Aim);
 }
 
 void UCMontagesComponent::PlayAnimMontage(EStateType InStateType)

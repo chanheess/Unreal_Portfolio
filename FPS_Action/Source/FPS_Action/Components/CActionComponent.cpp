@@ -1,6 +1,7 @@
 #include "CActionComponent.h"
 #include "../Utilities/Global.h"
 #include "../Actions/CActionData.h"
+#include "../Actions/CAttachment.h"
 #include "../Actions/CEquipment.h"
 #include "GameFramework/Character.h"
 
@@ -65,5 +66,4 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 
 	if (OnActionTypeChanged.IsBound())
 		OnActionTypeChanged.Broadcast(prevType, InNewType);
-
 }

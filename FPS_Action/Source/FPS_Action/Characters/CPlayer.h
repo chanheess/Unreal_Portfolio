@@ -25,13 +25,13 @@ private:	//Scene Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCameraComponent* Camera;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
 
 protected:
-	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
-		class UCameraComponent* Camera;
-
 	UFUNCTION(BlueprintImplementableEvent)
 		void ZoomIn();
 
@@ -53,10 +53,6 @@ private:	//Actor Component
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCActionComponent* Action;
-
-//public:
-	//FORCEINLINE class ACWeapon* GetWeapon() override { return Weapon; }
-	//FORCEINLINE	bool GetRunning() { return bRunning; }
 
 private:
 	void OnMoveForward(float InAxis);
