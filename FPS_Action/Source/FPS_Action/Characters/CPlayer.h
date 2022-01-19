@@ -25,13 +25,13 @@ private:	//Scene Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCameraComponent* Camera;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
 
 protected:
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
+		class UCameraComponent* Camera;
+
 	UFUNCTION(BlueprintImplementableEvent)
 		void ZoomIn();
 
