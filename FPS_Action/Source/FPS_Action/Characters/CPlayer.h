@@ -68,6 +68,8 @@ private:
 	void OnPistol();
 	void OnRifle();
 
+	void OnDoAction();
+
 	//void OnAim();
 	//void OffAim();
 	//

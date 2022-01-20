@@ -2,6 +2,7 @@
 #include "../Utilities/Global.h"
 #include "CAttachment.h"
 #include "CEquipment.h"
+#include "CDoAction.h"
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 
@@ -25,13 +26,26 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
-		
+		if (!!Attachment)
+		{
+			Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
+			Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
+		}
 	}
 
-	if (!!Attachment)
+	if (!!DoActionClass)
 	{
-		Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
-		Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
+		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
+		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
+		DoAction->SetActorLabel(GetLabelName(InOwnerCharacter, "DoAction"));
+		DoAction->SetDatas(DoActionDatas);
+		UGameplayStatics::FinishSpawningActor(DoAction, transform);
+
+		//if (!!Attachment)
+		//{
+		//	Attachment->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentBeginOverlap);
+		//	Attachment->OnAttachmentEndOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentEndOverlap);
+		//}
 	}
 }
 

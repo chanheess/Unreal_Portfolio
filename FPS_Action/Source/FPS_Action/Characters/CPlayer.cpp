@@ -95,6 +95,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
 
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
+
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
 
@@ -174,6 +176,11 @@ void ACPlayer::OnRifle()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetRifleMode();
+}
+
+void ACPlayer::OnDoAction()
+{
+	Action->DoAction();
 }
 
 //void ACPlayer::OnAim()
