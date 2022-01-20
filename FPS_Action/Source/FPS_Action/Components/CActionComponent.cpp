@@ -3,6 +3,7 @@
 #include "../Actions/CActionData.h"
 #include "../Actions/CAttachment.h"
 #include "../Actions/CEquipment.h"
+#include "../Actions/CDoAction.h"
 #include "GameFramework/Character.h"
 
 UCActionComponent::UCActionComponent()
@@ -40,6 +41,19 @@ void UCActionComponent::SetPistolMode()
 void UCActionComponent::SetRifleMode()
 {
 	SetMode(EActionType::Rifle);
+}
+
+void UCActionComponent::DoAction()
+{
+	CheckTrue(IsUnarmedMode());
+
+	if (!!Datas[(int32)Type])
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		if (!!action)
+			action->DoAction();
+	}
 }
 
 void UCActionComponent::SetMode(EActionType InType)	//¹«±â ÀåÂø

@@ -41,6 +41,8 @@ public:
 	void SetPistolMode();
 	void SetRifleMode();
 
+	void DoAction();
+
 private:
 	void SetMode(EActionType InType);
 	void ChangeType(EActionType InNewType);	//타입이 바뀌면 델리게이션 콜

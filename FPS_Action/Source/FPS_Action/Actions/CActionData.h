@@ -27,6 +27,43 @@ public:
 
 };
 
+USTRUCT(BlueprintType)
+struct FDoActionData : public FEquipmentData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly)
+		float Power = 5.0f;
+
+	UPROPERTY(EditDefaultsOnly)
+		float HitStop;
+
+	UPROPERTY(EditDefaultsOnly)
+		float LimitPitch;
+
+	UPROPERTY(EditDefaultsOnly)
+		class USoundCue* FireSoundCue;
+
+	UPROPERTY(EditDefaultsOnly)
+		class UParticleSystem* FlashParticle;
+
+	UPROPERTY(EditDefaultsOnly)
+		class UParticleSystem* EjectParticle;
+
+	UPROPERTY(EditDefaultsOnly)
+		class UParticleSystem* ImpactParticle;
+
+	UPROPERTY(EditDefaultsOnly)
+		class UMaterialInstanceConstant* DecalMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCameraShake> CameraShakeClass;
+
+	UPROPERTY(EditAnywhere)
+		FTransform EffectTransform;
+};
+
 UCLASS()
 class FPS_ACTION_API UCActionData : public UDataAsset
 {
@@ -38,6 +75,7 @@ public:
 public:
 	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment; }
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
+	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
 	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
 
 public:
@@ -46,6 +84,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACEquipment> EquipmentClass;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TSubclassOf<class ACDoAction> DoActionClass;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TArray<FDoActionData> DoActionDatas;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FEquipmentData EquipmentData;
@@ -59,5 +103,6 @@ private:
 private:
 	class ACAttachment* Attachment;
 	class ACEquipment* Equipment;
+	class ACDoAction* DoAction;
 
 };
