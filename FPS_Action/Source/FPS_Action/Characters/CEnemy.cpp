@@ -9,9 +9,15 @@
 #include "../Components/CStatusComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "Components/WidgetComponent.h"
+#include "../Widgets/CUserWidget_Name.h"
+#include "../Widgets/CUserWidget_Health.h"
 
 ACEnemy::ACEnemy()
 {
+	CHelpers::CreateComponent<UWidgetComponent>(this, &HealthWidget, "HealthWidget", GetMesh());
+	CHelpers::CreateComponent<UWidgetComponent>(this, &NameWidget, "NameWidget", GetMesh());
+
 	CHelpers::CreateActorComponent<UCMontagesComponent>(this, &Montages, "Montages");
 	CHelpers::CreateActorComponent<UCActionComponent>(this, &Action, "Action");
 	CHelpers::CreateActorComponent<UCStatusComponent>(this, &Status, "Status");
@@ -30,6 +36,19 @@ ACEnemy::ACEnemy()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
+	TSubclassOf<UCUserWidget_Name> nameClass;
+	CHelpers::GetClass<UCUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/Widgets/WB_Name.WB_Name_C'");
+	NameWidget->SetWidgetClass(nameClass);
+	NameWidget->SetRelativeLocation(FVector(0, 0, 240));
+	NameWidget->SetDrawSize(FVector2D(240, 30));
+	NameWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
+	TSubclassOf<UCUserWidget_Health> healthClass;
+	CHelpers::GetClass<UCUserWidget_Health>(&healthClass, "WidgetBlueprint'/Game/Widgets/WB_Health.WB_Health_C'");
+	HealthWidget->SetWidgetClass(healthClass);
+	HealthWidget->SetRelativeLocation(FVector(0, 0, 190));
+	HealthWidget->SetDrawSize(FVector2D(120, 20));
+	HealthWidget->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 void ACEnemy::BeginPlay()
@@ -39,9 +58,25 @@ void ACEnemy::BeginPlay()
 	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
 	GetMesh()->SetMaterial(0, BodyMaterial);
 
+	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
+
 	Super::BeginPlay();
 
+	NameWidget->InitWidget();
+	Cast<UCUserWidget_Name>(NameWidget->GetUserWidgetObject())->SetNameText(GetName());
+
+	HealthWidget->InitWidget();
+	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
+
 	Action->SetUnarmedMode();
+}
+
+void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
+{
+	switch (InNewType)
+	{
+		case EStateType::Hitted: Hitted(); break;
+	}
 }
 
 void ACEnemy::ChangeColor(FLinearColor InColor)
@@ -62,4 +97,22 @@ void ACEnemy::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVecto
 	//conDirection *= 3000.0f;
 
 	//OutEnd = chracterLocation + conDirection;
+}
+
+float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	DamageInstigator = EventInstigator;
+	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	State->SetHittedMode();
+
+	return Status->GetHealth();
+}
+
+void ACEnemy::Hitted()
+{
+	Status->SubHealth(DamageValue);
+	DamageValue = 0.0f;
+
+	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());	//데이터 갱신
 }
