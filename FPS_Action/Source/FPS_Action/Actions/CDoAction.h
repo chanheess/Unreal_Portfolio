@@ -22,6 +22,12 @@ public:
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
 
+	UFUNCTION()
+		virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) {}
+
+	UFUNCTION()
+		virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) {}
+
 public:
 	virtual void DoAction() {}
 	virtual void Begin_DoAction() {}	//notify
