@@ -10,6 +10,10 @@ class FPS_ACTION_API ACDoAction_Melee : public ACDoAction
 	GENERATED_BODY()
 
 public:
+	FORCEINLINE void EnableCombo() { bEnable = true; }
+	FORCEINLINE void DisableCombo() { bEnable = false; }
+
+public:
 	virtual void DoAction() override;
 	virtual void Begin_DoAction() override;
 	virtual void End_DoAction() override;
@@ -18,5 +22,15 @@ public:
 	virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) override;
 
 private:
-	int32 Index;
+	UFUNCTION()
+		void RestoreGlobalDilation();
+
+private:
+	int32 ComboNum;
+
+	bool bEnable;
+	bool bExist;
+	bool bLast;
+
+	TArray<class ACharacter*> HittedCharacter;
 };

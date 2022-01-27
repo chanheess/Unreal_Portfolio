@@ -42,6 +42,7 @@ public:
 
 	void PlayFire();
 	void PlayAim();
+	void PlayHitted();
 
 protected:
 	virtual void BeginPlay() override;

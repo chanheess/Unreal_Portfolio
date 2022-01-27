@@ -43,6 +43,11 @@ void UCActionComponent::SetRifleMode()
 	SetMode(EActionType::Rifle);
 }
 
+void UCActionComponent::SetKnifeMode()
+{
+	SetMode(EActionType::Knife);
+}
+
 void UCActionComponent::DoAction()
 {
 	CheckTrue(IsUnarmedMode());

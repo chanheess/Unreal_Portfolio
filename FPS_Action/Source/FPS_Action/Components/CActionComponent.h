@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, Pistol, Rifle, Max
+	Unarmed, Pistol, Rifle, Knife, Max
 };
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
 
@@ -34,12 +34,16 @@ public:
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsRifleMode() { return Type == EActionType::Rifle; }
 
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsKnifeMode() { return Type == EActionType::Knife; }
+
 public:	
 	UCActionComponent();
 
 	void SetUnarmedMode();
 	void SetPistolMode();
 	void SetRifleMode();
+	void SetKnifeMode();
 
 	void DoAction();
 

@@ -30,7 +30,7 @@ ACEnemy::ACEnemy()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	TSubclassOf<UAnimInstance> animInstance;
-	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_CEnemy.ABP_CEnemy_C'");
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_CEnemy.ABP_CEnemy_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
@@ -79,6 +79,12 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 	}
 }
 
+void ACEnemy::RestoreColor()
+{
+	FLinearColor color = Action->GetCurrent()->GetEquipmentColor();
+	ChangeColor(color);
+}
+
 void ACEnemy::ChangeColor(FLinearColor InColor)
 {
 	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
@@ -115,4 +121,16 @@ void ACEnemy::Hitted()
 	DamageValue = 0.0f;
 
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());	//데이터 갱신
+
+	Montages->PlayHitted();
+
+	/*//hitscan
+	FVector start = GetActorLocation();
+	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
+	UKismetMathLibrary::FindLookAtRotation(start, target);
+	DamageInstigator = NULL;
+	*/
+
+	ChangeColor(FLinearColor(1, 0, 0, 1));
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
 }

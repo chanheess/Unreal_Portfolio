@@ -10,6 +10,14 @@ void ACDoAction_Melee::DoAction()
 	Super::DoAction();
 	CheckFalse(Datas.Num() > 0);
 
+	if (bEnable == true)
+	{
+		bExist = true;
+		bEnable = false;
+
+		return;
+	}
+
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
@@ -19,20 +27,73 @@ void ACDoAction_Melee::DoAction()
 
 void ACDoAction_Melee::Begin_DoAction()
 {
+	Super::Begin_DoAction();
+
+	CheckFalse(bExist);
+	bExist = false;
+
+	OwnerCharacter->StopAnimMontage();
+
+	ComboNum++;
+
+	OwnerCharacter->PlayAnimMontage(Datas[ComboNum].AnimMontage, Datas[ComboNum].PlayRatio, Datas[ComboNum].StartSection);
+	Datas[ComboNum].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_Melee::End_DoAction()
 {
+	Super::End_DoAction();
+
+	OwnerCharacter->StopAnimMontage(Datas[ComboNum].AnimMontage);
+
+	ComboNum = 0;
+
 	State->SetIdleMode();
 	Status->SetMove();
 }
 
 void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter* InAttacker, AActor* InAttackCauser, ACharacter* InOtherCharacter)
 {
+	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
+
+	for (const ACharacter* other : HittedCharacter)
+	{
+		if (InOtherCharacter == other)
+			return;
+	}
+	HittedCharacter.Add(InOtherCharacter);
+
+	float hitStop = Datas[ComboNum].HitStop;
+	if (FMath::IsNearlyZero(hitStop) == false)
+	{
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f);
+		UKismetSystemLibrary::K2_SetTimer(this, "RestoreGlobalDilation", hitStop * 1e-3f, false);
+	}
+
+	UParticleSystem* hitEffect = Datas[ComboNum].ImpactParticle;
+	if (!!hitEffect)
+	{
+		FTransform transform = Datas[ComboNum].EffectTransform;
+		transform.AddToTranslation(InAttackCauser->GetActorLocation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitEffect, transform);
+	}
+
+	TSubclassOf<UCameraShake> shake = Datas[ComboNum].CameraShakeClass;
+	if (!!shake)
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->PlayCameraShake(shake);
+
 	FDamageEvent e;
-	InOtherCharacter->TakeDamage(Datas[Index].Power, e, InAttacker->GetController(), InAttackCauser);
+	InOtherCharacter->TakeDamage(Datas[ComboNum].Power, e, InAttacker->GetController(), InAttackCauser);
 }
 
 void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter* InAttacker, AActor* InAttackCauser, ACharacter* InOtherCharacter)
 {
+	Super::OnAttachmentEndOverlap(InAttacker, InAttackCauser, InOtherCharacter);
+
+	HittedCharacter.Empty();
+}
+
+void ACDoAction_Melee::RestoreGlobalDilation()
+{
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
 }
