@@ -48,7 +48,7 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	TSubclassOf<UAnimInstance> animInstance;
-	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Soldier/Animations/Soldier/ABP_Player.ABP_Player_C'");
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Player/ABP_Player.ABP_Player_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_Crosshair_C'");
@@ -94,6 +94,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
+	PlayerInputComponent->BindAction("Knife", EInputEvent::IE_Pressed, this, &ACPlayer::OnKnife);
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
 
@@ -176,6 +177,13 @@ void ACPlayer::OnRifle()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetRifleMode();
+}
+
+void ACPlayer::OnKnife()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetKnifeMode();
 }
 
 void ACPlayer::OnDoAction()

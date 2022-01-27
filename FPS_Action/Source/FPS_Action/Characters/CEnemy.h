@@ -39,6 +39,9 @@ private:
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 
+	UFUNCTION()
+		void RestoreColor();
+
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;
 	virtual void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;

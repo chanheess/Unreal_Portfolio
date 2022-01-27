@@ -2,13 +2,13 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include "CAnimNotifyState_Firing.generated.h"
+#include "CAnimNotifyState_Combo.generated.h"
 
 UCLASS()
-class FPS_ACTION_API UCAnimNotifyState_Firing : public UAnimNotifyState
+class FPS_ACTION_API UCAnimNotifyState_Combo : public UAnimNotifyState
 {
 	GENERATED_BODY()
-
+	
 public:
 	FString GetNotifyName_Implementation() const override;
 

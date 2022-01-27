@@ -67,6 +67,7 @@ private:
 
 	void OnPistol();
 	void OnRifle();
+	void OnKnife();
 
 	void OnDoAction();
 
