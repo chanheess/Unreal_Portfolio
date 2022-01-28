@@ -24,16 +24,17 @@ ACPlayer::ACPlayer()
 	CHelpers::CreateActorComponent(this, &State, "State");
 
 	CHelpers::CreateComponent(this, &SpringArm, "SpringArm", GetMesh());
-	SpringArm->SetRelativeLocation(FVector(0, 0, 160));
-	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
-	SpringArm->SocketOffset = FVector(0, 20, 20);
-	SpringArm->TargetArmLength = 200.0f; 
+	SpringArm->SetRelativeLocation(FVector(5, 20, 130));
+	SpringArm->SetRelativeRotation(FRotator(0, 0, 0));
+	SpringArm->SocketOffset = FVector(0, 0, 0);
+	SpringArm->TargetArmLength = 1.0f; 
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
 
+
 	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
-	Camera->SetRelativeLocation(FVector(10, 0, -5));
-	Camera->SetRelativeRotation(FRotator(-20.0f, 0, 0));
+	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	Camera->SetRelativeRotation(FRotator(0, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
 	bUseControllerRotationYaw = false;
@@ -41,11 +42,17 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
+	CHelpers::CreateComponent(this, &ArmMesh, "ArmMesh", GetMesh());
+	ArmMesh->SetOnlyOwnerSee(true);
+	ArmMesh->bCastDynamicShadow = false;
+	ArmMesh->CastShadow = false;
+
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
 	GetMesh()->SetSkeletalMesh(mesh);
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
+	GetMesh()->SetOwnerNoSee(true);
 
 	TSubclassOf<UAnimInstance> animInstance;
 	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Player/ABP_Player.ABP_Player_C'");
@@ -58,7 +65,6 @@ void ACPlayer::BeginPlay()
 {
 	Crosshair = CreateWidget<UCUserWidget_CrossHair, APlayerController>(GetController<APlayerController>(), CrossHairClass);
 	Crosshair->AddToViewport();
-	Crosshair->SetVisibility(ESlateVisibility::Hidden);
 
 	State->OnStateTypeChanged.AddDynamic(this, &ACPlayer::OnStateTypeChanged);
 
@@ -86,6 +92,9 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACPlayer::OnMoveRight);
 	PlayerInputComponent->BindAxis("HorizontalLook", this, &ACPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("VerticalLook", this, &ACPlayer::OnVerticalLook);
+
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ACPlayer::OnJump);
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Released, this, &ACPlayer::OffJump);
 
 	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Pressed, this, &ACPlayer::OnSprint);
 	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Released, this, &ACPlayer::OffSprint);
@@ -135,6 +144,16 @@ void ACPlayer::OnVerticalLook(float InAxis)
 {
 	float rate = Option->GetVerticalLookRate();
 	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
+}
+
+void ACPlayer::OnJump()
+{
+	bPressedJump = true;
+}
+
+void ACPlayer::OffJump()
+{
+	bPressedJump = false;
 }
 
 void ACPlayer::OnWalk()

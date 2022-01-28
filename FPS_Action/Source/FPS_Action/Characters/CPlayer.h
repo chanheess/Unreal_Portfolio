@@ -21,12 +21,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-private:	//Scene Component
-	UPROPERTY(VisibleDefaultsOnly)
-		class USpringArmComponent* SpringArm;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
-		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
+public:
+	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
+		USkeletalMeshComponent* ArmMesh;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
@@ -38,7 +35,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 		void ZoomOut();
 
-private:	//Actor Component
+private:
+	//Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStatusComponent* Status;
 
@@ -54,11 +52,21 @@ private:	//Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCActionComponent* Action;
 
+	//Scene Component
+	UPROPERTY(VisibleDefaultsOnly)
+		class USpringArmComponent* SpringArm;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
+
 private:
 	void OnMoveForward(float InAxis);
 	void OnMoveRight(float InAxis);
 	void OnHorizontalLook(float InAxis);
 	void OnVerticalLook(float InAxis);
+
+	void OnJump();
+	void OffJump();
 
 	void OnWalk();
 	void OffWalk();
