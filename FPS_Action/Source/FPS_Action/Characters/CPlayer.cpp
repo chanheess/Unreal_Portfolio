@@ -42,7 +42,9 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
-	CHelpers::CreateComponent(this, &ArmMesh, "ArmMesh", GetMesh());
+	CHelpers::CreateComponent(this, &ArmMesh, "ArmMesh", SpringArm);
+	ArmMesh->SetRelativeLocation(FVector(0, 0, -90));
+	ArmMesh->SetRelativeRotation(FRotator(0, -90, 0));
 	ArmMesh->SetOnlyOwnerSee(true);
 	ArmMesh->bCastDynamicShadow = false;
 	ArmMesh->CastShadow = false;
