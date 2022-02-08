@@ -33,32 +33,51 @@ ACPlayer::ACPlayer()
 
 
 	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
-	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	//Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	Camera->SetRelativeLocation(FVector(-199, 20, 40));
 	Camera->SetRelativeRotation(FRotator(0, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
-	bUseControllerRotationYaw = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
+	//rotation control
+	bUseControllerRotationYaw = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
-
-	CHelpers::CreateComponent(this, &ArmMesh, "ArmMesh", SpringArm);
-	ArmMesh->SetRelativeLocation(FVector(0, 0, -90));
-	ArmMesh->SetRelativeRotation(FRotator(0, -90, 0));
-	ArmMesh->SetOnlyOwnerSee(true);
-	ArmMesh->bCastDynamicShadow = false;
-	ArmMesh->CastShadow = false;
 
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
 	GetMesh()->SetSkeletalMesh(mesh);
+	//GetMesh()->SetRelativeLocation(FVector(-18, 5, -130));
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
-	GetMesh()->SetOwnerNoSee(true);
+	//GetMesh()->SetOwnerNoSee(true);
+	//GetMesh()->SetOnlyOwnerSee(true);
+	//GetMesh()->SetupAttachment(SpringArm);	//X
 
 	TSubclassOf<UAnimInstance> animInstance;
 	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Player/ABP_Player.ABP_Player_C'");
+	//CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Player/ABP_ArmPlayer.ABP_ArmPlayer_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
+
+	//arm_mesh
+	//USkeletalMesh* mesh2;
+	//CHelpers::GetAsset<USkeletalMesh>(&mesh2, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
+	//CHelpers::CreateComponent(this, &ArmMesh, "ArmMesh", SpringArm);
+
+	//ArmMesh->SetSkeletalMesh(mesh2);
+	////ArmMesh->SetRelativeLocation(FVector(-18, 5, -130));
+	//ArmMesh->SetRelativeLocation(FVector(0, 0, -90));
+	//ArmMesh->SetRelativeRotation(FRotator(0, -90, 0));
+	////ArmMesh->SetOnlyOwnerSee(true);
+	//ArmMesh->SetOwnerNoSee(true);
+	//ArmMesh->bCastDynamicShadow = false;
+	//ArmMesh->CastShadow = false;
+
+	//TSubclassOf<UAnimInstance> animInstance2;
+	////CHelpers::GetClass<UAnimInstance>(&animInstance2, "AnimBlueprint'/Game/Player/ABP_ArmPlayer.ABP_ArmPlayer_C'");
+	//CHelpers::GetClass<UAnimInstance>(&animInstance2, "AnimBlueprint'/Game/Player/ABP_Player.ABP_Player_C'");
+	//ArmMesh->SetAnimInstanceClass(animInstance2);
 
 	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_Crosshair_C'");
 }
@@ -74,10 +93,11 @@ void ACPlayer::BeginPlay()
 	CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/Soldier/Materials/Soldier/MI_Soldier_1.MI_Soldier_1'");
 	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
 	GetMesh()->SetMaterial(0, BodyMaterial);
+	//ArmMesh->SetMaterial(0, BodyMaterial);
 
 	Super::BeginPlay();
 
-	Action->SetUnarmedMode();
+	OnPistol();
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -98,8 +118,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ACPlayer::OnJump);
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Released, this, &ACPlayer::OffJump);
 
-	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Pressed, this, &ACPlayer::OnSprint);
-	PlayerInputComponent->BindAction("Sprint", EInputEvent::IE_Released, this, &ACPlayer::OffSprint);
 	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Pressed, this, &ACPlayer::OnWalk);
 	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Released, this, &ACPlayer::OffWalk);
 
@@ -168,28 +186,11 @@ void ACPlayer::OffWalk()
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 }
 
-void ACPlayer::OnSprint()
-{
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetSprintSpeed();
-
-	CheckFalse(State->IsIdleMode());
-	bUseControllerRotationYaw = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
-}
-
-void ACPlayer::OffSprint()
-{
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
-
-	CheckFalse(State->IsIdleMode());
-	bUseControllerRotationYaw = true;
-	GetCharacterMovement()->bOrientRotationToMovement = false;
-}
-
 void ACPlayer::OnPistol()
 {
 	CheckFalse(State->IsIdleMode());
 
+	//ArmMesh->SetRelativeLocation(FVector(-18, 5, -130));
 	Action->SetPistolMode();
 }
 
@@ -197,6 +198,7 @@ void ACPlayer::OnRifle()
 {
 	CheckFalse(State->IsIdleMode());
 
+	//ArmMesh->SetRelativeLocation(FVector(-18, 5, -130));
 	Action->SetRifleMode();
 }
 
@@ -204,6 +206,7 @@ void ACPlayer::OnKnife()
 {
 	CheckFalse(State->IsIdleMode());
 
+	//ArmMesh->SetRelativeLocation(FVector(-18, 16, -140));
 	Action->SetKnifeMode();
 }
 

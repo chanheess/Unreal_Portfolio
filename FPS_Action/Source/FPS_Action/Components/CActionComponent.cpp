@@ -24,15 +24,6 @@ void UCActionComponent::BeginPlay()
 	}
 }
 
-void UCActionComponent::SetUnarmedMode()
-{
-	if (!!Datas[(int32)Type])
-		Datas[(int32)Type]->GetEquipment()->Unequip();
-	
-	Datas[(int32)EActionType::Unarmed]->GetEquipment()->Equip();
-	ChangeType(EActionType::Unarmed);
-}
-
 void UCActionComponent::SetPistolMode()
 {
 	SetMode(EActionType::Pistol);
@@ -50,8 +41,6 @@ void UCActionComponent::SetKnifeMode()
 
 void UCActionComponent::DoAction()
 {
-	CheckTrue(IsUnarmedMode());
-
 	if (!!Datas[(int32)Type])
 	{
 		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
@@ -63,16 +52,7 @@ void UCActionComponent::DoAction()
 
 void UCActionComponent::SetMode(EActionType InType)	//¹«±â ÀåÂø
 {
-	if (Type == InType)
-	{
-		SetUnarmedMode();
-
-		return;
-	}
-	else if (IsUnarmedMode() == false)
-	{
-		Datas[(int32)Type]->GetEquipment()->Unequip();
-	}
+	if (Type == InType) return;
 
 	Datas[(int32)InType]->GetEquipment()->Equip();
 	ChangeType(InType);
