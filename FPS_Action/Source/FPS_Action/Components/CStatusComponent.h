@@ -18,10 +18,7 @@ private:
 		float WalkSpeed = 200;
 
 	UPROPERTY(EditAnywhere, Category = "Speed")
-		float RunSpeed = 400;
-
-	UPROPERTY(EditAnywhere, Category = "Speed")
-		float SprintSpeed = 600;
+		float RunSpeed = 500;
 
 public:
 	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
@@ -29,7 +26,6 @@ public:
 
 	FORCEINLINE float GetWalkSpeed() { return WalkSpeed; }
 	FORCEINLINE float GetRunSpeed() { return RunSpeed; }
-	FORCEINLINE float GetSprintSpeed() { return SprintSpeed; }
 
 	FORCEINLINE bool IsCanMove() { return bCanMove; }
 
