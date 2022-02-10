@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CStatusComponent.h"
+#include "Sound/SoundCue.h"
 
 ACDoAction::ACDoAction()
 {
@@ -23,5 +24,14 @@ void ACDoAction::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ACDoAction::OnSoundCue(int cueNum)
+{
+	CheckFalse(Datas.Num() > cueNum);
+
+	USoundCue* fireSoundCue = Datas[cueNum].FireSoundCue;
+	if (!!fireSoundCue)
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), fireSoundCue, OwnerCharacter->GetActorLocation());
 }
 
