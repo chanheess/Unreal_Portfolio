@@ -132,5 +132,5 @@ void ACEnemy::Hitted()
 	*/
 
 	ChangeColor(FLinearColor(1, 0, 0, 1));
-	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+	UKismetSystemLibrary::K2_SetTimer(this, "ChangeColor", 0.1f, false);
 }

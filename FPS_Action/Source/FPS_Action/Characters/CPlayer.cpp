@@ -129,9 +129,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
-
-	//PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACPlayer::OnFire);
-	//PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer::OffFire);
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -245,18 +242,6 @@ void ACPlayer::OnDoAction()
 //	//Weapon->End_Aim();
 //
 //	//Crosshair->SetVisibility(ESlateVisibility::Visible);
-//}
-
-//void ACPlayer::OnFire()
-//{
-//	CheckFalse(State->IsIdleMode());
-//	State->SetFireMode();
-//}
-//
-//void ACPlayer::OffFire()
-//{
-//	CheckFalse(State->IsFireMode());
-//	State->SetFireMode();
 //}
 
 void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
