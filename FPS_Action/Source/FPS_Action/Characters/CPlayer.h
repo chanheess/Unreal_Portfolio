@@ -71,8 +71,6 @@ private:
 
 	void OnWalk();
 	void OffWalk();
-	void OnSprint();
-	void OffSprint();
 
 	void OnPistol();
 	void OnRifle();
@@ -82,9 +80,6 @@ private:
 
 	//void OnAim();
 	//void OffAim();
-	//
-	//void OnFire();
-	//void OffFire();
 
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
