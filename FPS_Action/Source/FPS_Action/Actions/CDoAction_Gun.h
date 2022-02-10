@@ -22,12 +22,7 @@ private:
 		void RestoreGlobalDilation();
 
 private:
-	int32 ComboNum;
-
-	bool bEnable;
-	bool bExist;
-	bool bLast;
-
 	TArray<class ACharacter*> HittedCharacter;
+	TSubclassOf<class ACAttachment> AttachmentClass;
 	
 };

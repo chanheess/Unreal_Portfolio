@@ -3,7 +3,7 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CStatusComponent.h"
-
+#include "Sound/SoundCue.h"
 
 void ACDoAction_Melee::DoAction()
 {
@@ -21,6 +21,8 @@ void ACDoAction_Melee::DoAction()
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
+	OnSoundCue();
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }
@@ -35,6 +37,7 @@ void ACDoAction_Melee::Begin_DoAction()
 	OwnerCharacter->StopAnimMontage();
 
 	ComboNum++;
+	OnSoundCue(ComboNum);
 
 	OwnerCharacter->PlayAnimMontage(Datas[ComboNum].AnimMontage, Datas[ComboNum].PlayRatio, Datas[ComboNum].StartSection);
 	Datas[ComboNum].bCanMove ? Status->SetMove() : Status->SetStop();
