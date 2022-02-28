@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		float Pitch;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		bool bInAir;
+
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EActionType ActionType;
 
