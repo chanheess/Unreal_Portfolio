@@ -24,7 +24,6 @@ void ACDoAction_Melee::DoAction()
 	OnSoundCue();
 
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
-	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_Melee::Begin_DoAction()
@@ -40,7 +39,6 @@ void ACDoAction_Melee::Begin_DoAction()
 	OnSoundCue(ComboNum);
 
 	OwnerCharacter->PlayAnimMontage(Datas[ComboNum].AnimMontage, Datas[ComboNum].PlayRatio, Datas[ComboNum].StartSection);
-	Datas[ComboNum].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_Melee::End_DoAction()

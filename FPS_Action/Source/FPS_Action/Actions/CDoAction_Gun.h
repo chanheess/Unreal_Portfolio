@@ -23,6 +23,5 @@ private:
 
 private:
 	TArray<class ACharacter*> HittedCharacter;
-	TSubclassOf<class ACAttachment> AttachmentClass;
 	
 };

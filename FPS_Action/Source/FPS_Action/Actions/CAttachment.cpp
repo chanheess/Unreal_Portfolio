@@ -9,7 +9,6 @@
 ACAttachment::ACAttachment()
 {
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
-
 }
 
 void ACAttachment::BeginPlay()

@@ -1,6 +1,7 @@
 #include "CAnimInstance.h"
 #include "../Utilities/Global.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 void UCAnimInstance::NativeBeginPlay()
 {
@@ -25,6 +26,7 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Speed = character->GetVelocity().Size2D();
 	Direction = CalculateDirection(character->GetVelocity(), character->GetControlRotation());
 	Pitch = character->GetBaseAimRotation().Pitch;
+	bInAir = character->GetMovementComponent()->IsFalling();
 }
 
 void UCAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)

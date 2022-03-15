@@ -3,10 +3,13 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CStatusComponent.h"
+#include "CAttachment.h"
 
 
 /*
 1. 무기메시를 가져와서 해당 총구있는 곳에 파티클 넣어준다.
+2. 현재 캐릭터의 무기메시에서 카메라가 보고있는곳의 거리를 찍는다.
+
 
 */
 
