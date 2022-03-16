@@ -1,31 +1,39 @@
 #include "MyCharacter.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Camera/CameraComponent.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "Components/InputComponent.h"
 #include "CAnimInstance.h"
 #include "CLog.h"
 #include "DrawDebugHelpers.h"
 #include "CWeapon.h"
+#include "MyCharacterStatComponent.h"
+#include "Components/WidgetComponent.h"
+#include "MyCharacterWidget.h"
+#include "CAIController.h"
 
 AMyCharacter::AMyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	CharacterStat = CreateDefaultSubobject<UMyCharacterStatComponent>(TEXT("CHARACTERSTAT"));
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	HpBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
+
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->SetRelativeRotation(FRotator(-15.0f, 0.0f, 0.0f));
-
 	ArmLengthSpeed = 3.0f;
 	ArmRotationSpeed = 10.0f;
-
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	
 	Camera->SetupAttachment(SpringArm);
+	HpBarWidget->SetupAttachment(GetMesh());
 
-
-	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -88.0f), FRotator(0.0f, -90.0f, 0.0f));
+	HpBarWidget->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
+	HpBarWidget->SetWidgetSpace(EWidgetSpace::Screen);
+	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD(TEXT("WidgetBlueprint'/Game/UI/UI_HpBar.UI_HpBar_C'"));
+	if (UI_HUD.Succeeded())
+	{
+		HpBarWidget->SetWidgetClass(UI_HUD.Class);
+		HpBarWidget->SetDrawSize(FVector2D(150.0f, 50.0f));
+	}
 
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_Mannequin(TEXT("SkeletalMesh'/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Ragged0.SK_CharM_Ragged0'"));
@@ -34,6 +42,7 @@ AMyCharacter::AMyCharacter()
 		GetMesh()->SetSkeletalMesh(SK_Mannequin.Object);
 	}
 
+	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -88.0f), FRotator(0.0f, -90.0f, 0.0f));
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("AnimBlueprint'/Game/Player/ABP_MyCharacter.ABP_MyCharacter_C'"));
@@ -41,18 +50,22 @@ AMyCharacter::AMyCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
-	GetCharacterMovement()->MaxWalkSpeed = 500;
-	GetCharacterMovement()->JumpZVelocity = 420;
 
 	SetControlMode(EControlMode::TOPDOWN);
 
 	//variable settings
+	GetCharacterMovement()->MaxWalkSpeed = 500;
+	GetCharacterMovement()->JumpZVelocity = 420;
+
 	MaxCombo = 4;
 	AttackEndComboState();
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 	AttackRange = 200.0f;
 	AttackRadius = 50.0f;
 	SetCanBeDamaged(true);
+
+	AIControllerClass = ACAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AMyCharacter::BeginPlay()
@@ -65,6 +78,13 @@ void AMyCharacter::BeginPlay()
 	//{
 	//	CurrWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
 	//}
+
+
+	auto CharacterWidget = Cast<UMyCharacterWidget>(HpBarWidget->GetUserWidgetObject());
+	if (!!CharacterWidget)
+	{
+		CharacterWidget->BindCharacterStat(CharacterStat);
+	}
 }
 
 void AMyCharacter::Tick(float DeltaTime)
@@ -121,23 +141,41 @@ void AMyCharacter::PostInitializeComponents()
 		}
 	});
 
-
 	CAnim->OnAttackHitCheck.AddUObject(this, &AMyCharacter::AttackCheck);
+
+	CharacterStat->OnHpIsZero.AddLambda([this]() -> void {
+
+		ABLOG(Warning, TEXT("OnHpIsZero"));
+		CAnim->SetDeadAnim();
+		SetActorEnableCollision(false);
+	});
+
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	if (FinalDamage > 0.0f)
-	{
-		CAnim->SetDeadAnim();
-		SetActorEnableCollision(false);
-	}
-
 	CLog::Print(FinalDamage, 1, 1.0f);
 
+	CharacterStat->SetDamage(FinalDamage);
 	return FinalDamage;
+}
+
+void AMyCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (IsPlayerControlled())
+	{
+		SetControlMode(EControlMode::TOPDOWN);
+		GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	}
+	else
+	{
+		SetControlMode(EControlMode::NPC);
+		GetCharacterMovement()->MaxWalkSpeed = 350.0f;
+	}
 }
 
 bool AMyCharacter::CanSetWeapon()
@@ -292,15 +330,18 @@ void AMyCharacter::AttackCheck()
 			CLog::Print(*HitResult.Actor->GetName(), 0, 1.0f);
 
 			FDamageEvent DamageEvent;
-			HitResult.Actor->TakeDamage(50.0f, DamageEvent, GetController(), this);
+			HitResult.Actor->TakeDamage(CharacterStat->GetAttack(), DamageEvent, GetController(), this);
 		}
 	}
 }
 
 void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
+	ABCHECK(IsAttacking);
+	ABCHECK(CurrentCombo > 0);
 	IsAttacking = false;
 	AttackEndComboState();
+	OnAttackEnd.Broadcast();
 }
 
 void AMyCharacter::SetControlMode(EControlMode NewControlMode)
@@ -341,6 +382,13 @@ void AMyCharacter::SetControlMode(EControlMode NewControlMode)
 		GetCharacterMovement()->bOrientRotationToMovement = false;
 		GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
+		break;
+
+	case EControlMode::NPC:
+		bUseControllerRotationYaw = false;
+		GetCharacterMovement()->bUseControllerDesiredRotation = false;
+		GetCharacterMovement()->bOrientRotationToMovement = true;
+		GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
 		break;
 	}
 }

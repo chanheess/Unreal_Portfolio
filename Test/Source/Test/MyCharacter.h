@@ -1,8 +1,10 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Test.h"
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
+
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
 
 UCLASS()
 class TEST_API AMyCharacter : public ACharacter
@@ -22,6 +24,7 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 		class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void PossessedBy(AController* NewController) override;
 
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
@@ -30,9 +33,22 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 		class UCameraComponent* Camera;
 
+	UPROPERTY(VisibleAnywhere, Category = "Weapon")
+		class ACWeapon* CurrentWeapon;
+
+	UPROPERTY(VisibleAnywhere, Category = "Stat")
+		class UMyCharacterStatComponent* CharacterStat;
+
+	UPROPERTY(VisibleAnywhere, Category = "UI")
+		class UWidgetComponent* HpBarWidget;
+
 public:
 	bool CanSetWeapon();
 	void SetWeapon(class ACWeapon* NewWeapon);
+
+	void Attack();
+
+	FOnAttackEndDelegate OnAttackEnd;
 
 private:
 	void UpDown(float NewAxisValue);
@@ -41,7 +57,6 @@ private:
 	void Turn(float NewAxisValue);
 
 	void ViewChange();
-	void Attack();
 
 	void AttackStartComboState();
 	void AttackEndComboState();
@@ -76,14 +91,12 @@ private:
 	UPROPERTY()
 		class UCAnimInstance* CAnim;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon")
-		class ACWeapon* CurrentWeapon;
-
 protected:
 	enum class EControlMode
 	{
 		TPS,
-		TOPDOWN
+		TOPDOWN,
+		NPC
 	};
 
 	void SetControlMode(EControlMode NewControlMode);
