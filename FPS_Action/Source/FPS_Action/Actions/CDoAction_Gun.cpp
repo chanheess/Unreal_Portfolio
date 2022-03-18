@@ -76,6 +76,7 @@ void ACDoAction_Gun::OnAttachmentBeginOverlap(ACharacter* InAttacker, AActor* In
 	if (!!shake)
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->PlayCameraShake(shake);
 
+	//
 	FDamageEvent e;
 	InOtherCharacter->TakeDamage(Datas[0].Power, e, InAttacker->GetController(), InAttackCauser);
 }

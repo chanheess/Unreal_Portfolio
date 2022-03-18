@@ -13,10 +13,10 @@ EBTNodeResult::Type UBTTask_TurnToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	auto MyCharacter = Cast<AMyCharacter>(OwnerComp.GetAIOwner()->GetPawn());
-	if (NULL == MyCharacter) return EBTNodeResult::Failed;
+	if (nullptr == MyCharacter) return EBTNodeResult::Failed;
 
 	auto Target = Cast<AMyCharacter>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(ACAIController::TargetKey));
-	if (NULL == Target) return EBTNodeResult::Failed;
+	if (nullptr == Target) return EBTNodeResult::Failed;
 
 	FVector LookVector = Target->GetActorLocation() - MyCharacter->GetActorLocation();
 	LookVector.Z = 0.0f;

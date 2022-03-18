@@ -62,6 +62,8 @@ private:
 	void AttackEndComboState();
 	void AttackCheck();
 
+	void OnAssetLoadCompleted();
+
 	UFUNCTION()
 		void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
@@ -90,6 +92,9 @@ private:
 
 	UPROPERTY()
 		class UCAnimInstance* CAnim;
+
+	FSoftObjectPath CharacterAssetToLoad = FSoftObjectPath(nullptr);
+	TSharedPtr<struct FStreamableHandle> AssetStreamingHandle;
 
 protected:
 	enum class EControlMode

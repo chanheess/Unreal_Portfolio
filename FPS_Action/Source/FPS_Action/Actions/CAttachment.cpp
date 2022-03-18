@@ -47,7 +47,13 @@ void ACAttachment::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponen
 void ACAttachment::AttachTo(FName InSocketName)
 {
 	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), InSocketName);
-} 
+}
+
+void ACAttachment::AttachOff(FName InSocketName)
+{
+	//Detach
+	DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepRelative, false));
+}
 
 void ACAttachment::AttachToCollision(USceneComponent* InComponent, FName InSocketName)
 {

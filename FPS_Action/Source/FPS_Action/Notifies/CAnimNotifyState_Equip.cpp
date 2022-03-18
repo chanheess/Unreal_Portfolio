@@ -17,6 +17,9 @@ void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
+	//Todo 
+	//equip일때 같은 무기일 때는 가만히, 아니면 unequip
+	action->GetCurrent()->GetEquipment()->Unequip();
 	action->GetCurrent()->GetEquipment()->Begin_Equip();
 }
 

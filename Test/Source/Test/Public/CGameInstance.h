@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "Engine/GameInstance.h"
+#include "Engine/StreamableManager.h"
 #include "CGameInstance.generated.h"
 
 USTRUCT(BlueprintType)
@@ -43,6 +44,8 @@ public:
 
 public:
 	FMyCharacterData* GetMyCharacterData(int32 Level);
+
+	FStreamableManager StreamableManager;
 
 private:
 	UPROPERTY()

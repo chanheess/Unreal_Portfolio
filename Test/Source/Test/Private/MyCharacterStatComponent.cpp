@@ -26,7 +26,7 @@ void UMyCharacterStatComponent::InitializeComponent()
 void UMyCharacterStatComponent::SetNewLevel(int32 NewLevel)
 {
 	auto MyGameInstance = Cast<UCGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (NULL == MyGameInstance) return;
+	if (nullptr == MyGameInstance) return;
 
 	CurrentStatData = MyGameInstance->GetMyCharacterData(NewLevel);
 	if (!!CurrentStatData)
