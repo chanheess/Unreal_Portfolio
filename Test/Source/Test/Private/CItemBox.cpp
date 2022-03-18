@@ -55,7 +55,7 @@ void ACItemBox::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 
 	auto ABCharacter = Cast<AMyCharacter>(OtherActor);
 
-	if (NULL != ABCharacter && NULL != WeaponItemClass)
+	if (nullptr != ABCharacter && nullptr != WeaponItemClass)
 	{
 		if (ABCharacter->CanSetWeapon())
 		{

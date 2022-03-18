@@ -7,6 +7,8 @@
 #include "Components/WidgetComponent.h"
 #include "MyCharacterWidget.h"
 #include "CAIController.h"
+#include "MyCharacterSetting.h"
+#include "CGameInstance.h"
 
 AMyCharacter::AMyCharacter()
 {
@@ -51,6 +53,16 @@ AMyCharacter::AMyCharacter()
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
 
+	auto DefaultSetting = GetDefault<UMyCharacterSetting>();
+	if (DefaultSetting->CharacterAssets.Num() > 0)
+	{
+		for (auto CharacterAsset : DefaultSetting->CharacterAssets)
+		{
+			ABLOG(Warning, TEXT("Character Asset : %s"), *CharacterAsset.ToString());
+		}
+	}
+
+
 	SetControlMode(EControlMode::TOPDOWN);
 
 	//variable settings
@@ -79,6 +91,18 @@ void AMyCharacter::BeginPlay()
 	//	CurrWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocket);
 	//}
 
+	if (!IsPlayerControlled())
+	{
+		auto DefaultSetting = GetDefault<UMyCharacterSetting>();
+		int32 RandIndex = FMath::RandRange(0, DefaultSetting->CharacterAssets.Num() - 1);
+		CharacterAssetToLoad = DefaultSetting->CharacterAssets[RandIndex];
+
+		auto CGameInstance = Cast<UCGameInstance>(GetGameInstance());
+		if (!!CGameInstance)
+		{
+			AssetStreamingHandle = CGameInstance->StreamableManager.RequestAsyncLoad(CharacterAssetToLoad, FStreamableDelegate::CreateUObject(this, &AMyCharacter::OnAssetLoadCompleted));
+		}
+	}
 
 	auto CharacterWidget = Cast<UMyCharacterWidget>(HpBarWidget->GetUserWidgetObject());
 	if (!!CharacterWidget)
@@ -332,6 +356,16 @@ void AMyCharacter::AttackCheck()
 			FDamageEvent DamageEvent;
 			HitResult.Actor->TakeDamage(CharacterStat->GetAttack(), DamageEvent, GetController(), this);
 		}
+	}
+}
+
+void AMyCharacter::OnAssetLoadCompleted()
+{
+	USkeletalMesh* AssetLoaded = Cast<USkeletalMesh>(AssetStreamingHandle->GetLoadedAsset());
+	AssetStreamingHandle.Reset();
+	if (!!AssetLoaded)
+	{
+		GetMesh()->SetSkeletalMesh(AssetLoaded);
 	}
 }
 
