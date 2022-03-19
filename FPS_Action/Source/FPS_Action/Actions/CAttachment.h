@@ -35,9 +35,6 @@ protected:
 		void AttachTo(FName InSocketName);
 
 	UFUNCTION(BlueprintCallable)
-		void AttachOff(FName InSocketName);
-
-	UFUNCTION(BlueprintCallable)
 		void AttachToCollision(class USceneComponent* InComponent, FName InSocketName);
 
 	UPROPERTY(BlueprintReadOnly)
