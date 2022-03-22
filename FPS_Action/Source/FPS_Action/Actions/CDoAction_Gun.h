@@ -21,7 +21,14 @@ private:
 	UFUNCTION()
 		void RestoreGlobalDilation();
 
+	UPROPERTY(EditDefaultsOnly)
+		float LimitPitch = 0.25f;
+
+	void Firing();
+
 private:
 	TArray<class ACharacter*> HittedCharacter;
+
+	float Pitch;
 	
 };

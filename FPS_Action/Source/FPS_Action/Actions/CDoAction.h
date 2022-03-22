@@ -21,6 +21,7 @@ public:
 
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
+	FORCEINLINE void EquipSetDatas(TArray<FEquipmentData> InDatas) { EquipmentData = InDatas; }
 
 	UFUNCTION()
 		virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) {}
@@ -50,5 +51,6 @@ protected:
 
 protected:
 	TArray<FDoActionData> Datas;
+	TArray<FEquipmentData> EquipmentData;
 
 };
