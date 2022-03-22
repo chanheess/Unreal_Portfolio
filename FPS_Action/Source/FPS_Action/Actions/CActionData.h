@@ -60,6 +60,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class UCameraShake> CameraShakeClass;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class ACBullet> BulletClass;
+
 	UPROPERTY(EditAnywhere)
 		FTransform EffectTransform;
 };
