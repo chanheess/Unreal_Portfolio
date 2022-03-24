@@ -39,7 +39,6 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		DoAction->SetActorLabel(GetLabelName(InOwnerCharacter, "DoAction"));
 		DoAction->SetDatas(DoActionDatas);
-		DoAction->EquipSetDatas(EquipmentData);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
 
 		if (!!Attachment)

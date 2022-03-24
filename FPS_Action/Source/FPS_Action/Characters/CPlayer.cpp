@@ -278,7 +278,7 @@ void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVect
 	OutStart = cameraLocation + OutDirection;
 
 	//ÅºÂø±ºÀ» À§ÇÑ °Í
-	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.f);
+	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.0f);
 	conDirection *= 3000.0f;
 
 	OutEnd = cameraLocation + conDirection;

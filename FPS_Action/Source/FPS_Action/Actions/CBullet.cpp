@@ -31,3 +31,8 @@ void ACBullet::BeginPlay()
 	SetLifeSpan(3.0f);
 }
 
+void ACBullet::FireInDirection(const FVector& ShootDirection)
+{
+	Projectile->Velocity = ShootDirection * Projectile->InitialSpeed;
+}
+

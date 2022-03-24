@@ -52,9 +52,6 @@ void UCActionComponent::DoAction()
 
 void UCActionComponent::SetMode(EActionType InType)	//무기 장착
 {
-	//Todo 
-	//equip일때 같은 무기일 때는 가만히, 아니면 unequip
-	//action->GetCurrent()->GetEquipment()->Unequip();
 	if (Type == InType) return;
 
 	Datas[(int32)Type]->GetEquipment()->Unequip();
