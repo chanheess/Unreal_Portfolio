@@ -9,8 +9,6 @@ class FPS_ACTION_API ACBullet : public AActor
 {
 	GENERATED_BODY()
 
-
-
 public:
 	ACBullet();
 
@@ -25,7 +23,13 @@ private:
 		class UProjectileMovementComponent* Projectile;
 
 public:
-	void FireInDirection(const FVector& ShootDirection);
+	UPROPERTY(VisibleDefaultsOnly)
+		class USphereComponent* CollisionComponent;
 
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+public:
+	void FireInDirection(const FVector& ShootDirection);
 };
 

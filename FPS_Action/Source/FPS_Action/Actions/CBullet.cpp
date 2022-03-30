@@ -3,11 +3,18 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
+#include "Components/SphereComponent.h"
 
 ACBullet::ACBullet()
 {
 	CHelpers::CreateComponent(this, &Mesh, "Mesh");
+	CHelpers::CreateComponent(this, &CollisionComponent, "SphereComponent");
 	CHelpers::CreateActorComponent(this, &Projectile, "Projectile");
+
+	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+	CollisionComponent->OnComponentHit.AddDynamic(this, &ACBullet::OnHit);
+	CollisionComponent->InitSphereRadius(5.0f);
+	RootComponent = Mesh;
 
 	UStaticMesh* mesh;
 	CHelpers::GetAsset<UStaticMesh>(&mesh, "StaticMesh'/Game/Weapons/Meshs/SM_Sphere.SM_Sphere'");
@@ -22,6 +29,9 @@ ACBullet::ACBullet()
 	Projectile->InitialSpeed = 2e+4f;
 	Projectile->MaxSpeed = 2e+4f;
 	Projectile->ProjectileGravityScale = 0.0f;
+	//Projectile->SetUpdatedComponent(CollisionComponent);
+	Projectile->bRotationFollowsVelocity = true;
+	Projectile->bShouldBounce = true;
 }
 
 void ACBullet::BeginPlay()
@@ -29,6 +39,14 @@ void ACBullet::BeginPlay()
 	Super::BeginPlay();
 
 	SetLifeSpan(3.0f);
+}
+
+void ACBullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
+	{
+		OtherComponent->AddImpulseAtLocation(Projectile->Velocity * 100.0f, Hit.ImpactPoint);
+	}
 }
 
 void ACBullet::FireInDirection(const FVector& ShootDirection)

@@ -66,3 +66,9 @@ void ACAttachment::OffCollision()
 		component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+void ACAttachment::SetCollisionLocation(FVector NewLocation)
+{
+	for (UShapeComponent* component : ShapeComponents)
+		component->SetWorldLocation(NewLocation);
+}
+

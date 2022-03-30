@@ -62,4 +62,6 @@ public:
 	void OnCollision();
 	void OffCollision();
 
+	void SetCollisionLocation(FVector NewLocation);
+
 };

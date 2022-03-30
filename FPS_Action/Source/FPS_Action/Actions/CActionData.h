@@ -107,5 +107,4 @@ private:
 	class ACAttachment* Attachment;
 	class ACEquipment* Equipment;
 	class ACDoAction* DoAction;
-
 };

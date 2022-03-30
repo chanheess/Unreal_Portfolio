@@ -50,43 +50,6 @@ void ACDoAction_Gun::End_DoAction()
 	Status->SetMove();
 }
 
-void ACDoAction_Gun::OnAttachmentBeginOverlap(ACharacter* InAttacker, AActor* InAttackCauser, ACharacter* InOtherCharacter)
-{
-	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
-
-	for (const ACharacter* other : HittedCharacter)
-	{
-		if (InOtherCharacter == other)
-			return;
-	}
-	HittedCharacter.Add(InOtherCharacter);
-
-	float hitStop = Datas[0].HitStop;
-	if (FMath::IsNearlyZero(hitStop) == false)
-	{
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f);
-		UKismetSystemLibrary::K2_SetTimer(this, "RestoreGlobalDilation", hitStop * 1e-3f, false);
-	}
-
-	UParticleSystem* hitEffect = Datas[0].ImpactParticle;
-	if (!!hitEffect)
-	{
-		FTransform transform = Datas[0].EffectTransform;
-		transform.AddToTranslation(InAttackCauser->GetActorLocation());
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitEffect, transform);
-	}
-
-	FDamageEvent e;
-	InOtherCharacter->TakeDamage(Datas[0].Power, e, InAttacker->GetController(), InAttackCauser);
-}
-
-void ACDoAction_Gun::OnAttachmentEndOverlap(ACharacter* InAttacker, AActor* InAttackCauser, ACharacter* InOtherCharacter)
-{
-	Super::OnAttachmentEndOverlap(InAttacker, InAttackCauser, InOtherCharacter);
-
-	HittedCharacter.Empty();
-}
-
 void ACDoAction_Gun::RestoreGlobalDilation()
 {
 	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
@@ -103,14 +66,10 @@ void ACDoAction_Gun::Firing()
 	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
 	FVector start, end, direction;
 
-	TArray<AActor*> parentedActors;	//bp_attachpistol
-	OwnerCharacter->GetAttachedActors(parentedActors);
+	TArray<AActor*> attachmentActors;	//bp_attachpistol
+	OwnerCharacter->GetAttachedActors(attachmentActors);
 
-	//USceneComponent *mesh = CHelpers::GetComponent<USceneComponent>(OwnerCharacter);
-	//CheckNull(mesh);
-	//CLog::Print(parentedActors[0]->GetAttachParentSocketName().ToString());	//오너// skt-pistol
-
-	FVector muzzleLocation = OwnerCharacter->GetMesh()->GetSocketLocation(parentedActors[0]->GetAttachParentSocketName());
+	FVector muzzleLocation = OwnerCharacter->GetMesh()->GetSocketLocation(attachmentActors[0]->GetAttachParentSocketName());
 	start = muzzleLocation;
 
 	//언젠가 muzzle소켓을 발견시에
@@ -118,14 +77,16 @@ void ACDoAction_Gun::Firing()
 	//FRotator muzzleRotation = mesh->GetSocketRotation("MuzzleSocket");
 	//start = muzzleLocation;
 	character->GetLocationAndDirection(start, end, direction);
+
+
 	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
 	if (!!BulletClass)
 		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
 	if (Pitch > -LimitPitch)
 		OwnerCharacter->AddControllerPitchInput(Pitch);
 
-	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, OwnerCharacter->GetMesh(), parentedActors[0]->GetAttachParentSocketName(), FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
-	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, OwnerCharacter->GetMesh(), parentedActors[0]->GetAttachParentSocketName(), FVector(-2, 10, 23), FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, OwnerCharacter->GetMesh(), attachmentActors[0]->GetAttachParentSocketName(), FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, OwnerCharacter->GetMesh(), attachmentActors[0]->GetAttachParentSocketName(), FVector(-2, 10, 23), FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
 
 	//충돌 어떤 식으로 검출하는 건지 지정
 	FCollisionQueryParams params;
@@ -133,17 +94,21 @@ void ACDoAction_Gun::Firing()
 	params.AddIgnoredActor(OwnerCharacter);
 
 	FHitResult hitResult;
-	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_WorldDynamic, params))
+	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_Visibility, params))
 	{
 		FRotator decalRotator = UKismetMathLibrary::MakeRotFromX(hitResult.ImpactNormal);
-		//FRotator decalRotator = hitResult.ImpactNormal.Rotation();
-
 		UGameplayStatics::SpawnDecalAtLocation(GetWorld(), (UMaterialInterface*)Datas[0].DecalMaterial, FVector(5), hitResult.Location, decalRotator, 10.0f);
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Datas[0].ImpactParticle, hitResult.Location, decalRotator, true);
 	}
 
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_WorldDynamic, params))
 	{
+		//CLog::Print(hitResult.GetActor()->GetName());
+		FDamageEvent DamageEvent;
+		hitResult.GetActor()->TakeDamage(Datas[0].Power, DamageEvent, OwnerCharacter->GetController(), this);
+
+		FRotator decalRotator = UKismetMathLibrary::MakeRotFromX(hitResult.ImpactNormal);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Datas[0].ImpactParticle, hitResult.Location, decalRotator, true);
+
 		AStaticMeshActor* staticMeshActor = Cast<AStaticMeshActor>(hitResult.GetActor());
 		if (!!staticMeshActor)
 		{
@@ -154,10 +119,8 @@ void ACDoAction_Gun::Firing()
 				{
 					direction = staticMeshActor->GetActorLocation() - OwnerCharacter->GetActorLocation();
 					direction.Normalize();
-
+	
 					meshComponent->AddImpulseAtLocation(direction * meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
-
-					return;
 				}
 			}//if (!!meshComponent)
 		}//if (!!staticMeshActor)

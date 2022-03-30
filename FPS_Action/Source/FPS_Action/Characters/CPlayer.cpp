@@ -51,6 +51,7 @@ ACPlayer::ACPlayer()
 	//GetMesh()->SetRelativeLocation(FVector(-18, 5, -130));
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
+
 	//GetMesh()->SetOwnerNoSee(true);
 	//GetMesh()->SetOnlyOwnerSee(true);
 	//GetMesh()->SetupAttachment(SpringArm);	//X
@@ -129,6 +130,13 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
+}
+
+float ACPlayer::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	UE_LOG(LogTemp, Warning, TEXT("Actor Name : %s Damage : %f"), *GetName(), FinalDamage);
+	return FinalDamage;
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
