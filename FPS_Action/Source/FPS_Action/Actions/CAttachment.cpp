@@ -9,6 +9,8 @@
 ACAttachment::ACAttachment()
 {
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
+	CHelpers::CreateComponent<UMeshComponent>(this, &Mesh, "Mesh");
+	//UMeshComponent
 }
 
 void ACAttachment::BeginPlay()

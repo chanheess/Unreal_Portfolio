@@ -27,14 +27,14 @@ ACPlayer::ACPlayer()
 	SpringArm->SetRelativeLocation(FVector(5, 20, 130));
 	SpringArm->SetRelativeRotation(FRotator(0, 0, 0));
 	SpringArm->SocketOffset = FVector(0, 0, 0);
-	SpringArm->TargetArmLength = 1.0f; 
-	SpringArm->bDoCollisionTest = false;
+	SpringArm->TargetArmLength = 250.0f; 
+	SpringArm->bDoCollisionTest = true;
 	SpringArm->bUsePawnControlRotation = true;
 
 
 	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
 	//Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	Camera->SetRelativeLocation(FVector(-199, 20, 40));
+	Camera->SetRelativeLocation(FVector(0, 20, 40));
 	Camera->SetRelativeRotation(FRotator(0, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
@@ -286,9 +286,9 @@ void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVect
 	OutStart = cameraLocation + OutDirection;
 
 	//ÅºÂø±ºÀ» À§ÇÑ °Í
-	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.0f);
-	conDirection *= 3000.0f;
+	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.2f);
+	conDirection *= 5000.0f;
 
-	OutEnd = cameraLocation + conDirection;
+	OutEnd = cameraLocation + conDirection;// + FVector(0, 20, 40);
 }
 

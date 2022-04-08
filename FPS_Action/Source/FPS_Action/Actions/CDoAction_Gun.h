@@ -19,7 +19,7 @@ private:
 		void RestoreGlobalDilation();
 
 	UPROPERTY(EditDefaultsOnly)
-		float LimitPitch = 0.25f;
+		float LimitPitch = 0.5f;
 
 	void Firing();
 

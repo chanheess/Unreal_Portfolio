@@ -23,13 +23,6 @@ private:
 		class UProjectileMovementComponent* Projectile;
 
 public:
-	UPROPERTY(VisibleDefaultsOnly)
-		class USphereComponent* CollisionComponent;
-
-	UFUNCTION()
-		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-
-public:
 	void FireInDirection(const FVector& ShootDirection);
 };
 

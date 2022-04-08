@@ -1,4 +1,4 @@
-#include "CDoAction_Gun.h"
+#include "CDoAction_Rifle.h"
 #include "../Utilities/Global.h"
 #include "GameFramework/Character.h"
 #include "Engine/StaticMeshActor.h"
@@ -7,9 +7,6 @@
 #include "CAttachment.h"
 #include "../Characters/ICharacter.h"
 #include "../Actions/CBullet.h"
-#include "../Components/CActionComponent.h"
-#include "../Actions/CAttachment_Pistol.h"
-
 
 /*
 1. 무기메시를 가져와서 해당 총구있는 곳에 파티클 넣어준다.
@@ -19,30 +16,57 @@ cactiondata에서 doaction에 setdatas에 현재 equipmentdata를 넘겨주어 장비정보를 �
 */
 //Datas[(int32)Type]->GetEquipment()
 
-void ACDoAction_Gun::DoAction()
+void ACDoAction_Rifle::DoAction()
 {
 	Super::DoAction();
 	CheckFalse(Datas.Num() > 0);
 
+	if (bEnable == true)
+	{
+		bExist = true;
+		bEnable = false;
+
+		return;
+	}
+
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
-	
+
 	//총알이 있을 때만 발사되게 만들기
+	
 	OnSoundCue();
 	Firing();
+	if (BulletNum > 30) return;
+
+	//bExist = false;
+	//OnSoundCue();
+	//GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Rifle::Firing, 0.1f, true, 0.0f);
+
+	CLog::Print(BulletNum);
 
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 }
 
-void ACDoAction_Gun::Begin_DoAction()
+void ACDoAction_Rifle::Begin_DoAction()
 {
 	Super::Begin_DoAction();
 
-	OwnerCharacter->StopAnimMontage();
+	CheckFalse(bExist);
+	bExist = false;
+
+	//OwnerCharacter->StopAnimMontage();
+
+	/*if (BulletNum > 30) return;
+
+	BulletNum++;
+	OnSoundCue();
+	GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Rifle::Firing, 0.1f, true, 0.0f);*/
+
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 }
 
-void ACDoAction_Gun::End_DoAction()
+void ACDoAction_Rifle::End_DoAction()
 {
 	Super::End_DoAction();
 
@@ -50,55 +74,52 @@ void ACDoAction_Gun::End_DoAction()
 
 	State->SetIdleMode();
 	Status->SetMove();
+
+	GetWorld()->GetTimerManager().ClearTimer(AutoFireTimer);
 }
 
-void ACDoAction_Gun::RestoreGlobalDilation()
+void ACDoAction_Rifle::RestoreGlobalDilation()
 {
 	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
 }
 
-void ACDoAction_Gun::Firing()
+void ACDoAction_Rifle::Firing()
 {
+	BulletNum++;
+
 	TSubclassOf<UCameraShake> shake = Datas[0].CameraShakeClass;
 	if (!!shake)
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->PlayCameraShake(shake);
 
-	Pitch = 0.5f;
+	Pitch = 0.0f;
 
 	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
 	FVector start, end, direction;
 
-	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(OwnerCharacter);
-	CheckNull(action);
+	TArray<AActor*> attachmentActors;	//bp_attach
+	OwnerCharacter->GetAttachedActors(attachmentActors);
 
-	ACAttachment_Pistol* weaponMesh = Cast<ACAttachment_Pistol>(action->GetCurrent()->GetAttachment());
-	CheckNull(weaponMesh);
-	CheckNull(weaponMesh->GetWeaponMesh());
-
-	FVector muzzleLocation = weaponMesh->GetWeaponMesh()->GetSocketLocation("MuzzleSocket");
-	//FRotator muzzleRotation = weaponMesh->GetWeaponMesh()->GetSocketRotation("MuzzleSocket");
+	FVector muzzleLocation = OwnerCharacter->GetMesh()->GetSocketLocation(attachmentActors[0]->GetAttachParentSocketName());
 	start = muzzleLocation;
 
-	character->GetLocationAndDirection(start, end, direction);
-
-	DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
-	DrawDebugLine(GetWorld(), muzzleLocation, end, FColor::Red, false, 3.0f);
-
-	//end += FVector(0, 20, 40);
+	character->GetLocationAndDirection(muzzleLocation, end, direction);
 
 	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
 	if (!!BulletClass)
 		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
-	if (Pitch > -LimitPitch)	//반동
-		OwnerCharacter->AddControllerPitchInput(-Pitch);
+	if (Pitch > -LimitPitch)
+		OwnerCharacter->AddControllerPitchInput(Pitch);
 
-	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, weaponMesh->GetWeaponMesh(), "EjectSocket", FVector::ZeroVector, FRotator(0, 180, 0), EAttachLocation::KeepRelativeOffset);
-	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, weaponMesh->GetWeaponMesh(), "MuzzleSocket", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, OwnerCharacter->GetMesh(), attachmentActors[0]->GetAttachParentSocketName(), FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, OwnerCharacter->GetMesh(), attachmentActors[0]->GetAttachParentSocketName(), FVector(-2, 10, 23), FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
 
 	//충돌 어떤 식으로 검출하는 건지 지정
 	FCollisionQueryParams params;
 	params.AddIgnoredActor(this);	//자기 자신 제거
 	params.AddIgnoredActor(OwnerCharacter);
+
+	DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
+	DrawDebugLine(GetWorld(), muzzleLocation, end, FColor::Red, false, 3.0f);
 
 	FHitResult hitResult;
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_Visibility, params))
@@ -126,7 +147,7 @@ void ACDoAction_Gun::Firing()
 				{
 					direction = staticMeshActor->GetActorLocation() - OwnerCharacter->GetActorLocation();
 					direction.Normalize();
-	
+
 					meshComponent->AddImpulseAtLocation(direction * meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
 				}
 			}//if (!!meshComponent)

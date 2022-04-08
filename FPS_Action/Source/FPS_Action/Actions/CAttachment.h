@@ -18,7 +18,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-private:
+//private:
+protected:
 	UFUNCTION()
 		void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -27,6 +28,9 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class USceneComponent* Scene;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UMeshComponent* Mesh;
 
 	TArray<class UShapeComponent*> ShapeComponents;
 
@@ -63,5 +67,4 @@ public:
 	void OffCollision();
 
 	void SetCollisionLocation(FVector NewLocation);
-
 };
