@@ -84,8 +84,6 @@ void ACDoAction_Gun::Firing()
 	DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
 	DrawDebugLine(GetWorld(), muzzleLocation, end, FColor::Red, false, 3.0f);
 
-	//end += FVector(0, 20, 40);
-
 	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
 	if (!!BulletClass)
 		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
