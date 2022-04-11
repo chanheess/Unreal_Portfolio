@@ -18,9 +18,6 @@ private:
 	UFUNCTION()
 		void RestoreGlobalDilation();
 
-	UPROPERTY(EditDefaultsOnly)
-		float LimitPitch = 0.5f;
-
 	void Firing();
 
 private:

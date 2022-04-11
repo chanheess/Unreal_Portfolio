@@ -59,14 +59,14 @@ void ACDoAction_Gun::RestoreGlobalDilation()
 
 void ACDoAction_Gun::Firing()
 {
+	Pitch = 0.0f;
+
 	TSubclassOf<UCameraShake> shake = Datas[0].CameraShakeClass;
 	if (!!shake)
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->PlayCameraShake(shake);
 
-	Pitch = 0.5f;
-
 	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
-	FVector start, end, direction;
+	FVector start, end, direction, hittedEnd;
 
 	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(OwnerCharacter);
 	CheckNull(action);
@@ -77,18 +77,17 @@ void ACDoAction_Gun::Firing()
 
 	FVector muzzleLocation = weaponMesh->GetWeaponMesh()->GetSocketLocation("MuzzleSocket");
 	//FRotator muzzleRotation = weaponMesh->GetWeaponMesh()->GetSocketRotation("MuzzleSocket");
-	start = muzzleLocation;
 
 	character->GetLocationAndDirection(start, end, direction);
 
-	DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
-	DrawDebugLine(GetWorld(), muzzleLocation, end, FColor::Red, false, 3.0f);
+	
 
-	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
-	if (!!BulletClass)
-		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
-	if (Pitch > -LimitPitch)	//반동
-		OwnerCharacter->AddControllerPitchInput(-Pitch);
+	//Pitch -= Datas[0].LimitPitch * GetWorld()->GetDeltaSeconds();
+	//if (Pitch > -Datas[0].LimitPitch)	//반동
+	//	OwnerCharacter->AddControllerPitchInput(Pitch);
+
+	DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
+	
 
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, weaponMesh->GetWeaponMesh(), "EjectSocket", FVector::ZeroVector, FRotator(0, 180, 0), EAttachLocation::KeepRelativeOffset);
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, weaponMesh->GetWeaponMesh(), "MuzzleSocket", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
@@ -104,6 +103,14 @@ void ACDoAction_Gun::Firing()
 		FRotator decalRotator = UKismetMathLibrary::MakeRotFromX(hitResult.ImpactNormal);
 		UGameplayStatics::SpawnDecalAtLocation(GetWorld(), (UMaterialInterface*)Datas[0].DecalMaterial, FVector(5), hitResult.Location, decalRotator, 10.0f);
 	}
+
+	hittedEnd = hitResult.Location;
+
+	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
+	if (!!BulletClass)
+		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation() + FRotator(2, 0.2f, 0));
+
+	DrawDebugLine(GetWorld(), muzzleLocation, hittedEnd, FColor::Red, false, 3.0f);
 
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_WorldDynamic, params))
 	{

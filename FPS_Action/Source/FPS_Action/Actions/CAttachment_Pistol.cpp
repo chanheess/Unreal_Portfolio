@@ -9,6 +9,8 @@
 ACAttachment_Pistol::ACAttachment_Pistol()
 {
 	CHelpers::CreateComponent<UStaticMeshComponent>(this, &StaticMesh, "StaticMesh");
+
+	StaticMesh->SetCollisionProfileName("NoCollision");
 }
 
 void ACAttachment_Pistol::BeginPlay()
