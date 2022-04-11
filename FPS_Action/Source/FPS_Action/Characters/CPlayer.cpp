@@ -27,14 +27,14 @@ ACPlayer::ACPlayer()
 	SpringArm->SetRelativeLocation(FVector(5, 20, 130));
 	SpringArm->SetRelativeRotation(FRotator(0, 0, 0));
 	SpringArm->SocketOffset = FVector(0, 0, 0);
-	SpringArm->TargetArmLength = 1.0f; 
-	SpringArm->bDoCollisionTest = false;
+	SpringArm->TargetArmLength = 250.0f; 
+	SpringArm->bDoCollisionTest = true;
 	SpringArm->bUsePawnControlRotation = true;
 
 
 	CHelpers::CreateComponent(this, &Camera, "Camera", SpringArm);
 	//Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-	Camera->SetRelativeLocation(FVector(-199, 20, 40));
+	Camera->SetRelativeLocation(FVector(0, 20, 40));
 	Camera->SetRelativeRotation(FRotator(0, 0, 0));
 	Camera->bUsePawnControlRotation = true;
 
@@ -51,6 +51,7 @@ ACPlayer::ACPlayer()
 	//GetMesh()->SetRelativeLocation(FVector(-18, 5, -130));
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
+
 	//GetMesh()->SetOwnerNoSee(true);
 	//GetMesh()->SetOnlyOwnerSee(true);
 	//GetMesh()->SetupAttachment(SpringArm);	//X
@@ -129,6 +130,13 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
+}
+
+float ACPlayer::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	UE_LOG(LogTemp, Warning, TEXT("Actor Name : %s Damage : %f"), *GetName(), FinalDamage);
+	return FinalDamage;
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -278,9 +286,9 @@ void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVect
 	OutStart = cameraLocation + OutDirection;
 
 	//ÅºÂø±ºÀ» À§ÇÑ °Í
-	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.f);
-	conDirection *= 3000.0f;
+	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.2f);
+	conDirection *= 5000.0f;
 
-	OutEnd = cameraLocation + conDirection;
+	OutEnd = cameraLocation + conDirection;// + FVector(0, 20, 40);
 }
 

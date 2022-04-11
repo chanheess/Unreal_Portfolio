@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CStatusComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Sound/SoundCue.h"
 
 ACDoAction::ACDoAction()

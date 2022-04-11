@@ -3,7 +3,6 @@
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "../Components/CStatusComponent.h"
-#include "Sound/SoundCue.h"
 
 void ACDoAction_Melee::DoAction()
 {

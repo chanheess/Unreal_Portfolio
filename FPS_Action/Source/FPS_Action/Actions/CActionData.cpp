@@ -3,6 +3,7 @@
 #include "CAttachment.h"
 #include "CEquipment.h"
 #include "CDoAction.h"
+#include "CBullet.h"
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 
@@ -39,7 +40,6 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		DoAction->SetActorLabel(GetLabelName(InOwnerCharacter, "DoAction"));
 		DoAction->SetDatas(DoActionDatas);
-		DoAction->EquipSetDatas(EquipmentData);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
 
 		if (!!Attachment)

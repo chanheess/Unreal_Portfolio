@@ -110,6 +110,8 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AContro
 	DamageInstigator = EventInstigator;
 	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 
+	UE_LOG(LogTemp, Warning, TEXT("Actor Name : %s Damage : %f"), *GetName(), DamageValue);
+
 	State->SetHittedMode();
 
 	return Status->GetHealth();

@@ -9,6 +9,8 @@
 ACAttachment::ACAttachment()
 {
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
+	CHelpers::CreateComponent<UMeshComponent>(this, &Mesh, "Mesh");
+	//UMeshComponent
 }
 
 void ACAttachment::BeginPlay()
@@ -64,5 +66,11 @@ void ACAttachment::OffCollision()
 {
 	for (UShapeComponent* component : ShapeComponents)
 		component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ACAttachment::SetCollisionLocation(FVector NewLocation)
+{
+	for (UShapeComponent* component : ShapeComponents)
+		component->SetWorldLocation(NewLocation);
 }
 

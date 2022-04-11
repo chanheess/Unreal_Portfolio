@@ -9,6 +9,12 @@ class FPS_ACTION_API ACBullet : public AActor
 {
 	GENERATED_BODY()
 
+public:
+	ACBullet();
+
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UStaticMeshComponent* Mesh;
@@ -17,10 +23,6 @@ private:
 		class UProjectileMovementComponent* Projectile;
 
 public:
-	ACBullet();
-
-protected:
-	virtual void BeginPlay() override;
-
+	void FireInDirection(const FVector& ShootDirection);
 };
 
