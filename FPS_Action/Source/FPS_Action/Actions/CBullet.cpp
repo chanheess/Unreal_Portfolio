@@ -20,7 +20,7 @@ ACBullet::ACBullet()
 	CHelpers::GetAsset<UMaterialInstanceConstant>(&material, "MaterialInstanceConstant'/Game/Weapons/Materials/M_Bullet_Inst.M_Bullet_Inst'");
 	Mesh->SetMaterial(0, material);
 	Mesh->SetRelativeScale3D(FVector(1.0f, 0.025f, 0.025f));
-	//Mesh->SetCollisionProfileName("NoCollision");
+	Mesh->SetCollisionProfileName("NoCollision");
 
 	Projectile->InitialSpeed = 2000;
 	Projectile->MaxSpeed = 5000;
