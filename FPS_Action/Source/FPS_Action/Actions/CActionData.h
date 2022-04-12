@@ -65,6 +65,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		FTransform EffectTransform;
+
+	UPROPERTY(EditAnywhere)
+		FTransform BulletRotation;
 };
 
 UCLASS()

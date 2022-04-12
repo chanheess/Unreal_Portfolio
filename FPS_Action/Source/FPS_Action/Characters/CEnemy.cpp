@@ -12,6 +12,7 @@
 #include "Components/WidgetComponent.h"
 #include "../Widgets/CUserWidget_Name.h"
 #include "../Widgets/CUserWidget_Health.h"
+#include "../AI/CAIController.h"
 
 ACEnemy::ACEnemy()
 {
@@ -22,6 +23,9 @@ ACEnemy::ACEnemy()
 	CHelpers::CreateActorComponent<UCActionComponent>(this, &Action, "Action");
 	CHelpers::CreateActorComponent<UCStatusComponent>(this, &Status, "Status");
 	CHelpers::CreateActorComponent<UCStateComponent>(this, &State, "State");
+
+	AIControllerClass = ACAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
@@ -88,21 +92,6 @@ void ACEnemy::RestoreColor()
 void ACEnemy::ChangeColor(FLinearColor InColor)
 {
 	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
-}
-
-void ACEnemy::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection)
-{
-	//OutDirection = GetOwner()->GetActorForwardVector();
-
-	//FTransform transform = GetOwner()->GetTransform();
-	//FVector chracterLocation = transform.GetLocation();
-	//OutStart = chracterLocation + OutDirection;
-
-	////ÅºÂø±ºÀ» À§ÇÑ °Í
-	//FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.f);
-	//conDirection *= 3000.0f;
-
-	//OutEnd = chracterLocation + conDirection;
 }
 
 float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
