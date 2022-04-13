@@ -51,6 +51,10 @@ public:
 private:
 	void Hitted();
 
+public:
+	void OnDoAction();
+
+
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class AController* DamageInstigator; 

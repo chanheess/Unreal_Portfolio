@@ -53,6 +53,13 @@ ACEnemy::ACEnemy()
 	HealthWidget->SetRelativeLocation(FVector(0, 0, 190));
 	HealthWidget->SetDrawSize(FVector2D(120, 20));
 	HealthWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bUseControllerDesiredRotation = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
+	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+
 }
 
 void ACEnemy::BeginPlay()
@@ -85,7 +92,7 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 
 void ACEnemy::RestoreColor()
 {
-	FLinearColor color = Action->GetCurrent()->GetEquipmentColor();
+	FLinearColor color = FLinearColor(0, 0, 0, 0);
 	ChangeColor(color);
 }
 
@@ -115,13 +122,17 @@ void ACEnemy::Hitted()
 
 	Montages->PlayHitted();
 
-	/*//hitscan
+	//hitscan
 	FVector start = GetActorLocation();
 	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
 	UKismetMathLibrary::FindLookAtRotation(start, target);
 	DamageInstigator = NULL;
-	*/
 
 	ChangeColor(FLinearColor(1, 0, 0, 1));
-	UKismetSystemLibrary::K2_SetTimer(this, "ChangeColor", 0.1f, false);
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+}
+
+void ACEnemy::OnDoAction()
+{
+	Action->DoAction();
 }

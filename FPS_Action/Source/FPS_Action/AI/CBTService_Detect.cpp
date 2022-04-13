@@ -61,5 +61,5 @@ void UCBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 		}
 	}
 
-	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
+	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 1.0f);
 }
