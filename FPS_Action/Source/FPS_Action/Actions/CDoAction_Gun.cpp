@@ -10,15 +10,6 @@
 #include "../Components/CActionComponent.h"
 #include "../Actions/CAttachment_Pistol.h"
 
-
-/*
-1. 무기메시를 가져와서 해당 총구있는 곳에 파티클 넣어준다.
-2. 현재 캐릭터의 무기메시에서 카메라가 보고있는곳의 거리를 찍는다.
-
-cactiondata에서 doaction에 setdatas에 현재 equipmentdata를 넘겨주어 장비정보를 받아온다.
-*/
-//Datas[(int32)Type]->GetEquipment()
-
 void ACDoAction_Gun::DoAction()
 {
 	Super::DoAction();
@@ -80,8 +71,6 @@ void ACDoAction_Gun::Firing()
 
 	character->GetLocationAndDirection(start, end, direction);
 
-	
-
 	//Pitch -= Datas[0].LimitPitch * GetWorld()->GetDeltaSeconds();
 	//if (Pitch > -Datas[0].LimitPitch)	//반동
 	//	OwnerCharacter->AddControllerPitchInput(Pitch);
@@ -92,7 +81,6 @@ void ACDoAction_Gun::Firing()
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, weaponMesh->GetWeaponMesh(), "EjectSocket", FVector::ZeroVector, FRotator(0, 180, 0), EAttachLocation::KeepRelativeOffset);
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, weaponMesh->GetWeaponMesh(), "MuzzleSocket", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
 
-	//충돌 어떤 식으로 검출하는 건지 지정
 	FCollisionQueryParams params;
 	params.AddIgnoredActor(this);	//자기 자신 제거
 	params.AddIgnoredActor(OwnerCharacter);
@@ -106,11 +94,11 @@ void ACDoAction_Gun::Firing()
 
 	hittedEnd = hitResult.Location;
 
-	TSubclassOf<ACBullet> BulletClass = Datas[0].BulletClass;
+	TSubclassOf<class ACBullet> BulletClass = Datas[0].BulletClass;
 	if (!!BulletClass)
-		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation() + FRotator(2, 0.2f, 0));
+		GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
 
-	DrawDebugLine(GetWorld(), muzzleLocation, hittedEnd, FColor::Red, false, 3.0f);
+	//DrawDebugLine(GetWorld(), muzzleLocation, hittedEnd, FColor::Red, false, 3.0f);
 
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_WorldDynamic, params))
 	{

@@ -67,3 +67,17 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 	if (OnActionTypeChanged.IsBound())
 		OnActionTypeChanged.Broadcast(prevType, InNewType);
 }
+
+void UCActionComponent::OffAllCollision()
+{
+	for (UCActionData* data : Datas)
+	{
+		if (!!data == false)
+			continue;
+
+		if (!!data->GetAttachment() == false)
+			continue;
+
+		data->GetAttachment()->OffCollision();
+	}
+}

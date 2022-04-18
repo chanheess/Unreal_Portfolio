@@ -27,18 +27,8 @@ ACEnemy::ACEnemy()
 	AIControllerClass = ACAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	USkeletalMesh* mesh;
-	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
-	GetMesh()->SetSkeletalMesh(mesh);
 	GetMesh()->SetRelativeLocation(FVector(0, 0, -90));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
-
-	TSubclassOf<UAnimInstance> animInstance;
-	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_Enemy.ABP_Enemy_C'");
-	GetMesh()->SetAnimInstanceClass(animInstance);
-
-	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
 	TSubclassOf<UCUserWidget_Name> nameClass;
 	CHelpers::GetClass<UCUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/Widgets/WB_Name.WB_Name_C'");
@@ -58,17 +48,12 @@ ACEnemy::ACEnemy()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 480.0f, 0.0f);
-	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 350.0f;
 
 }
 
 void ACEnemy::BeginPlay()
 {
-	UMaterialInstanceConstant* body;
-	CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/Soldier/Materials/Soldier/MI_Soldier_3.MI_Soldier_3'");
-	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
-	GetMesh()->SetMaterial(0, BodyMaterial);
-
 	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
 
 	Super::BeginPlay();
@@ -78,8 +63,6 @@ void ACEnemy::BeginPlay()
 
 	HealthWidget->InitWidget();
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
-
-	Action->SetPistolMode();
 }
 
 void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
@@ -87,6 +70,7 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 	switch (InNewType)
 	{
 		case EStateType::Hitted: Hitted(); break;
+		case EStateType::Dead: Dead(); break;
 	}
 }
 
@@ -120,6 +104,13 @@ void ACEnemy::Hitted()
 
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());	//데이터 갱신
 
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+
+		return;
+	}
+
 	Montages->PlayHitted();
 
 	//hitscan
@@ -135,4 +126,11 @@ void ACEnemy::Hitted()
 void ACEnemy::OnDoAction()
 {
 	Action->DoAction();
+}
+
+void ACEnemy::Dead()
+{
+	CheckFalse(State->IsDeadMode());
+
+	Montages->PlayDead();
 }

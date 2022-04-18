@@ -1,11 +1,11 @@
 #include "CBTTask_Attack.h"
+#include "../Utilities/Global.h"
 #include "CAIController.h"
 #include "../Characters/CEnemy.h"
 
 UCBTTask_Attack::UCBTTask_Attack()
 {
 	bNotifyTick = true;
-	IsAttacking = false;
 }
 
 EBTNodeResult::Type UCBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -16,12 +16,7 @@ EBTNodeResult::Type UCBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 	if (nullptr == CEnemy) return EBTNodeResult::Failed;
 
 	CEnemy->OnDoAction();
-
-	/*MyCharacter->Attack();
-	IsAttacking = true;
-	MyCharacter->OnAttackEnd.AddLambda([this]() -> void {
-		IsAttacking = false;
-		});*/
+	CLog::Print("AI Attack");
 
 	return EBTNodeResult::InProgress;
 }
@@ -29,7 +24,11 @@ EBTNodeResult::Type UCBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 void UCBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-	if (!IsAttacking)
+
+	auto CEnemy = Cast<ACEnemy>(OwnerComp.GetAIOwner()->GetPawn());
+	if (nullptr == CEnemy) return;
+
+	if (CEnemy->GetState()->IsIdleMode())
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}

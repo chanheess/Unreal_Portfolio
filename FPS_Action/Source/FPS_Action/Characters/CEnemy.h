@@ -48,14 +48,20 @@ public:
 
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	UCStateComponent* GetState() { return State; }
+
 private:
 	void Hitted();
+	void Dead();
 
 public:
 	void OnDoAction();
 
 
-private:
+protected:
+	USkeletalMesh* mesh;
+	TSubclassOf<UAnimInstance> animInstance;
+
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class AController* DamageInstigator; 
 	float DamageValue;
