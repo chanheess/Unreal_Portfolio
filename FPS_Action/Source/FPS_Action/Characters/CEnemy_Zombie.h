@@ -2,17 +2,16 @@
 
 #include "CoreMinimal.h"
 #include "CEnemy.h"
-#include "CEnemy_Dummy.generated.h"
+#include "CEnemy_Zombie.generated.h"
 
 UCLASS()
-class FPS_ACTION_API ACEnemy_Dummy : public ACEnemy
+class FPS_ACTION_API ACEnemy_Zombie : public ACEnemy
 {
 	GENERATED_BODY()
-
+	
 public:
-	ACEnemy_Dummy();
+	ACEnemy_Zombie();
 
 protected:
 	virtual void BeginPlay() override;
-	
 };

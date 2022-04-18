@@ -1,7 +1,6 @@
 #include "CAnimNotifyState_Combo.h"
 #include "../Utilities/Global.h"
 #include "../Actions/CDoAction_Melee.h"
-#include "../Actions/CDoAction_Rifle.h"
 #include "../Components/CActionComponent.h"
 
 FString UCAnimNotifyState_Combo::GetNotifyName_Implementation() const
@@ -22,10 +21,6 @@ void UCAnimNotifyState_Combo::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 	CheckNull(melee);
 	melee->EnableCombo();
 
-	ACDoAction_Rifle* rifle = Cast<ACDoAction_Rifle>(action->GetCurrent()->GetDoAction());
-	CheckNull(rifle);
-	rifle->EnableCombo();
-
 	//action->GetCurrent()->GetAttachment()
 }
 
@@ -41,9 +36,5 @@ void UCAnimNotifyState_Combo::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimS
 	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrent()->GetDoAction());
 	CheckNull(melee);
 	melee->DisableCombo();
-
-	ACDoAction_Rifle* rifle = Cast<ACDoAction_Rifle>(action->GetCurrent()->GetDoAction());
-	CheckNull(rifle);
-	rifle->DisableCombo();
 }
 
