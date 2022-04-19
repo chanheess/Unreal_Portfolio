@@ -63,6 +63,8 @@ void ACEnemy::BeginPlay()
 
 	HealthWidget->InitWidget();
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
+
+	Action->SetPistolMode();
 }
 
 void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
@@ -131,6 +133,5 @@ void ACEnemy::OnDoAction()
 void ACEnemy::Dead()
 {
 	CheckFalse(State->IsDeadMode());
-
 	Montages->PlayDead();
 }

@@ -83,8 +83,6 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter* InAttacker, AActor* 
 	FDamageEvent e;
 	InOtherCharacter->TakeDamage(Datas[ComboNum].Power, e, InAttacker->GetController(), InAttackCauser);
 
-	if (!OwnerCharacter->IsPlayerControlled()) return;
-
 	TSubclassOf<UCameraShake> shake = Datas[ComboNum].CameraShakeClass;
 	if (!!shake)
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->PlayCameraShake(shake);
