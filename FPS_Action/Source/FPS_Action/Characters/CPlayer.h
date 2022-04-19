@@ -79,6 +79,9 @@ private:
 
 	void OnDoAction();
 
+	void Hitted();
+	void Dead();
+
 	//void OnAim();
 	//void OffAim();
 
@@ -95,4 +98,7 @@ private:
 	class UCUserWidget_CrossHair* Crosshair;
 	class UMaterialInstanceDynamic* BodyMaterial;
 	//class UCUserWidget_AutoFire* AutoFire;
+
+	class AController* DamageInstigator;
+	float DamageValue;
 };

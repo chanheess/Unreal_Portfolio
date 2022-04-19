@@ -220,6 +220,38 @@ void ACPlayer::OnDoAction()
 	Action->DoAction();
 }
 
+void ACPlayer::Hitted()
+{
+	Status->SubHealth(DamageValue);
+	DamageValue = 0.0f;
+
+	//Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());	//데이터 갱신
+
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+
+		return;
+	}
+
+	Montages->PlayHitted();
+
+	//hitscan
+	FVector start = GetActorLocation();
+	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
+	UKismetMathLibrary::FindLookAtRotation(start, target);
+	DamageInstigator = NULL;
+
+	ChangeColor(FLinearColor(1, 0, 0, 1));
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+}
+
+void ACPlayer::Dead()
+{
+	CheckFalse(State->IsDeadMode());
+	Montages->PlayDead();
+}
+
 //void ACPlayer::OnAim()
 //{
 //	//CheckFalse(Weapon->GetEquipped());
@@ -256,10 +288,11 @@ void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InNewType)
 	{
-	case EStateType::Fire: break;
-	case EStateType::Aim: break; 
+		case EStateType::Fire: break;
+		case EStateType::Aim: break; 
+		case EStateType::Hitted: Hitted(); break;
+		case EStateType::Dead: Dead(); break;
 	}
-
 }
 
 void ACPlayer::OnFocus()

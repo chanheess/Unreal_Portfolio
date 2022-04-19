@@ -12,17 +12,17 @@ FString UCAnimNotifyState_Dead::GetNotifyName_Implementation() const
 void UCAnimNotifyState_Dead::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	//CheckNull(MeshComp);
-	//CheckNull(MeshComp->GetOwner());
-	//
-	//UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
-	//CheckNull(action);
-	//
-	//action->OffAllCollision();
-	//
-	//ACharacter* character = Cast<ACharacter>(MeshComp->GetOwner());
-	//if(!!character)
-	//	character->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CheckNull(MeshComp);
+	CheckNull(MeshComp->GetOwner());
+	
+	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
+	CheckNull(action);
+	
+	action->OffAllCollision();
+	
+	ACharacter* character = Cast<ACharacter>(MeshComp->GetOwner());
+	if(!!character)
+		character->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void UCAnimNotifyState_Dead::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)

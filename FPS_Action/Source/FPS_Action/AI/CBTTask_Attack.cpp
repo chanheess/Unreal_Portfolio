@@ -16,7 +16,6 @@ EBTNodeResult::Type UCBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 	if (nullptr == CEnemy) return EBTNodeResult::Failed;
 
 	CEnemy->OnDoAction();
-	CLog::Print("AI Attack");
 
 	return EBTNodeResult::InProgress;
 }
@@ -28,7 +27,7 @@ void UCBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMem
 	auto CEnemy = Cast<ACEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 	if (nullptr == CEnemy) return;
 
-	if (CEnemy->GetState()->IsIdleMode())
+	if (!CEnemy->GetState()->IsActionMode())
 	{
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}
