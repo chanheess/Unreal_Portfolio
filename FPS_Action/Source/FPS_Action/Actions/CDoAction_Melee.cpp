@@ -80,8 +80,10 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter* InAttacker, AActor* 
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitEffect, transform);
 	}
 
+	
 	FDamageEvent e;
-	InOtherCharacter->TakeDamage(Datas[ComboNum].Power, e, InAttacker->GetController(), InAttackCauser);
+	if(!!InOtherCharacter)
+		InOtherCharacter->TakeDamage(Datas[ComboNum].Power, e, InAttacker->GetController(), InAttackCauser);
 
 	TSubclassOf<UCameraShake> shake = Datas[ComboNum].CameraShakeClass;
 	if (!!shake)
@@ -92,7 +94,7 @@ void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter* InAttacker, AActor* In
 {
 	Super::OnAttachmentEndOverlap(InAttacker, InAttackCauser, InOtherCharacter);
 
-	HittedCharacter.Empty();
+	//HittedCharacter.Empty();
 }
 
 void ACDoAction_Melee::RestoreGlobalDilation()
