@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "EngineMinimal.h"
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "ICharacter.h"
@@ -73,10 +73,6 @@ private:
 	void OnWalk();
 	void OffWalk();
 
-	void OnPistol();
-	void OnRifle();
-	void OnKnife();
-
 	void OnDoAction();
 
 	void Hitted();
@@ -87,6 +83,14 @@ private:
 
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
+
+	UFUNCTION()
+		void RestoreColor();
+public:
+	void OnPistol();
+	void OnRifle();
+	void OnKnife();
+
 
 public:	//ICharacter
 	virtual void OnFocus() override;

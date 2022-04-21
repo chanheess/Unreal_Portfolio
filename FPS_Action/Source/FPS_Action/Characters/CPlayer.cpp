@@ -45,6 +45,8 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
 
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("CPlayer"));
+
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
 	GetMesh()->SetSkeletalMesh(mesh);
@@ -310,6 +312,12 @@ void ACPlayer::ChangeColor(FLinearColor InColor)
 	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
 
+void ACPlayer::RestoreColor()
+{
+	FLinearColor color = FLinearColor(0, 0, 0, 0);
+	ChangeColor(color);
+}
+
 void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection)
 {
 	OutDirection = Camera->GetForwardVector();
@@ -322,6 +330,6 @@ void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVect
 	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.2f);
 	conDirection *= 5000.0f;
 
-	OutEnd = cameraLocation + conDirection;// + FVector(0, 20, 40);
+	OutEnd = cameraLocation + conDirection;
 }
 
