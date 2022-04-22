@@ -20,15 +20,13 @@ ACBullet::ACBullet()
 	CHelpers::GetAsset<UMaterialInstanceConstant>(&material, "MaterialInstanceConstant'/Game/Weapons/Materials/M_Bullet_Inst.M_Bullet_Inst'");
 	Mesh->SetMaterial(0, material);
 	Mesh->SetRelativeScale3D(FVector(1.0f, 0.025f, 0.025f));
-	Mesh->SetCollisionProfileName("NoCollision");
+	Mesh->SetCollisionProfileName("Projectile");
 
-	Projectile->InitialSpeed = 2000;
-	Projectile->MaxSpeed = 5000;
-	//Projectile->InitialSpeed = 2e+4f;
-	//Projectile->MaxSpeed = 2e+4f;
+	//Projectile->InitialSpeed = 2000;
+	//Projectile->MaxSpeed = 5000;
 	Projectile->ProjectileGravityScale = 0.0f;
-	Projectile->bRotationFollowsVelocity = true;
-	Projectile->bShouldBounce = true;
+	Projectile->InitialSpeed = 2e+4f;
+	Projectile->MaxSpeed = 2e+4f;
 }
 
 void ACBullet::BeginPlay()
@@ -38,8 +36,9 @@ void ACBullet::BeginPlay()
 	SetLifeSpan(3.0f);
 }
 
-void ACBullet::FireInDirection(const FVector& ShootDirection)
+void ACBullet::SetProjectileVelocity(FVector InStart, FVector InEnd, float InIntense)
 {
-	Projectile->Velocity = ShootDirection * Projectile->InitialSpeed;
+	FVector Direction = (InEnd - InStart).GetSafeNormal();
+	Projectile->Velocity = Direction * Projectile->InitialSpeed;
 }
 

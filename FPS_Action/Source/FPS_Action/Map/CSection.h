@@ -62,7 +62,5 @@ private:
 	void SetState(ESectionState NewState);
 	ESectionState CurrentState = ESectionState::READY;
 
-	void OperateGate(bool bOpen = true);
 	void OnNPCSpawn();
-
 };

@@ -20,14 +20,12 @@ void UCBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 
 	UWorld* World = ControllingPawn->GetWorld();
 	FVector Center = ControllingPawn->GetActorLocation();
-	float DetectRadius = 3000.0f;
-
-	
+	float DetectRadius = 1000.0f;
 
 	if (nullptr == World) return;
 	TArray<FOverlapResult> OverlapResults;
 	FCollisionQueryParams CollisionQueryParam(NAME_None, false, ControllingPawn);
-	bool bResult = World->OverlapMultiByChannel(	//이걸 linetracesingle로바꾼다.
+	bool bResult = World->OverlapMultiByChannel(
 		OverlapResults,
 		Center,
 		FQuat::Identity,
@@ -43,20 +41,11 @@ void UCBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 			ACPlayer* CPlayer = Cast<ACPlayer>(OverlapResult.GetActor());
 			if (CPlayer && CPlayer->GetController()->IsPlayerController())
 			{
-				//OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACAIController::TargetKey, CPlayer);
-				//DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
-				//DrawDebugLine(World, ControllingPawn->GetActorLocation(), CPlayer->GetActorLocation(), FColor::Blue, false, 0.2f);
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACAIController::TargetKey, CPlayer);
+				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
+				DrawDebugLine(World, ControllingPawn->GetActorLocation(), CPlayer->GetActorLocation(), FColor::Blue, false, 0.2f);
 
-				FHitResult hitResult;
-				FCollisionQueryParams params;
-				params.AddIgnoredActor(ControllingPawn);
-				if (GetWorld()->LineTraceSingleByChannel(hitResult, ControllingPawn->GetActorLocation(), CPlayer->GetActorLocation(), ECollisionChannel::ECC_WorldDynamic, params))
-				{
-					DrawDebugLine(World, ControllingPawn->GetActorLocation(), hitResult.Location, FColor::Green, false, 5.0f);
-					OwnerComp.GetBlackboardComponent()->SetValueAsObject(ACAIController::TargetKey, CPlayer);
-					return;
-				}
-				//return;
+				return;
 			}
 		}
 	}

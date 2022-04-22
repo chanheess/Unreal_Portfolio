@@ -23,6 +23,6 @@ private:
 		class UProjectileMovementComponent* Projectile;
 
 public:
-	void FireInDirection(const FVector& ShootDirection);
+	void SetProjectileVelocity(FVector InStart, FVector InEnd, float InIntense);
 };
 
