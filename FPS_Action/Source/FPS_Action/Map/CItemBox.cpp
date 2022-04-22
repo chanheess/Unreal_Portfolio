@@ -21,7 +21,7 @@ ACItemBox::ACItemBox()
 		Box->SetStaticMesh(SM_BOX.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UParticleSystem> P_CHESTOPEN(TEXT("ParticleSystem'/Game/Box/FX_Treasure/Chest/P_TreasureChest_Open_Mesh.P_TreasureChest_Open_Mesh'"));
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> P_CHESTOPEN(TEXT("ParticleSystem'/Game/Box/Effects/FX_Treasure/Chest/P_TreasureChest_Open_Mesh.P_TreasureChest_Open_Mesh'"));
 	if (P_CHESTOPEN.Succeeded())
 	{
 		Effect->SetTemplate(P_CHESTOPEN.Object);

@@ -3,7 +3,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/PointLightComponent.h"
-#include "../Characters/CEnemy.h"
+#include "../Characters/CEnemy_Zombie.h"
 #include "CItemBox.h"
 
 ACSection::ACSection()
@@ -50,8 +50,11 @@ void ACSection::BeginPlay()
 void ACSection::ComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	PointLight->SetVisibility(false);
+
 	if (CurrentState == ESectionState::READY)
 		SetState(ESectionState::BATTLE);
+
+	CLog::Print((int32)CurrentState);
 
 }
 
@@ -65,23 +68,20 @@ void ACSection::SetState(ESectionState NewState)
 	switch (NewState)
 	{
 	case ACSection::ESectionState::READY:
-		Trigger->SetCollisionProfileName(TEXT("ABTrigger"));
-		OperateGate(true);
+		Trigger->SetCollisionProfileName(TEXT("ItemBox"));
 		break;
 	case ACSection::ESectionState::BATTLE:
 		Trigger->SetCollisionProfileName(TEXT("NoCollision"));
-		OperateGate(false);
 
 		GetWorld()->GetTimerManager().SetTimer(SpawnNPCTimerHandle, FTimerDelegate::CreateUObject(this, &ACSection::OnNPCSpawn), EnemySpawnTime, false);
 		GetWorld()->GetTimerManager().SetTimer(SpawnItemBoxTimerHandle, FTimerDelegate::CreateLambda([this]()-> void
 			{
-				FVector2D RandXY = FMath::RandPointInCircle(600.0f);
+				FVector2D RandXY = FMath::RandPointInCircle(3000.0f);
 				GetWorld()->SpawnActor<ACItemBox>(GetActorLocation() + FVector(RandXY, 30.0f), FRotator::ZeroRotator);
 			}), ItemBoxSpawnTime, false);
 		break;
 	case ACSection::ESectionState::COMPLETE:
 		Trigger->SetCollisionProfileName(TEXT("NoCollision"));
-		OperateGate(true);
 		break;
 	default:
 		break;
@@ -90,15 +90,11 @@ void ACSection::SetState(ESectionState NewState)
 	CurrentState = NewState;
 }
 
-void ACSection::OperateGate(bool bOpen)
-{
-	//for (UStaticMeshComponent* Gate : GateMeshes)
-	//{
-	//
-	//}
-}
-
 void ACSection::OnNPCSpawn()
 {
-	GetWorld()->SpawnActor<ACEnemy>(GetActorLocation() + FVector::UpVector * 88.0f, FRotator::ZeroRotator);
+	for (int32 i = 0; i < 10; i++)
+	{
+		FVector2D RandXY = FMath::RandPointInCircle(3000.0f);
+		GetWorld()->SpawnActor<ACEnemy_Zombie>(GetActorLocation() + FVector(RandXY, 30.0f), FRotator::ZeroRotator);
+	}
 }

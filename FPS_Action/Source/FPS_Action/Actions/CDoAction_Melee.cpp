@@ -94,7 +94,7 @@ void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter* InAttacker, AActor* In
 {
 	Super::OnAttachmentEndOverlap(InAttacker, InAttackCauser, InOtherCharacter);
 
-	//HittedCharacter.Empty();
+	HittedCharacter.Empty();
 }
 
 void ACDoAction_Melee::RestoreGlobalDilation()

@@ -100,13 +100,21 @@ void ACPlayer::BeginPlay()
 
 	Super::BeginPlay();
 
-	OnPistol();
+	OnKnife();
 }
 
 void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//FVector start, end, direction;
+	//GetLocationAndDirection(start, end, direction);
+	//FHitResult hitResult;
+	//TArray<AActor*> ignoreActors;
+	//ignoreActors.Add(this);
+	//if (UKismetSystemLibrary::LineTraceSingleByProfile(GetWorld(), start, end, "Pawn", false, ignoreActors, EDrawDebugTrace::ForOneFrame, hitResult, true, FLinearColor::Green, FLinearColor::Red))
+	//{
+	//}
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -328,7 +336,7 @@ void ACPlayer::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVect
 
 	//ÅºÂø±ºÀ» À§ÇÑ °Í
 	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(OutDirection, 0.2f);
-	conDirection *= 5000.0f;
+	conDirection *= 3000.0f;
 
 	OutEnd = cameraLocation + conDirection;
 }
