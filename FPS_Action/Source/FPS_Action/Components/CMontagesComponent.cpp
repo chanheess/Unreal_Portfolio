@@ -36,11 +36,6 @@ void UCMontagesComponent::BeginPlay()
 	}*/
 }
 
-void UCMontagesComponent::PlayFire()
-{
-	PlayAnimMontage(EStateType::Fire);
-}
-
 void UCMontagesComponent::PlayAim()
 {
 	PlayAnimMontage(EStateType::Aim);

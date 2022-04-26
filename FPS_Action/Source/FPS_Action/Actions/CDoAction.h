@@ -12,12 +12,11 @@ class FPS_ACTION_API ACDoAction : public AActor
 	
 public:	
 	ACDoAction();
+	virtual void Tick(float DeltaTime) override;
+
 
 protected:
 	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
 
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }

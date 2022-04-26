@@ -10,6 +10,8 @@ class FPS_ACTION_API ACDoAction_Gun : public ACDoAction
 	GENERATED_BODY()
 
 public:
+	ACDoAction_Gun();
+	virtual void Tick(float DeltaTime) override;
 
 public:
 	virtual void DoAction() override;
@@ -27,6 +29,7 @@ private:
 
 private:
 	TArray<class ACharacter*> HittedCharacter;
+	FTimerHandle AutoFireTimer;
 
 	float Pitch;
 	

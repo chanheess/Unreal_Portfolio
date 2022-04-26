@@ -1,6 +1,7 @@
 #include "CBTService_Detect.h"
 #include "CAIController.h"
 #include "../Characters/CPlayer.h"
+#include "../Characters/CEnemy.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
 
@@ -15,6 +16,7 @@ void UCBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
+	ACEnemy* CEnemy = Cast<ACEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (nullptr == ControllingPawn) return;
 
@@ -45,10 +47,13 @@ void UCBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Node
 				DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Green, false, 0.2f);
 				DrawDebugLine(World, ControllingPawn->GetActorLocation(), CPlayer->GetActorLocation(), FColor::Blue, false, 0.2f);
 
+				CEnemy->OnWidget();
+
 				return;
 			}
 		}
 	}
 
+	CEnemy->OffWidget();
 	DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 1.0f);
 }

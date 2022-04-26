@@ -64,6 +64,7 @@ void ACEnemy::BeginPlay()
 	HealthWidget->InitWidget();
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 
+	OffWidget();
 	Action->SetPistolMode();
 }
 
@@ -97,6 +98,18 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AContro
 	State->SetHittedMode();
 
 	return Status->GetHealth();
+}
+
+void ACEnemy::OnWidget()
+{
+	NameWidget->bHiddenInGame = false;
+	HealthWidget->bHiddenInGame = false;
+}
+
+void ACEnemy::OffWidget()
+{
+	NameWidget->bHiddenInGame = true;
+	HealthWidget->bHiddenInGame = true;
 }
 
 void ACEnemy::Hitted()

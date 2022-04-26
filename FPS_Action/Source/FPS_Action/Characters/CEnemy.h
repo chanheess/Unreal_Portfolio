@@ -17,7 +17,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-private:
+protected:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UWidgetComponent* NameWidget;
 
@@ -43,12 +43,17 @@ private:
 		void RestoreColor();
 
 public:
+	UFUNCTION()
+		UCStateComponent* GetState() { return State; }
+
+public:
 	virtual void ChangeColor(FLinearColor InColor) override;
 	virtual void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override {  }
 
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	UCStateComponent* GetState() { return State; }
+	void OnWidget();
+	void OffWidget();
 
 private:
 	void Hitted();

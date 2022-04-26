@@ -10,6 +10,16 @@
 #include "../Components/CActionComponent.h"
 #include "../Actions/CAttachment_Pistol.h"
 
+ACDoAction_Gun::ACDoAction_Gun() : ACDoAction()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+void ACDoAction_Gun::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 void ACDoAction_Gun::DoAction()
 {
 	Super::DoAction();
@@ -19,10 +29,14 @@ void ACDoAction_Gun::DoAction()
 	State->SetActionMode();
 	
 	//총알이 있을 때만 발사되게 만들기
-	OnSoundCue();
 	Firing();
 
+	//if (Status->IsReleased())
+	//	GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Gun::Firing, 0.15f, true, 0.0f);
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
+
+	CLog::Log("DoActionFire");
 }
 
 void ACDoAction_Gun::Begin_DoAction()
@@ -30,7 +44,13 @@ void ACDoAction_Gun::Begin_DoAction()
 	Super::Begin_DoAction();
 
 	OwnerCharacter->StopAnimMontage();
+
+	//if(Status->IsReleased())
+	//	GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Gun::Firing, 0.15f, true, 0.0f);
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
+
+	CLog::Log("BeginFire");
 }
 
 void ACDoAction_Gun::End_DoAction()
@@ -39,8 +59,12 @@ void ACDoAction_Gun::End_DoAction()
 
 	OwnerCharacter->StopAnimMontage(Datas[0].AnimMontage);
 
+	//GetWorld()->GetTimerManager().ClearTimer(AutoFireTimer);
+
 	State->SetIdleMode();
 	Status->SetMove();
+
+	CLog::Print("EndFire");
 }
 
 void ACDoAction_Gun::RestoreGlobalDilation()
@@ -51,6 +75,8 @@ void ACDoAction_Gun::RestoreGlobalDilation()
 void ACDoAction_Gun::Firing()
 {
 	Pitch = 0.0f;
+
+	OnSoundCue();
 
 	TSubclassOf<UCameraShake> shake = Datas[0].CameraShakeClass;
 	if (!!shake)
