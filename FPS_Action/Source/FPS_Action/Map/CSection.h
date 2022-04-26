@@ -40,6 +40,9 @@ private:
 		TArray<UStaticMeshComponent*> GateMeshes;
 
 	UPROPERTY(EditAnywhere)
+		TSubclassOf<class ACEnemy_Zombie> zombie;
+
+	UPROPERTY(EditAnywhere)
 		float EnemySpawnTime;
 
 	UPROPERTY(EditAnywhere)
@@ -62,5 +65,7 @@ private:
 	void SetState(ESectionState NewState);
 	ESectionState CurrentState = ESectionState::READY;
 
+private:
 	void OnNPCSpawn();
+
 };

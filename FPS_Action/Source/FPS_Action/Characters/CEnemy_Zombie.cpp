@@ -9,6 +9,7 @@ ACEnemy_Zombie::ACEnemy_Zombie() : ACEnemy()
 
 	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_Enemy_Zombie.ABP_Enemy_Zombie_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
+	
 }
 
 void ACEnemy_Zombie::BeginPlay()
@@ -19,4 +20,9 @@ void ACEnemy_Zombie::BeginPlay()
 	GetMesh()->SetMaterial(0, BodyMaterial);
 
 	Super::BeginPlay();
+}
+
+ACEnemy_Zombie::Attack()
+{
+
 }

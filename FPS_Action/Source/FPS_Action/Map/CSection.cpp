@@ -31,6 +31,8 @@ ACSection::ACSection()
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ACSection::ComponentBeginOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ACSection::ComponentEndOverlap);
+
+	CHelpers::GetClass<ACEnemy_Zombie>(&zombie, "Class'/Game/Enemies/BP_CEnemy_Zombie.BP_CEnemy_Zombie_C'");
 }
 
 void ACSection::OnConstruction(const FTransform& Transform)
@@ -95,6 +97,6 @@ void ACSection::OnNPCSpawn()
 	for (int32 i = 0; i < 10; i++)
 	{
 		FVector2D RandXY = FMath::RandPointInCircle(3000.0f);
-		GetWorld()->SpawnActor<ACEnemy_Zombie>(GetActorLocation() + FVector(RandXY, 30.0f), FRotator::ZeroRotator);
+		GetWorld()->SpawnActor<ACEnemy_Zombie>(zombie, GetActorLocation() + FVector(RandXY, 30.0f), FRotator::ZeroRotator);
 	}
 }

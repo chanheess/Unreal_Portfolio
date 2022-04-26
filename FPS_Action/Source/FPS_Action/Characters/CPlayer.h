@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EngineMinimal.h"
+#include "../FPS_Action.h"
 #include "GameFramework/Character.h"
 #include "../Components/CStateComponent.h"
 #include "ICharacter.h"
@@ -70,10 +70,11 @@ private:
 	void OnJump();
 	void OffJump();
 
-	void OnWalk();
-	void OffWalk();
+	void OnRun();
+	void OffRun();
 
 	void OnDoAction();
+	void OffDoAction();
 
 	void Hitted();
 	void Dead();

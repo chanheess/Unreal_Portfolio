@@ -16,11 +16,6 @@ void UCStateComponent::SetIdleMode()
 	ChangeType(EStateType::Idle);
 }
 
-void UCStateComponent::SetFireMode()
-{
-	ChangeType(EStateType::Fire);
-}
-
 void UCStateComponent::SetAimMode()
 {
 	ChangeType(EStateType::Aim);

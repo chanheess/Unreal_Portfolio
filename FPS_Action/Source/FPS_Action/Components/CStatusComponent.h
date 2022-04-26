@@ -15,10 +15,10 @@ private:
 		float MaxHealth = 100;
 
 	UPROPERTY(EditAnywhere, Category = "Speed")
-		float WalkSpeed = 200;
+		float WalkSpeed = 500;
 
 	UPROPERTY(EditAnywhere, Category = "Speed")
-		float RunSpeed = 500;
+		float RunSpeed = 700;
 
 public:
 	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
@@ -28,6 +28,9 @@ public:
 	FORCEINLINE float GetRunSpeed() { return RunSpeed; }
 
 	FORCEINLINE bool IsCanMove() { return bCanMove; }
+	FORCEINLINE bool IsReleased() { return bReleased; }
+
+	FORCEINLINE void SetReleased(bool InReleased) { bReleased = InReleased; }
 
 public:	
 	UCStatusComponent();
@@ -44,5 +47,5 @@ protected:
 private:
 	float Health;
 	bool bCanMove = true;
-		
+	bool bReleased = false;
 };

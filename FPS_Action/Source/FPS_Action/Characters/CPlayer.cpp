@@ -43,7 +43,7 @@ ACPlayer::ACPlayer()
 	GetCharacterMovement()->bOrientRotationToMovement = false;
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed();
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("CPlayer"));
 
@@ -129,14 +129,15 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ACPlayer::OnJump);
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Released, this, &ACPlayer::OffJump);
 
-	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Pressed, this, &ACPlayer::OnWalk);
-	PlayerInputComponent->BindAction("Walk", EInputEvent::IE_Released, this, &ACPlayer::OffWalk);
+	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Pressed, this, &ACPlayer::OnRun);
+	PlayerInputComponent->BindAction("Run", EInputEvent::IE_Released, this, &ACPlayer::OffRun);
 
 	PlayerInputComponent->BindAction("Pistol", EInputEvent::IE_Pressed, this, &ACPlayer::OnPistol);
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
 	PlayerInputComponent->BindAction("Knife", EInputEvent::IE_Pressed, this, &ACPlayer::OnKnife);
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Released, this, &ACPlayer::OffDoAction);
 
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
 	//PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
@@ -191,14 +192,14 @@ void ACPlayer::OffJump()
 	bPressedJump = false;
 }
 
-void ACPlayer::OnWalk()
-{
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed();
-}
-
-void ACPlayer::OffWalk()
+void ACPlayer::OnRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
+}
+
+void ACPlayer::OffRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed();
 }
 
 void ACPlayer::OnPistol()
@@ -227,7 +228,14 @@ void ACPlayer::OnKnife()
 
 void ACPlayer::OnDoAction()
 {
+	Status->SetReleased(false);
 	Action->DoAction();
+	//CLog::Print("tset");
+}
+
+void ACPlayer::OffDoAction()
+{
+	Status->SetReleased(true);
 }
 
 void ACPlayer::Hitted()
@@ -298,7 +306,6 @@ void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InNewType)
 	{
-		case EStateType::Fire: break;
 		case EStateType::Aim: break; 
 		case EStateType::Hitted: Hitted(); break;
 		case EStateType::Dead: Dead(); break;
