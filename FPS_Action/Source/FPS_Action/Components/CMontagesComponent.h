@@ -40,7 +40,7 @@ private:
 public:	
 	UCMontagesComponent();
 
-	void PlayFire();
+	void PlayAction();
 	void PlayAim();
 	void PlayHitted();
 	void PlayDead();

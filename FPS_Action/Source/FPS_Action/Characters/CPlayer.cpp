@@ -230,12 +230,14 @@ void ACPlayer::OnDoAction()
 {
 	Status->SetReleased(false);
 	Action->DoAction();
+	//Action->DoAction_Toogle();
 	//CLog::Print("tset");
 }
 
 void ACPlayer::OffDoAction()
 {
 	Status->SetReleased(true);
+	//Action->DoAction_Toogle();
 }
 
 void ACPlayer::Hitted()

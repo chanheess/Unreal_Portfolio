@@ -49,7 +49,6 @@ public:
 	UCStateComponent();
 
 	void SetIdleMode();
-	void SetFireMode();
 	void SetAimMode();
 	void SetEquipMode();
 	void SetActionMode();

@@ -22,6 +22,8 @@ void ACDoAction_Melee::DoAction()
 
 	OnSoundCue();
 
+	//CLog::Print(OwnerCharacter->GetName());
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }

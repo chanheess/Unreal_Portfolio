@@ -32,7 +32,7 @@ ACSection::ACSection()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ACSection::ComponentBeginOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ACSection::ComponentEndOverlap);
 
-	CHelpers::GetClass<ACEnemy_Zombie>(&zombie, "Class'/Game/Enemies/BP_CEnemy_Zombie.BP_CEnemy_Zombie_C'");
+	CHelpers::GetClass<ACEnemy_Zombie>(&zombie, "Blueprint'/Game/Enemies/BP_CEnemy_Zombie.BP_CEnemy_Zombie_C'");
 }
 
 void ACSection::OnConstruction(const FTransform& Transform)
@@ -57,7 +57,6 @@ void ACSection::ComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 		SetState(ESectionState::BATTLE);
 
 	CLog::Print((int32)CurrentState);
-
 }
 
 void ACSection::ComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

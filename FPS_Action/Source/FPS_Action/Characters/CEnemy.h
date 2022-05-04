@@ -13,6 +13,8 @@ class FPS_ACTION_API ACEnemy : public ACharacter, public IICharacter
 
 public:
 	ACEnemy();
+	virtual void Tick(float DeltaTime) override;
+	virtual void PostInitializeComponents() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -35,6 +37,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStateComponent* State;
+
+	//UPROPERTY()
+	//	class UCAnimInstance_Zombie* animInstance;
 
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
@@ -65,7 +70,6 @@ public:
 
 protected:
 	USkeletalMesh* mesh;
-	TSubclassOf<UAnimInstance> animInstance;
 
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class AController* DamageInstigator; 

@@ -7,8 +7,8 @@ ACEnemy_Dummy::ACEnemy_Dummy() : ACEnemy()
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Soldier/Mesh/Soldier/SK_Soldier.SK_Soldier'");
 	GetMesh()->SetSkeletalMesh(mesh);
 
-	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_Enemy.ABP_Enemy_C'");
-	GetMesh()->SetAnimInstanceClass(animInstance);
+	//CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_Enemy.ABP_Enemy_C'");
+	//GetMesh()->SetAnimInstanceClass(animInstance);
 }
 
 void ACEnemy_Dummy::BeginPlay()
