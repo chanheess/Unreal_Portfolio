@@ -30,10 +30,6 @@ void ACDoAction_Gun::DoAction()
 	
 	//총알이 있을 때만 발사되게 만들기
 	Firing();
-
-	//if (Status->IsReleased())
-	//	GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Gun::Firing, 0.15f, true, 0.0f);
-
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 
 	CLog::Log("DoActionFire");
@@ -43,13 +39,7 @@ void ACDoAction_Gun::Begin_DoAction()
 {
 	Super::Begin_DoAction();
 
-	OwnerCharacter->StopAnimMontage();
-
-	//if(Status->IsReleased())
-	//	GetWorld()->GetTimerManager().SetTimer(AutoFireTimer, this, &ACDoAction_Gun::Firing, 0.15f, true, 0.0f);
-
-	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
-
+	Firing();
 	CLog::Log("BeginFire");
 }
 
@@ -57,10 +47,14 @@ void ACDoAction_Gun::End_DoAction()
 {
 	Super::End_DoAction();
 
+	// 클릭하고 있을 때
+	if (Status->IsReleased() == false)
+	{
+		OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
+		return;
+	}
+	
 	OwnerCharacter->StopAnimMontage(Datas[0].AnimMontage);
-
-	//GetWorld()->GetTimerManager().ClearTimer(AutoFireTimer);
-
 	State->SetIdleMode();
 	Status->SetMove();
 

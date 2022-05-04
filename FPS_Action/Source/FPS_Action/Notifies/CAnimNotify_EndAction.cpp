@@ -1,6 +1,5 @@
 #include "CAnimNotify_EndAction.h"
 #include "../Utilities/Global.h"
-#include "../Characters/CPlayer.h"
 #include "../Actions/CActionData.h"
 #include "../Actions/CDoAction.h"
 #include "../Components/CActionComponent.h"

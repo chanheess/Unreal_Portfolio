@@ -36,6 +36,11 @@ void UCMontagesComponent::BeginPlay()
 	}*/
 }
 
+void UCMontagesComponent::PlayAction()
+{
+	PlayAnimMontage(EStateType::Action);
+}
+
 void UCMontagesComponent::PlayAim()
 {
 	PlayAnimMontage(EStateType::Aim);
