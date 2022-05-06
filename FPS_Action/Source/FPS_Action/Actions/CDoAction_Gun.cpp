@@ -28,8 +28,9 @@ void ACDoAction_Gun::DoAction()
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 	
-	//총알이 있을 때만 발사되게 만들기
-	Firing();
+	if(Datas[0].CurrentWeapon == 2)
+		Firing();
+
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 
 	CLog::Log("DoActionFire");
@@ -47,8 +48,7 @@ void ACDoAction_Gun::End_DoAction()
 {
 	Super::End_DoAction();
 
-	// 클릭하고 있을 때
-	if (Status->IsReleased() == false)
+	if (Status->IsReleased() == false && Datas[0].CurrentWeapon == 1)
 	{
 		OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
 		return;
@@ -122,6 +122,7 @@ void ACDoAction_Gun::Firing()
 			ACBullet* Bullet = GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
 			Bullet->SetProjectileVelocity(muzzleLocation, hitResult.Location, 1.0f);
 
+			//DrawDebugLine(GetWorld(), muzzleLocation, hitResult.Location, FColor::Red, false, 3.0f);
 		}
 	}
 	else
@@ -134,7 +135,7 @@ void ACDoAction_Gun::Firing()
 	}
 
 	//DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
-	//DrawDebugLine(GetWorld(), muzzleLocation, end, FColor::Red, false, 3.0f);
+	
 
 	//if (!!BulletClass)
 	//	GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());

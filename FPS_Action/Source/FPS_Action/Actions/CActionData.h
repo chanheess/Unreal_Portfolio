@@ -43,6 +43,9 @@ public:
 		float LimitPitch;
 
 	UPROPERTY(EditDefaultsOnly)
+		int CurrentWeapon;
+
+	UPROPERTY(EditDefaultsOnly)
 		class USoundCue* FireSoundCue;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -65,9 +68,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		FTransform EffectTransform;
-
-	UPROPERTY(EditAnywhere)
-		FRotator BulletRotation;
+	
 };
 
 UCLASS()

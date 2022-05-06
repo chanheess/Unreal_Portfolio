@@ -24,13 +24,3 @@ void UCStatusComponent::BeginPlay()
 
 	Health = MaxHealth;
 }
-
-void UCStatusComponent::SetMove()
-{
-	bCanMove = true;
-}
-
-void UCStatusComponent::SetStop()
-{
-	bCanMove = false;
-}

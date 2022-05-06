@@ -27,25 +27,24 @@ public:
 	FORCEINLINE float GetWalkSpeed() { return WalkSpeed; }
 	FORCEINLINE float GetRunSpeed() { return RunSpeed; }
 
-	FORCEINLINE bool IsCanMove() { return bCanMove; }
-	FORCEINLINE bool IsReleased() { return bReleased; }
+	FORCEINLINE bool IsCanMove() { return isCanMove; }
+	FORCEINLINE bool IsReleased() { return isReleased; }
 
-	FORCEINLINE void SetReleased(bool InReleased) { bReleased = InReleased; }
+	FORCEINLINE void SetReleased(bool InReleased) { isReleased = InReleased; }
+	FORCEINLINE void SetMove() { isCanMove = true; }
+	FORCEINLINE void SetStop() { isCanMove = false; }
 
 public:	
 	UCStatusComponent();
 
 	void AddHealth(float InAmount);
 	void SubHealth(float InAmount);
-	
-	void SetMove();
-	void SetStop();
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	float Health;
-	bool bCanMove = true;
-	bool bReleased = false;
+	bool isCanMove = true;
+	bool isReleased = false;
 };
