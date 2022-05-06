@@ -107,14 +107,6 @@ void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//FVector start, end, direction;
-	//GetLocationAndDirection(start, end, direction);
-	//FHitResult hitResult;
-	//TArray<AActor*> ignoreActors;
-	//ignoreActors.Add(this);
-	//if (UKismetSystemLibrary::LineTraceSingleByProfile(GetWorld(), start, end, "Pawn", false, ignoreActors, EDrawDebugTrace::ForOneFrame, hitResult, true, FLinearColor::Green, FLinearColor::Red))
-	//{
-	//}
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -230,14 +222,12 @@ void ACPlayer::OnDoAction()
 {
 	Status->SetReleased(false);
 	Action->DoAction();
-	//Action->DoAction_Toogle();
 	//CLog::Print("tset");
 }
 
 void ACPlayer::OffDoAction()
 {
 	Status->SetReleased(true);
-	//Action->DoAction_Toogle();
 }
 
 void ACPlayer::Hitted()
