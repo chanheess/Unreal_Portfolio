@@ -25,7 +25,6 @@ private:
 	UFUNCTION()
 		void RestoreGlobalDilation();
 
-private:
 	int32 ComboNum;
 
 	bool bEnable;

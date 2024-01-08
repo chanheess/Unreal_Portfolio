@@ -6,6 +6,9 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
 
+DECLARE_DELEGATE(FTestDelegate);
+DECLARE_DELEGATE_OneParam(FTest2Delegate, int);
+
 UCLASS()
 class TEST_API AMyCharacter : public ACharacter
 {

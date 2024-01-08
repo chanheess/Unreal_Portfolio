@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "TDShooting",
+			"Path": "..\\Source\\TDShooting.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TDShootingEditor",
+			"Path": "..\\Source\\TDShootingEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

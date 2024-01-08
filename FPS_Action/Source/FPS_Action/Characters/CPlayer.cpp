@@ -247,10 +247,10 @@ void ACPlayer::Hitted()
 	Montages->PlayHitted();
 
 	//hitscan
-	FVector start = GetActorLocation();
-	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
-	UKismetMathLibrary::FindLookAtRotation(start, target);
-	DamageInstigator = NULL;
+	//FVector start = GetActorLocation();
+	//FVector target = DamageInstigator->GetPawn()->GetActorLocation();
+	//UKismetMathLibrary::FindLookAtRotation(start, target);
+	//DamageInstigator = NULL;
 
 	ChangeColor(FLinearColor(1, 0, 0, 1));
 	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
