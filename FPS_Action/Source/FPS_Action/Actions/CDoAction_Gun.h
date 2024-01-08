@@ -21,17 +21,19 @@ public:
 
 private:
 	UFUNCTION()
-		void RestoreGlobalDilation();
+	void RestoreGlobalDilation();
 
-	//UPROPERTY(EditDefaultsOnly)
-	//	TSubclassOf<class ACBullet> BulletClass;
-
+	UFUNCTION()
 	void Firing();
 
 private:
+	UPROPERTY()
 	TArray<class ACharacter*> HittedCharacter;
+
+	UPROPERTY()
 	FTimerHandle AutoFireTimer;
 
-	float Pitch;
+	UPROPERTY()
+	float AimPitch;
 	
 };

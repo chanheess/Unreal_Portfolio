@@ -68,7 +68,7 @@ void ACDoAction_Gun::RestoreGlobalDilation()
 
 void ACDoAction_Gun::Firing()
 {
-	Pitch = 0.0f;
+	AimPitch = 0.0f;
 
 	OnSoundCue();
 
@@ -91,15 +91,19 @@ void ACDoAction_Gun::Firing()
 
 	character->GetLocationAndDirection(start, end, direction);
 
-	Pitch -= Datas[0].LimitPitch * GetWorld()->GetDeltaSeconds();
-	if (Pitch > -Datas[0].LimitPitch)	//반동
-		OwnerCharacter->AddControllerPitchInput(Pitch);
+	AimPitch -= Datas[0].LimitPitch * GetWorld()->GetDeltaSeconds();
+
+	//반동 적용
+	if (AimPitch > -Datas[0].LimitPitch)
+	{
+		OwnerCharacter->AddControllerPitchInput(AimPitch);
+	}
 
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].EjectParticle, weaponMesh->GetWeaponMesh(), "EjectSocket", FVector::ZeroVector, FRotator(0, 180, 0), EAttachLocation::KeepRelativeOffset);
 	UGameplayStatics::SpawnEmitterAttached(Datas[0].FlashParticle, weaponMesh->GetWeaponMesh(), "MuzzleSocket", FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
 
 	FCollisionQueryParams params;
-	params.AddIgnoredActor(this);	//자기 자신 제거
+	params.AddIgnoredActor(this);
 	params.AddIgnoredActor(OwnerCharacter);
 
 	FHitResult hitResult;

@@ -48,6 +48,7 @@ protected:
 		class UCStatusComponent* Status;
 
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	TArray<FDoActionData> Datas;
 
 };
