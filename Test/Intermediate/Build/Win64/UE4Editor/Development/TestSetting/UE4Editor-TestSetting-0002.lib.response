@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-TestSetting-0002.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\TestEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\MyCharacterSetting.cpp.obj"
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\TestSetting.cpp.obj"
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\MyCharacterSetting.gen.cpp.obj"
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\TestSetting.init.gen.cpp.obj"
+"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\Default.rc2.res"
+/OUT:"C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\TestSetting\UE4Editor-TestSetting-0002.lib"
+/INCLUDE:IMPLEMENT_MODULE_TestSetting
