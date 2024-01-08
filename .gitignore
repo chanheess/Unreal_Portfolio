@@ -43,3 +43,11 @@ FPS_Action/Content
 FPS_Action/DerivedDataCache
 FPS_Action/Intermediate
 FPS_Action/Saved
+
+Test/.vs
+Test/Binaries
+Test/Config
+Test/Content
+Test/DerivedDataCache
+Test/Intermediate
+Test/Saved
