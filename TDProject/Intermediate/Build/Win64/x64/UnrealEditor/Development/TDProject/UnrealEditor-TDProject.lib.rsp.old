@@ -1,0 +1,17 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-TDProject.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDCharacterBase.gen.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.gen.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDProject.init.gen.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDProject.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDCharacterBase.cpp.obj"
+"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\Default.rc2.res"
+/OUT:"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\UnrealEditor-TDProject.lib"

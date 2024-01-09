@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "TDProject",
+			"Path": "..\\Source\\TDProject.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TDProjectEditor",
+			"Path": "..\\Source\\TDProjectEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

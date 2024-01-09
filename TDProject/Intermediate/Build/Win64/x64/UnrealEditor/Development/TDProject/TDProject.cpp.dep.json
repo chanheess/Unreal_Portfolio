@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\tdproject.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\tdprojecteditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tdproject\\definitions.tdproject.h",
+            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\tdproject.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

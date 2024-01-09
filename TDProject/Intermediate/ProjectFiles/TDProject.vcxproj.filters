@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\TDProject.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TDProject.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TDProjectEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\TDProject">
+      <UniqueIdentifier>{198444FB-E361-35AF-BC00-45DF294F29F4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TDProject\TDGameMode.cpp">
+      <Filter>Source\TDProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\TDGameMode.h">
+      <Filter>Source\TDProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TDProject\TDPlayerController.cpp">
+      <Filter>Source\TDProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\TDPlayerController.h">
+      <Filter>Source\TDProject</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\TDProject\TDProject.Build.cs">
+      <Filter>Source\TDProject</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\TDProject\TDProject.cpp">
+      <Filter>Source\TDProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\TDProject.h">
+      <Filter>Source\TDProject</Filter>
+    </ClInclude>
+    <Filter Include="Source\TDProject\Characters">
+      <UniqueIdentifier>{84216F40-1711-3F5B-9663-09AF29AB87EA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TDProject\Characters\TDCharacterBase.cpp">
+      <Filter>Source\TDProject\Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\Characters\TDCharacterBase.h">
+      <Filter>Source\TDProject\Characters</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
