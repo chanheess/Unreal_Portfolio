@@ -19,17 +19,22 @@ public:
 	// Sets default values for this empty's properties
 	ATDPlayerController();
 
+	virtual void PlayerTick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-private:
-	FVector CachedDestination;
-	bool bIsTouch; // Is it a touch device
-	float FollowTime; // For how long it has been pressed
+public:
+	//Move
+	UFUNCTION()
+	void MoveForward(float InAxis);
 
-protected:
-	uint32 bMoveToMouseCursor : 1;
+	UFUNCTION()
+	void MoveRight(float InAxis);
+
+	UFUNCTION()
+	void LookMouseCursor();
 
 };

@@ -13,28 +13,21 @@ public:
 	// Sets default values for this character's properties
 	ATDCharacterBase();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
+#pragma region Camera
 public:
-	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
-	/** Returns CameraBoom subobject **/
+	
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-
-public:
-	//Move
-	void OnMoveForward(float InAxis);
-	void OnMoveRight(float InAxis);
 
 private:
 	/** Top down camera */
@@ -44,5 +37,18 @@ private:
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
+
+#pragma endregion Camera
+
+
+#pragma region Rotation
+public:
+	UFUNCTION(BlueprintCallable)
+	void CharacterLookAt();
+
+public:
+	FRotator DefaultRotation;
+
+#pragma endregion Rotation
 
 };

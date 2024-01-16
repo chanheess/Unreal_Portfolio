@@ -5,73 +5,25 @@
       <Configuration>Invalid</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Invalid|Win64">
-      <Configuration>Invalid</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugGame|x64">
       <Configuration>DebugGame</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame|Win64">
-      <Configuration>DebugGame</Configuration>
-      <Platform>Win64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugGame_Editor|x64">
       <Configuration>DebugGame_Editor</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugGame_Editor|Win64">
-      <Configuration>DebugGame_Editor</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_DebugGame|x64">
-      <Configuration>IOS_DebugGame</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_DebugGame|Win64">
-      <Configuration>IOS_DebugGame</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Development|x64">
       <Configuration>Development</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Development|Win64">
-      <Configuration>Development</Configuration>
-      <Platform>Win64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Development_Editor|x64">
       <Configuration>Development_Editor</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Development_Editor|Win64">
-      <Configuration>Development_Editor</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_Development|x64">
-      <Configuration>IOS_Development</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_Development|Win64">
-      <Configuration>IOS_Development</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Shipping|x64">
       <Configuration>Shipping</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Shipping|Win64">
-      <Configuration>Shipping</Configuration>
-      <Platform>Win64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_Shipping|x64">
-      <Configuration>IOS_Shipping</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="IOS_Shipping|Win64">
-      <Configuration>IOS_Shipping</Configuration>
-      <Platform>Win64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -105,18 +57,6 @@
       <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProjectEditor Win64 DebugGame -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
     </NMakeCompile>
   </ItemDefinitionGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IOS_DebugGame|Win64'">
-    <NMakeBuildCommandLine>$(BuildBatchScript) TDProject IOS DebugGame -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(RebuildBatchScript) TDProject IOS DebugGame -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(CleanBatchScript) TDProject IOS DebugGame -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\IOS\TDProject-IOS-DebugGame</NMakeOutput>
-    <AdditionalOptions>/std:c++20  /DSAL_NO_ATTRIBUTE_DECLARATIONS=1 /permissive- /Zc:strictStrings- /Zc:__cplusplus</AdditionalOptions>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='IOS_DebugGame|Win64'">
-    <NMakeCompile>
-      <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProject IOS DebugGame -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
-    </NMakeCompile>
-  </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
     <NMakeBuildCommandLine>$(BuildBatchScript) TDProject Win64 Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(RebuildBatchScript) TDProject Win64 Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
@@ -141,18 +81,6 @@
       <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProjectEditor Win64 Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
     </NMakeCompile>
   </ItemDefinitionGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IOS_Development|Win64'">
-    <NMakeBuildCommandLine>$(BuildBatchScript) TDProject IOS Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(RebuildBatchScript) TDProject IOS Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(CleanBatchScript) TDProject IOS Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\IOS\TDProject</NMakeOutput>
-    <AdditionalOptions>/std:c++20  /DSAL_NO_ATTRIBUTE_DECLARATIONS=1 /permissive- /Zc:strictStrings- /Zc:__cplusplus</AdditionalOptions>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='IOS_Development|Win64'">
-    <NMakeCompile>
-      <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProject IOS Development -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
-    </NMakeCompile>
-  </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">
     <NMakeBuildCommandLine>$(BuildBatchScript) TDProject Win64 Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>$(RebuildBatchScript) TDProject Win64 Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
@@ -163,18 +91,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">
     <NMakeCompile>
       <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProject Win64 Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
-    </NMakeCompile>
-  </ItemDefinitionGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IOS_Shipping|Win64'">
-    <NMakeBuildCommandLine>$(BuildBatchScript) TDProject IOS Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine>$(RebuildBatchScript) TDProject IOS Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine>$(CleanBatchScript) TDProject IOS Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild</NMakeCleanCommandLine>
-    <NMakeOutput>..\..\Binaries\IOS\TDProject-IOS-Shipping</NMakeOutput>
-    <AdditionalOptions>/std:c++20  /DSAL_NO_ATTRIBUTE_DECLARATIONS=1 /permissive- /Zc:strictStrings- /Zc:__cplusplus</AdditionalOptions>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='IOS_Shipping|Win64'">
-    <NMakeCompile>
-      <NMakeCompileFileCommandLine>$(BuildBatchScript) TDProject IOS Shipping -Project="$(SolutionDir)TDProject.uproject" -WaitMutex -FromMsBuild -WorkingDir=$(MSBuildProjectDirectory) -Files=$(SelectedFiles)</NMakeCompileFileCommandLine>
     </NMakeCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
