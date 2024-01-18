@@ -259,8 +259,8 @@
 /I "Developer\PhysicsUtilities\Public"
 /I "..\Intermediate\Build\Win64\UnrealEditor\Inc\WidgetRegistration\UHT"
 /I "Developer\WidgetRegistration\Public"
-/I "C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\UnrealEditor\Inc\TDProject\UHT"
-/I "C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Source"
+/I "C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\UnrealEditor\Inc\TDProject\UHT"
+/I "C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Source"
 /external:W0
 /external:I "ThirdParty\mimalloc\include"
 /external:I "ThirdParty\LibTiff\Source\Win64"

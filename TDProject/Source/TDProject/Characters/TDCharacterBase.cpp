@@ -1,6 +1,4 @@
 #include "TDCharacterBase.h"
-
-#include "ScreenPass.inl"
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -10,6 +8,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "PaperFlipbookComponent.h"
 
 // Sets default values
 ATDCharacterBase::ATDCharacterBase()
@@ -44,9 +43,6 @@ ATDCharacterBase::ATDCharacterBase()
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	//Character default setting
-	DefaultRotation = GetMesh()->GetRelativeRotation();
 }
 
 // Called when the game starts or when spawned
@@ -82,18 +78,13 @@ void ATDCharacterBase::CharacterLookAt()
 
 	if (Hit.bBlockingHit)
 	{
-		FVector MousePoint = FVector(Hit.Location.X, Hit.Location.Y, GetActorLocation().Z);
+		float MousePoint = Hit.Location.Y;
+		float LookRotation = 0;
 
-		FRotator LookRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MousePoint);
-		int LookRotation = 180;
-
-		if(MousePoint.X < GetActorLocation().X)
+		if(MousePoint > GetActorLocation().Y)
 		{
-			LookRotation = -180;
+			LookRotation = TurnRotation;
 		}
-		
-		SetActorRelativeRotation()
-
-		SetActorRotation({ MousePoint.X + LookRotation, GetActorRotation().Yaw, MousePoint.Z + LookRotation });
+		GetSprite()->SetRelativeRotation(FRotator(DefaultRotation.Pitch, DefaultRotation.Yaw + LookRotation, DefaultRotation.Roll + LookRotation));
 	}
 }

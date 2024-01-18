@@ -9,6 +9,7 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 // Cross Module References
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FRotator();
 	ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 	PAPER2D_API UClass* Z_Construct_UClass_APaperCharacter();
@@ -16,22 +17,22 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 	TDPROJECT_API UClass* Z_Construct_UClass_ATDCharacterBase_NoRegister();
 	UPackage* Z_Construct_UPackage__Script_TDProject();
 // End Cross Module References
-	DEFINE_FUNCTION(ATDCharacterBase::execCharacterDirection)
+	DEFINE_FUNCTION(ATDCharacterBase::execCharacterLookAt)
 	{
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->CharacterDirection();
+		P_THIS->CharacterLookAt();
 		P_NATIVE_END;
 	}
 	void ATDCharacterBase::StaticRegisterNativesATDCharacterBase()
 	{
 		UClass* Class = ATDCharacterBase::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "CharacterDirection", &ATDCharacterBase::execCharacterDirection },
+			{ "CharacterLookAt", &ATDCharacterBase::execCharacterLookAt },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
-	struct Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics
+	struct Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics
 	{
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
@@ -39,17 +40,17 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics::Function_MetaDataParams[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "Characters/TDCharacterBase.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ATDCharacterBase, nullptr, "CharacterDirection", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics::Function_MetaDataParams), Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics::Function_MetaDataParams) };
-	UFunction* Z_Construct_UFunction_ATDCharacterBase_CharacterDirection()
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ATDCharacterBase, nullptr, "CharacterLookAt", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics::Function_MetaDataParams), Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics::Function_MetaDataParams) };
+	UFunction* Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ATDCharacterBase_CharacterDirection_Statics::FuncParams);
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -73,6 +74,14 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_CameraBoom_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraBoom;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_DefaultRotation_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_DefaultRotation;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_TurnRotation_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_TurnRotation;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -83,7 +92,7 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ATDCharacterBase_Statics::DependentSingletons) < 16);
 	const FClassFunctionLinkInfo Z_Construct_UClass_ATDCharacterBase_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ATDCharacterBase_CharacterDirection, "CharacterDirection" }, // 375303858
+		{ &Z_Construct_UFunction_ATDCharacterBase_CharacterLookAt, "CharacterLookAt" }, // 1485741802
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ATDCharacterBase_Statics::FuncInfo) < 2048);
 #if WITH_METADATA
@@ -125,9 +134,25 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_CameraBoom = { "CameraBoom", nullptr, (EPropertyFlags)0x00400000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ATDCharacterBase, CameraBoom), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_CameraBoom_MetaData), Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_CameraBoom_MetaData) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_DefaultRotation_MetaData[] = {
+		{ "Category", "TDCharacterBase" },
+		{ "ModuleRelativePath", "Characters/TDCharacterBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_DefaultRotation = { "DefaultRotation", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ATDCharacterBase, DefaultRotation), Z_Construct_UScriptStruct_FRotator, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_DefaultRotation_MetaData), Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_DefaultRotation_MetaData) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TurnRotation_MetaData[] = {
+		{ "Category", "TDCharacterBase" },
+		{ "ModuleRelativePath", "Characters/TDCharacterBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TurnRotation = { "TurnRotation", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ATDCharacterBase, TurnRotation), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TurnRotation_MetaData), Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TurnRotation_MetaData) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ATDCharacterBase_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TopDownCameraComponent,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_CameraBoom,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_DefaultRotation,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ATDCharacterBase_Statics::NewProp_TurnRotation,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_ATDCharacterBase_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<ATDCharacterBase>::IsAbstract,
@@ -162,15 +187,15 @@ void EmptyLinkFunctionForGeneratedCodeTDCharacterBase() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ATDCharacterBase);
 	ATDCharacterBase::~ATDCharacterBase() {}
-	struct Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics
+	struct Z_CompiledInDeferFile_FID_Users_acer_Desktop_UnrealPortfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ATDCharacterBase, ATDCharacterBase::StaticClass, TEXT("ATDCharacterBase"), &Z_Registration_Info_UClass_ATDCharacterBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDCharacterBase), 2545594452U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_acer_Desktop_UnrealPortfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_ATDCharacterBase, ATDCharacterBase::StaticClass, TEXT("ATDCharacterBase"), &Z_Registration_Info_UClass_ATDCharacterBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDCharacterBase), 1601598449U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_2250243672(TEXT("/Script/TDProject"),
-		Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_acer_Desktop_UnrealPortfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_2045529706(TEXT("/Script/TDProject"),
+		Z_CompiledInDeferFile_FID_Users_acer_Desktop_UnrealPortfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_acer_Desktop_UnrealPortfolio_TDProject_Source_TDProject_Characters_TDCharacterBase_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

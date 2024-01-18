@@ -1,11 +1,11 @@
-"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\UnrealEditor\Inc\TDProject\UHT\TDGameMode.gen.cpp"
-/FI"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h"
-/FI"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\Definitions.TDProject.h"
-/Yu"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h"
-/Fp"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h.pch"
-/Fo"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.gen.cpp.obj"
-/sourceDependencies "C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.gen.cpp.dep.json"
-@"C:\Users\Chanheess\Desktop\Unreal_Portfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDProject.Shared.rsp"
+"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\UnrealEditor\Inc\TDProject\UHT\TDGameMode.gen.cpp"
+/FI"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h"
+/FI"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\Definitions.TDProject.h"
+/Yu"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h"
+/Fp"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\TDProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h.pch"
+/Fo"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.gen.cpp.obj"
+/sourceDependencies "C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDGameMode.gen.cpp.dep.json"
+@"C:\Users\acer\Desktop\UnrealPortfolio\TDProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\TDProject\TDProject.Shared.rsp"
 /Zc:inline
 /nologo
 /Oi

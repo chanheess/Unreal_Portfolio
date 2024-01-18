@@ -47,7 +47,11 @@ public:
 	void CharacterLookAt();
 
 public:
+	UPROPERTY(EditAnywhere)
 	FRotator DefaultRotation;
+
+	UPROPERTY(EditAnywhere)
+	float TurnRotation = 180;
 
 #pragma endregion Rotation
 

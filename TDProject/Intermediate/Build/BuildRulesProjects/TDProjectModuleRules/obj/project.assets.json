@@ -8064,23 +8064,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Chanheess\\.nuget\\packages\\": {},
+    "C:\\Users\\acer\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\TDProjectModuleRules.csproj",
+      "projectUniqueName": "C:\\Users\\acer\\Desktop\\UnrealPortfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\TDProjectModuleRules.csproj",
       "projectName": "TDProjectModuleRules",
-      "projectPath": "C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\TDProjectModuleRules.csproj",
-      "packagesPath": "C:\\Users\\Chanheess\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\obj\\",
+      "projectPath": "C:\\Users\\acer\\Desktop\\UnrealPortfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\TDProjectModuleRules.csproj",
+      "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\acer\\Desktop\\UnrealPortfolio\\TDProject\\Intermediate\\Build\\BuildRulesProjects\\TDProjectModuleRules\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Chanheess\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

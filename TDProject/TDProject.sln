@@ -116,7 +116,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UE5ProgramRules", "..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UE5Rules", "..\..\..\..\..\Program Files\Epic Games\UE_5.3\Engine\Intermediate\Build\BuildRulesProjects\UE5Rules\UE5Rules.csproj", "{B6CFA7F6-D814-324B-BD6B-9D340F875363}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDProjectModuleRules", "Intermediate\Build\BuildRulesProjects\TDProjectModuleRules\TDProjectModuleRules.csproj", "{4E79E067-7A0F-3B94-9359-9F0738272675}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDProjectModuleRules", "Intermediate\Build\BuildRulesProjects\TDProjectModuleRules\TDProjectModuleRules.csproj", "{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visualizers", "Visualizers", "{1CCEC849-CC72-4C59-8C36-2F7C38706D4C}"
 	ProjectSection(SolutionItems) = preProject
@@ -612,16 +612,16 @@ Global
 		{B6CFA7F6-D814-324B-BD6B-9D340F875363}.Development|Win64.Build.0 = Development|Any CPU
 		{B6CFA7F6-D814-324B-BD6B-9D340F875363}.Shipping|Win64.ActiveCfg = Development|Any CPU
 		{B6CFA7F6-D814-324B-BD6B-9D340F875363}.Shipping|Win64.Build.0 = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.DebugGame Editor|Win64.ActiveCfg = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.DebugGame Editor|Win64.Build.0 = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.DebugGame|Win64.ActiveCfg = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.DebugGame|Win64.Build.0 = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Development Editor|Win64.ActiveCfg = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Development Editor|Win64.Build.0 = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Development|Win64.ActiveCfg = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Development|Win64.Build.0 = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Shipping|Win64.ActiveCfg = Development|Any CPU
-		{4E79E067-7A0F-3B94-9359-9F0738272675}.Shipping|Win64.Build.0 = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.DebugGame Editor|Win64.ActiveCfg = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.DebugGame Editor|Win64.Build.0 = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.DebugGame|Win64.ActiveCfg = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.DebugGame|Win64.Build.0 = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Development Editor|Win64.ActiveCfg = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Development Editor|Win64.Build.0 = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Development|Win64.ActiveCfg = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Development|Win64.Build.0 = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Shipping|Win64.ActiveCfg = Development|Any CPU
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D}.Shipping|Win64.Build.0 = Development|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -678,6 +678,6 @@ Global
 		{3DBF91C2-B6FF-36F4-B3EF-8D8DF60CD87F} = {C2F57ECE-B26F-39D8-BDA7-C1D40BD8F180}
 		{6AD9E4C5-2F0D-339D-B434-01ACE48F5238} = {C2F57ECE-B26F-39D8-BDA7-C1D40BD8F180}
 		{B6CFA7F6-D814-324B-BD6B-9D340F875363} = {C2F57ECE-B26F-39D8-BDA7-C1D40BD8F180}
-		{4E79E067-7A0F-3B94-9359-9F0738272675} = {C2F57ECE-B26F-39D8-BDA7-C1D40BD8F180}
+		{CD1E0EA2-4185-383A-87B4-CB8B7C0BAE4D} = {C2F57ECE-B26F-39D8-BDA7-C1D40BD8F180}
 	EndGlobalSection
 EndGlobal
