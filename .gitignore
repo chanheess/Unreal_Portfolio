@@ -36,6 +36,9 @@
 *.asset
 *.uasset
 *.ipch
+*.vsidx
+*.log
+
 FPS_Action/.vs
 FPS_Action/Binaries
 FPS_Action/Config
@@ -51,3 +54,11 @@ Test/Content
 Test/DerivedDataCache
 Test/Intermediate
 Test/Saved
+
+TDProject/.vs
+TDProject/Binaries
+TDProject/Config
+TDProject/Content
+TDProject/DerivedDataCache
+TDProject/Intermediate
+TDProject/Saved
