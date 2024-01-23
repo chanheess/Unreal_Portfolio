@@ -39,26 +39,13 @@
 *.log
 *.bin
 
-FPS_Action/.vs
-FPS_Action/Binaries
-FPS_Action/Config
-FPS_Action/Content
-FPS_Action/DerivedDataCache
-FPS_Action/Intermediate
-FPS_Action/Saved
-
-Test/.vs
-Test/Binaries
-Test/Config
-Test/Content
-Test/DerivedDataCache
-Test/Intermediate
-Test/Saved
+FPS_Action/
+Test/
+Weapons/
 
 TDProject/.vs
 TDProject/Binaries
 TDProject/Config
-TDProject/Content
 TDProject/DerivedDataCache
 TDProject/Intermediate
 TDProject/Saved
