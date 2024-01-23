@@ -37,6 +37,7 @@
 *.uasset
 *.ipch
 *.log
+*.bin
 
 FPS_Action/.vs
 FPS_Action/Binaries
@@ -57,6 +58,7 @@ Test/Saved
 TDProject/.vs
 TDProject/Binaries
 TDProject/Config
+TDProject/Content
 TDProject/DerivedDataCache
 TDProject/Intermediate
 TDProject/Saved
