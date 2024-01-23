@@ -36,6 +36,7 @@
 *.asset
 *.uasset
 *.ipch
+*.log
 
 FPS_Action/.vs
 FPS_Action/Binaries

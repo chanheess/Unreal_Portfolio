@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\tdgamemode.cpp",
+        "Source": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\settings\\tdgamemode.cpp",
         "ProvidedModule": "",
         "PCH": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\tdprojecteditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
         "Includes": [
             "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tdproject\\definitions.tdproject.h",
-            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\tdgamemode.h",
+            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\settings\\tdgamemode.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
             "c:\\program files\\epic games\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",

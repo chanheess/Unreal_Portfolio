@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "TDProject/TDGameMode.h"
+#include "TDProject/Settings/TDGameMode.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeTDGameMode() {}
 // Cross Module References
@@ -39,8 +39,8 @@ void EmptyLinkFunctionForGeneratedCodeTDGameMode() {}
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATDGameMode_Statics::Class_MetaDataParams[] = {
 		{ "HideCategories", "Info Rendering MovementReplication Replication Actor Input Movement Collision Rendering HLOD WorldPartition DataLayers Transformation" },
-		{ "IncludePath", "TDGameMode.h" },
-		{ "ModuleRelativePath", "TDGameMode.h" },
+		{ "IncludePath", "Settings/TDGameMode.h" },
+		{ "ModuleRelativePath", "Settings/TDGameMode.h" },
 		{ "ShowCategories", "Input|MouseInput Input|TouchInput" },
 	};
 #endif
@@ -76,15 +76,15 @@ void EmptyLinkFunctionForGeneratedCodeTDGameMode() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ATDGameMode);
 	ATDGameMode::~ATDGameMode() {}
-	struct Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDGameMode_h_Statics
+	struct Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDGameMode_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDGameMode_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ATDGameMode, ATDGameMode::StaticClass, TEXT("ATDGameMode"), &Z_Registration_Info_UClass_ATDGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDGameMode), 3508797412U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDGameMode_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_ATDGameMode, ATDGameMode::StaticClass, TEXT("ATDGameMode"), &Z_Registration_Info_UClass_ATDGameMode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDGameMode), 4083778850U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDGameMode_h_2270681897(TEXT("/Script/TDProject"),
-		Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDGameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDGameMode_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDGameMode_h_1910974443(TEXT("/Script/TDProject"),
+		Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDGameMode_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDGameMode_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

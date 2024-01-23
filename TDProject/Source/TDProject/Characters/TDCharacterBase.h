@@ -4,6 +4,23 @@
 #include "PaperCharacter.h"
 #include "TDCharacterBase.generated.h"
 
+UENUM(BlueprintType)
+enum class ECharacterState : uint8
+{
+	Idle,
+	Move
+};
+
+USTRUCT(BlueprintType)
+struct FFlipbookData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	class UPaperFlipbook* AnimData;
+};
+
+
 UCLASS(Blueprintable)
 class TDPROJECT_API ATDCharacterBase : public APaperCharacter
 {
@@ -40,15 +57,24 @@ private:
 
 #pragma endregion Camera
 
-
-#pragma region Rotation
 public:
 	UFUNCTION(BlueprintCallable)
 	void CharacterLookAt();
 
+	UFUNCTION(BlueprintCallable)
+	void UpdateAnimStateMachine(ECharacterState InputAnim);
+
 public:
+	UPROPERTY(EditAnywhere)
 	FRotator DefaultRotation;
 
-#pragma endregion Rotation
+	UPROPERTY(EditAnywhere)
+	float TurnRotation = 180;
+
+	UPROPERTY(BlueprintReadWrite)
+	ECharacterState CharacterState;
+
+	UPROPERTY(EditAnywhere)
+	TMap<ECharacterState, FFlipbookData> AnimFlipbooks;
 
 };

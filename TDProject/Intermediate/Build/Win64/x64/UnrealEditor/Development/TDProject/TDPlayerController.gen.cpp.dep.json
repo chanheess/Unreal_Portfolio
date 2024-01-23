@@ -6,7 +6,7 @@
         "PCH": "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\tdprojecteditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
         "Includes": [
             "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tdproject\\definitions.tdproject.h",
-            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\tdplayercontroller.h",
+            "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\source\\tdproject\\settings\\tdplayercontroller.h",
             "c:\\users\\chanheess\\desktop\\unreal_portfolio\\tdproject\\intermediate\\build\\win64\\unrealeditor\\inc\\tdproject\\uht\\tdplayercontroller.generated.h"
         ],
         "ImportedModules": [],

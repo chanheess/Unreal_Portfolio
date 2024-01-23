@@ -33,18 +33,6 @@
     <Filter Include="Source\TDProject">
       <UniqueIdentifier>{198444FB-E361-35AF-BC00-45DF294F29F4}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\TDProject\TDGameMode.cpp">
-      <Filter>Source\TDProject</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TDProject\TDGameMode.h">
-      <Filter>Source\TDProject</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\TDProject\TDPlayerController.cpp">
-      <Filter>Source\TDProject</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TDProject\TDPlayerController.h">
-      <Filter>Source\TDProject</Filter>
-    </ClInclude>
     <None Include="..\..\Source\TDProject\TDProject.Build.cs">
       <Filter>Source\TDProject</Filter>
     </None>
@@ -62,6 +50,21 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\TDProject\Characters\TDCharacterBase.h">
       <Filter>Source\TDProject\Characters</Filter>
+    </ClInclude>
+    <Filter Include="Source\TDProject\Settings">
+      <UniqueIdentifier>{773DC4A2-48B1-369F-B121-AD4DB5B6CC2D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TDProject\Settings\TDGameMode.cpp">
+      <Filter>Source\TDProject\Settings</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\Settings\TDGameMode.h">
+      <Filter>Source\TDProject\Settings</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TDProject\Settings\TDPlayerController.cpp">
+      <Filter>Source\TDProject\Settings</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TDProject\Settings\TDPlayerController.h">
+      <Filter>Source\TDProject\Settings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

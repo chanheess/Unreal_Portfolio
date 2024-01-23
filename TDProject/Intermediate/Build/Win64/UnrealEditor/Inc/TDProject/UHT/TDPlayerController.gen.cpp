@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "TDProject/TDPlayerController.h"
+#include "TDProject/Settings/TDPlayerController.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 // Cross Module References
@@ -56,7 +56,7 @@ void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ATDPlayerController_LookMouseCursor_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "TDPlayerController.h" },
+		{ "ModuleRelativePath", "Settings/TDPlayerController.h" },
 	};
 #endif
 	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ATDPlayerController_LookMouseCursor_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ATDPlayerController, nullptr, "LookMouseCursor", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ATDPlayerController_LookMouseCursor_Statics::Function_MetaDataParams), Z_Construct_UFunction_ATDPlayerController_LookMouseCursor_Statics::Function_MetaDataParams) };
@@ -91,7 +91,7 @@ void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "//Move\n" },
 #endif
-		{ "ModuleRelativePath", "TDPlayerController.h" },
+		{ "ModuleRelativePath", "Settings/TDPlayerController.h" },
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Move" },
 #endif
@@ -128,7 +128,7 @@ void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "TDPlayerController.h" },
+		{ "ModuleRelativePath", "Settings/TDPlayerController.h" },
 	};
 #endif
 	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ATDPlayerController, nullptr, "MoveRight", nullptr, nullptr, Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::PropPointers), sizeof(Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::TDPlayerController_eventMoveRight_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::Function_MetaDataParams), Z_Construct_UFunction_ATDPlayerController_MoveRight_Statics::Function_MetaDataParams) };
@@ -164,16 +164,16 @@ void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ATDPlayerController_Statics::DependentSingletons) < 16);
 	const FClassFunctionLinkInfo Z_Construct_UClass_ATDPlayerController_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ATDPlayerController_LookMouseCursor, "LookMouseCursor" }, // 3387841251
-		{ &Z_Construct_UFunction_ATDPlayerController_MoveForward, "MoveForward" }, // 3293224806
-		{ &Z_Construct_UFunction_ATDPlayerController_MoveRight, "MoveRight" }, // 4019928500
+		{ &Z_Construct_UFunction_ATDPlayerController_LookMouseCursor, "LookMouseCursor" }, // 251631814
+		{ &Z_Construct_UFunction_ATDPlayerController_MoveForward, "MoveForward" }, // 3434785736
+		{ &Z_Construct_UFunction_ATDPlayerController_MoveRight, "MoveRight" }, // 4222205185
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ATDPlayerController_Statics::FuncInfo) < 2048);
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATDPlayerController_Statics::Class_MetaDataParams[] = {
 		{ "HideCategories", "Collision Rendering Transformation" },
-		{ "IncludePath", "TDPlayerController.h" },
-		{ "ModuleRelativePath", "TDPlayerController.h" },
+		{ "IncludePath", "Settings/TDPlayerController.h" },
+		{ "ModuleRelativePath", "Settings/TDPlayerController.h" },
 	};
 #endif
 	const FCppClassTypeInfoStatic Z_Construct_UClass_ATDPlayerController_Statics::StaticCppClassTypeInfo = {
@@ -208,15 +208,15 @@ void EmptyLinkFunctionForGeneratedCodeTDPlayerController() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ATDPlayerController);
 	ATDPlayerController::~ATDPlayerController() {}
-	struct Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDPlayerController_h_Statics
+	struct Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDPlayerController_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDPlayerController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ATDPlayerController, ATDPlayerController::StaticClass, TEXT("ATDPlayerController"), &Z_Registration_Info_UClass_ATDPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDPlayerController), 1905920798U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDPlayerController_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_ATDPlayerController, ATDPlayerController::StaticClass, TEXT("ATDPlayerController"), &Z_Registration_Info_UClass_ATDPlayerController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATDPlayerController), 1155359803U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDPlayerController_h_4204319748(TEXT("/Script/TDProject"),
-		Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDPlayerController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_TDPlayerController_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDPlayerController_h_2262020733(TEXT("/Script/TDProject"),
+		Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDPlayerController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Chanheess_Desktop_Unreal_Portfolio_TDProject_Source_TDProject_Settings_TDPlayerController_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

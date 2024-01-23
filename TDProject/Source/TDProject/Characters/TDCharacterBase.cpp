@@ -1,11 +1,14 @@
 #include "TDCharacterBase.h"
-
+#include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Materials/Material.h"
+#include "Engine/World.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "PaperFlipbookComponent.h"
 
 // Sets default values
 ATDCharacterBase::ATDCharacterBase()
@@ -40,9 +43,6 @@ ATDCharacterBase::ATDCharacterBase()
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	//Character default setting
-	//DefaultRotation = GetMesh()->GetRelativeRotation();
 }
 
 // Called when the game starts or when spawned
@@ -78,18 +78,29 @@ void ATDCharacterBase::CharacterLookAt()
 
 	if (Hit.bBlockingHit)
 	{
-		FVector MouseLoc = FVector(Hit.Location.X, Hit.Location.Y, GetActorLocation().Z);
+		float MousePoint = Hit.Location.Y;
+		float LookRotation = 0;
 
-		FRotator LookRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MouseLoc);
-		//int LookRotation = 180;
-		//
-		//if(MousePoint.X < GetActorLocation().X)
-		//{
-		//	LookRotation = -180;
-		//}
-		
-		//SetActorRelativeRotation()
-		//
-		//SetActorRotation({ MousePoint.X + LookRotation, GetActorRotation().Yaw, MousePoint.Z + LookRotation });
+		//좌우 방향으로 마우스를 바라보게 한다.
+		if(MousePoint > GetActorLocation().Y)
+		{
+			LookRotation = TurnRotation;
+		}
+		GetSprite()->SetRelativeRotation(FRotator(DefaultRotation.Pitch, DefaultRotation.Yaw + LookRotation, DefaultRotation.Roll + LookRotation));
+	}
+}
+
+void ATDCharacterBase::UpdateAnimStateMachine(ECharacterState InputAnim)
+{
+	if (CharacterState == InputAnim)
+	{
+		return;
+	}
+
+	UPaperFlipbook* FBData = AnimFlipbooks.Find(InputAnim)->AnimData;
+
+	if (FBData)
+	{
+		GetSprite()->SetFlipbook(FBData);
 	}
 }
