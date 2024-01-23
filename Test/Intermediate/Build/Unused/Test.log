@@ -1,4 +1,0 @@
-﻿  Using 'git status' to determine working set for adaptive non-unity build (C:\Users\Chanheess\Desktop\Unreal_Portfolio).
-  Creating makefile for TestEditor (no existing makefile)
-UnrealBuildTool : error : Could not find NetFxSDK install dir; this will prevent SwarmInterface from installing.  Install a version of .NET Framework SDK at 4.6.0 or higher.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.MakeFile.Targets(45,5): error MSB3073: ""C:\Program Files\Epic Games\UE_4.25\Engine\Build\BatchFiles\Build.bat" TestEditor Win64 Development -Project="C:\Users\Chanheess\Desktop\Unreal_Portfolio\Test\Test.uproject" -WaitMutex -FromMsBuild" 명령이 종료되었습니다(코드: 6).

@@ -1,9 +1,0 @@
-{
-	"SourceFiles": [
-		"C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\Test\\Source\\Test\\Test.Build.cs",
-		"C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\Test\\Source\\TestSetting\\TestSetting.Build.cs",
-		"C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\Test\\Source\\Test.Target.cs",
-		"C:\\Users\\Chanheess\\Desktop\\Unreal_Portfolio\\Test\\Source\\TestEditor.Target.cs"
-	],
-	"EngineVersion": "4.25.4"
-}

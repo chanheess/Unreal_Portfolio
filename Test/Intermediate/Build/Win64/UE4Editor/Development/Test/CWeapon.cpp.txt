@@ -1,3 +1,0 @@
-C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Development\Test\Definitions.Test.h
-C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Source\Test\Public\CWeapon.h
-C:\Users\kim75\Desktop\Unreal_Portfolio\Test\Intermediate\Build\Win64\UE4Editor\Inc\Test\CWeapon.generated.h
