@@ -39,13 +39,16 @@
 *.log
 *.bin
 
-FPS_Action/
-Test/
-Weapons/
+#  Etc
+.vsconfig
 
-TDProject/.vs
-TDProject/Binaries
-TDProject/Config
-TDProject/DerivedDataCache
-TDProject/Intermediate
-TDProject/Saved
+# Folder
+FPS_Action/Binaries
+FPS_Action/Intermediate
+FPS_Action/Saved
+FPS_Action/Content/
+
+Test/Binaries
+Test/Intermediate
+Test/Saved
+Test/Content/
